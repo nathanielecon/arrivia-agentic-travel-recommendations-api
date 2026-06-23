@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/v1/partners/p1/policy"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "partner_id": "p1",
+      "max_recommendations_per_session": 3,
+      "exclude_cruise": true
+    }
+  }
+}

@@ -1,0 +1,17 @@
+tasks:
+  - title: "Refine Python project setup"
+    completed: true
+    parallel_group: 1
+    description: "Update pyproject.toml, .gitignore, and .env.example for a clean local developer workflow without adding unnecessary tooling."
+  - title: "Harden local container scaffolding"
+    completed: true
+    parallel_group: 1
+    description: "Update Dockerfile and docker-compose.yml so the service can run locally in a containerized workflow and leave room for mocked upstreams."
+  - title: "Expand baseline app structure"
+    completed: true
+    parallel_group: 2
+    description: "Create the initial src package layout for config, domain, integrations, use cases, API routing, and MCP modules without overbuilding."
+  - title: "Seed repository guidance"
+    completed: true
+    parallel_group: 2
+    description: "Update README.md with local setup, project scope, and the distinction between v0 delivery and later enhancements."

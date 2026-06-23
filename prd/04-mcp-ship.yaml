@@ -1,0 +1,21 @@
+tasks:
+  - title: Implement MCP server
+    completed: true
+    parallel_group: 1
+    description: Implement src/arrivia_recs/mcp/server.py and related modules so an
+      AI agent can discover and invoke recommendation tools through MCP.
+  - title: Add MCP smoke tests
+    completed: true
+    parallel_group: 2
+    description: Add targeted tests that verify MCP tool registration and a basic
+      recommendation invocation path.
+  - title: Write operator runbook
+    completed: true
+    parallel_group: 2
+    description: Create docs/plan/runbook.md with local run commands, common
+      failures, and on-call-minded debugging notes.
+  - title: Finalize README scope and delivery plan
+    completed: true
+    parallel_group: 3
+    description: Update README.md so it clearly explains the four-week first step,
+      the local demo path, and what remains out of scope.

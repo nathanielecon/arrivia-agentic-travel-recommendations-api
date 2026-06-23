@@ -1,0 +1,10 @@
+service:
+  name: arrivia-agentic-travel-recs
+  environment: v0
+  rollout:
+    active_replicas: 1
+    autoscaling_enabled: false
+  session_budget:
+    store: local_sqlite
+    shared_scope: same_machine_only
+    scale_out_blocker: shared_distributed_session_state_required

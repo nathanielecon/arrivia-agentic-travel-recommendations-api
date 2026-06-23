@@ -1,0 +1,13 @@
+tasks:
+  - title: "Harden session-cap enforcement and upstream failure paths"
+    completed: false
+    parallel_group: 1
+    description: "Fix concurrency-sensitive session cap accounting, make malformed upstream responses explicit failures, and align MCP error handling with the live recommendation stack."
+  - title: "Improve reviewer run path and MCP demo guidance"
+    completed: false
+    parallel_group: 1
+    description: "Update README and supporting docs so a reviewer can quickly run the full mock-backed stack, start the MCP server, and understand the clearest evaluation path."
+  - title: "Verify prompt compliance and submission quality"
+    completed: false
+    parallel_group: 2
+    description: "Run pytest, ruff, and compileall; confirm the implementation still respects Prompt.md constraints around containerized deployment, read-only partner config, four-week scope, and on-call-friendly behavior."

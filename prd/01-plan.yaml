@@ -1,0 +1,17 @@
+tasks:
+  - title: "Draft architecture overview"
+    completed: true
+    parallel_group: 1
+    description: "Create docs/plan/architecture.md covering service boundaries, request flow, partner rule enforcement, and the first-step four-week scope."
+  - title: "Document upstream contracts"
+    completed: true
+    parallel_group: 1
+    description: "Create docs/plan/upstream-contracts.md describing mocked member data and partner configuration service shapes based on Prompt.md."
+  - title: "Define MCP tool surface"
+    completed: true
+    parallel_group: 2
+    description: "Create docs/plan/mcp-tools.md describing discoverable MCP tools, inputs, outputs, and how they map to the HTTP service."
+  - title: "Capture reliability decisions"
+    completed: true
+    parallel_group: 2
+    description: "Create docs/plan/reliability.md covering timeouts, failure behavior, on-call expectations, and what ships first versus later."

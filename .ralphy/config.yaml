@@ -1,0 +1,39 @@
+project:
+  name: "arrivia-agentic-travel-recs"
+  language: "Python"
+  framework: "FastAPI + MCP"
+
+commands:
+  test: "pytest"
+  lint: "ruff check ."
+  build: "python -m compileall src tests"
+
+rules:
+  - "Treat C:\\Users\\natha\\Downloads\\Prompt.md as the source product brief."
+  - "Honor the constraints in Prompt.md, especially read-only partner config and four-week scope."
+  - "Do not introduce new infrastructure layers or third-party platforms outside the current containerized AWS/Azure-friendly stack."
+  - "Prefer simple, on-call-friendly designs with explicit failure handling."
+  - "Preserve multi-tenant boundaries and make partner rule enforcement auditable."
+
+boundaries:
+  never_touch:
+    - "C:/Users/natha/Downloads/Prompt.md"
+  write_only:
+    - ".ralphy/**"
+    - "docs/**"
+    - "prd/**"
+    - "src/**"
+    - "tests/**"
+    - "README.md"
+    - "Dockerfile"
+    - "docker-compose.yml"
+    - "pyproject.toml"
+    - ".env.example"
+
+execution:
+  default_engine: "codex"
+  parallel: true
+  max_parallel: 3
+
+capabilities:
+  browser: "auto"

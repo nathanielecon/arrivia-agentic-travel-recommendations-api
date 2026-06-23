@@ -1,0 +1,21 @@
+tasks:
+  - title: "Model recommendation domain"
+    completed: true
+    parallel_group: 1
+    description: "Implement domain models for members, bookings, partner policies, and recommendation responses under src/arrivia_recs/domain/."
+  - title: "Build upstream client adapters"
+    completed: true
+    parallel_group: 1
+    description: "Implement read-only integration clients for member and partner configuration lookups under src/arrivia_recs/integrations/."
+  - title: "Implement recommendation orchestration"
+    completed: true
+    parallel_group: 2
+    description: "Implement the use case that fetches member context and partner policy, applies exclusions and caps, and returns auditable recommendation output."
+  - title: "Add recommendations API"
+    completed: true
+    parallel_group: 3
+    description: "Add FastAPI routes for health, readiness, and POST /v1/recommendations, wiring them through the shared use case."
+  - title: "Add service tests"
+    completed: true
+    parallel_group: 4
+    description: "Add targeted tests for policy behavior, route behavior, and key integration edge cases under tests/."

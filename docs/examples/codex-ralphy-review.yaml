@@ -1,0 +1,43 @@
+tasks:
+  - title: Audit prompt compliance and reviewer path
+    completed: false
+    parallel_group: 1
+    description: |
+      Compare Prompt.md, README.md, docs/plan, docker-compose.yml, and the mock fixtures.
+      Confirm that the fastest reviewer path, four-week scope, read-only partner policy rule,
+      and containerized deployment story are all consistent.
+      This track is documentation-first and should leave a reviewer with one obvious path.
+
+  - title: Review REST and MCP runtime reliability
+    completed: false
+    parallel_group: 1
+    description: |
+      Exercise the primary REST route and the MCP tool against the same member and session.
+      Focus on partner-rule enforcement, explicit failure handling, and whether the MCP output
+      stays aligned with POST /v1/recommendations.
+      Treat the MCP stdio path as the canonical agent integration proof for v0.
+
+  - title: Review tests and docs contracts
+    completed: false
+    parallel_group: 1
+    description: |
+      Run pytest for the documentation, recommendation, and MCP smoke suites.
+      Tighten docs and contract tests so a reviewer can follow one copy-paste path to success.
+      Confirm the v0 rollout boundary is explicit: one active replica, same-machine budget parity,
+      distributed cross-host state later.
+
+  - title: Apply fixes from the parallel review tracks
+    completed: false
+    parallel_group: 2
+    description: |
+      Consolidate findings from the parallel agents, implement the highest-severity fixes,
+      and keep the README plus runbook aligned with the actual shipped behavior.
+      Prefer concise reviewer-facing proof over internal-only process notes.
+
+  - title: Re-run verification and prepare submission notes
+    completed: false
+    parallel_group: 2
+    description: |
+      Re-run pytest, ruff, compileall, and the MCP smoke path. Summarize residual risk,
+      the final readiness score, and the exact reviewer commands to use.
+      Record the final proof map for judges: REST path, MCP path, rollout boundary, and tests.
