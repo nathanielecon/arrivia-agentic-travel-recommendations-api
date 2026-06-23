@@ -254,7 +254,7 @@ Relevant docs:
 - `docs/plan/mcp-tools.md`
 - `docs/examples/codex-ralphy-review.yaml`
 - `docs/examples/judge-proof.md`
-- `docs/submission/provn-submission.md`
+- `docs/examples/mcp-stdio-transcript.md`
 
 ## Cursor Compatibility Note
 
