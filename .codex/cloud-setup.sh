@@ -73,31 +73,9 @@ if [[ -f "$HOME/.bashrc" ]] || touch "$HOME/.bashrc"; then
     echo 'export TF_IN_AUTOMATION=1 POWERSHELL_TELEMETRY_OPTOUT=1' >> "$HOME/.bashrc"
 fi
 
-echo "== Arrivia Python wheelhouse (best-effort; never fails setup) =="
-# Cloud agent egress is often 403. Wheelhouse helps offline installs, but a failed
-# pip download must not abort Environment setup (set -e) and kill Gate 6 tasks.
-if [[ -f requirements-dev.lock && -f requirements-build.lock ]]; then
-  WHEELHOUSE="$HOME/.cache/arrivia-wheelhouse"
-  LOCK_STAMP="$WHEELHOUSE/locks.sha256"
-  mkdir -p "$WHEELHOUSE" || true
-  current_stamp="$(
-    sha256sum requirements-dev.lock requirements-build.lock \
-      | sha256sum \
-      | awk '{print $1}'
-  )" || current_stamp=""
-  cached_stamp="$(cat "$LOCK_STAMP" 2>/dev/null || true)"
-  if [[ -n "$current_stamp" && "$cached_stamp" != "$current_stamp" ]]; then
-    if python -m pip download \
-      --dest "$WHEELHOUSE" \
-      -r requirements-dev.lock \
-      -r requirements-build.lock; then
-      printf '%s\n' "$current_stamp" > "$LOCK_STAMP" || true
-    else
-      echo "WARN: wheelhouse download failed; continuing without offline cache" >&2
-    fi
-  fi
-  echo "wheelhouse=$WHEELHOUSE files=$(find "$WHEELHOUSE" -maxdepth 1 -type f 2>/dev/null | wc -l)"
-fi
+# Do not download a Python wheelhouse during Environment setup.
+# Pip/proxy 403s previously aborted setup under set -e and left Cloud tasks
+# in ERROR before the agent could run. Offline installs remain a task-time concern.
 
 echo "== Verify toolchain =="
 git --version
