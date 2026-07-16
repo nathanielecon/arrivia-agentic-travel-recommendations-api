@@ -1,0 +1,19 @@
+Evidence protocol: setup -> test start -> named assertions -> result
+Candidate base: 5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896 (working tree dirty)
+Environment: Windows Python 3.14.3; real MCP stdio subprocess; temporary HTTP upstream servers and SQLite store
+
+SETUP
+The test launches python -m arrivia_recs.mcp.server through the official MCP stdio client transport.
+
+TEST START mcp-stdio-discovery-invocation-and-budget-parity
+Command: python -m pytest tests/test_mcp_stdio_smoke.py -q
+
+ASSERTION discovery-and-invocation
+Observed: list_tools returned get_travel_recommendations; call_tool returned partner p1, member m1,
+partner-config-service audit metadata, and no cruise recommendation.
+
+ASSERTION rest-mcp-budget-parity
+Observed: REST consumed the shared SQLite final slot; a separately spawned MCP stdio process then
+returned no recommendations for the same session.
+
+RESULT passed: 2 tests passed in 17.25 seconds. Eight framework deprecation warnings were emitted.

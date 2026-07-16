@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arrivia.example/contracts/partner-policy.schema.json",
+  "title": "Partner Policy",
+  "description": "Read-only partner restrictions. Unknown properties fail closed. If both exclusion names are supplied, application validation requires equal values.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["partner_id"],
+  "properties": {
+    "partner_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "max_recommendations_per_session": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "A null value means unlimited; otherwise this is the hard per-session cap."
+    },
+    "exclude_cruise": {
+      "type": "boolean",
+      "default": false,
+      "description": "Canonical cruise-exclusion rule."
+    },
+    "exclude_cruises": {
+      "type": "boolean",
+      "description": "Only accepted legacy alias for exclude_cruise."
+    }
+  }
+}

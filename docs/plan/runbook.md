@@ -91,6 +91,10 @@ Loaded from environment or `.env` in the working directory:
 | `APP_ENV` | Deployment label such as `local` or `staging` |
 | `APP_NAME` | Service name for logs and metadata |
 | `SESSION_BUDGET_STORE_PATH` | Local SQLite file for same-machine session-cap parity between API and MCP |
+| `UPSTREAM_*_TIMEOUT_SECONDS` | Strict connect/read/write/pool budgets |
+| `UPSTREAM_CIRCUIT_*` | Failure threshold and open interval |
+| `METRICS_ENABLED` | Registers the internal `/metrics` endpoint when true |
+| `ARRIVIA_RECS_IMAGE` | Compose image digest selected for promotion or rollback |
 
 Misconfigured URLs are a common cause of `upstream_unreachable`.
 
@@ -112,6 +116,16 @@ Do not scale this service above one active recommendation-serving replica in v0.
 | `404` with `member_not_found` | unknown member ID | member mock mappings or upstream data | use `m1` for local smoke or fix the fixture |
 | `502` with `partner_policy_not_found` | missing partner policy | partner mock mappings or upstream data | add or fix the partner policy fixture |
 | `502` with `upstream_error` | upstream returned non-2xx | upstream logs and request URL | restore the upstream dependency |
+| `502` with `upstream_circuit_open` | three qualifying failures opened a per-process circuit | circuit metric and upstream logs | restore dependency; allow one half-open probe after 30s |
+
+## Rollback
+
+Use the canonical [single-replica rollback runbook](../operations/ROLLBACK_RUNBOOK.md). Stop the sole
+replica, snapshot the SQLite database plus WAL/SHM, select a previous immutable digest with
+`ARRIVIA_RECS_IMAGE`, start with `--no-build`, and run `scripts/deployment_verifier.py` with a fresh
+session. Routine code rollback keeps `.data` and active counts until their existing TTL. Restore a
+database snapshot only for demonstrated corruption; rollback, restore, rebuild, failover, and
+forward-fix are separate decisions.
 
 ## On-Call Notes
 

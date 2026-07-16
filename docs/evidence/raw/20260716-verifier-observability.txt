@@ -1,0 +1,31 @@
+Evidence protocol: setup -> named assertions -> result
+Candidate base: 5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896 (working tree dirty)
+Image: arrivia-recs@sha256:eb5976b2f9e73c740d2b82aaecace4ca13764456929bf770259213928991fe96
+
+Command: python scripts/deployment_verifier.py --base-url http://127.0.0.1:8080
+Result: pass
+Checks: /health, /ready, /metrics, audit_and_cruise_exclusion, session_cap all passed.
+
+ASSERTION completion-log-audit-and-redaction
+Representative emitted JSON event:
+{"event":"recommendation.completed","surface":"rest","outcome":"success","recommendation_count":3,"partner_id":"p1","member_id_hash":"sha256:a7db9c1874235b1e","session_id_hash":"sha256:3083707a8d13d4b5","audit_block":{"partner_id":"p1","policy_source":"partner-config-service","rules_applied":[{"rule":"max_recommendations_per_session","value":"3"},{"rule":"exclude_cruise","value":"true"}]}}
+Observed: audit present; raw member/session identifiers absent.
+
+ASSERTION metrics
+Observed: /metrics returned HTTP 200 and contained recommendation_requests_total,
+recommendation_request_duration_seconds, partner_config_upstream_requests_total, and
+session_budget_reservations_total.
+
+RESULT passed. Full rollback to a distinct previously verified image remains untested because no
+separate metrics-compatible previous image digest exists in this repository history.
+
+RETAINED LATE FAILURE AND REPAIR
+After a Windows-host clean test run accessed the Docker Desktop bind-mounted SQLite file, a later
+deployment verifier returned HTTP 500 with sqlite3.OperationalError: unable to open database file.
+Health/readiness/metrics remained available and the budget-infrastructure metric/log fired. The API
+was stopped, the database was integrity-checked and copied to timestamped snapshots, the same bytes
+were rebound to a new NTFS file identity, and the unchanged locked image was restarted. Container
+integrity check and BEGIN IMMEDIATE succeeded; the deployment verifier then passed all checks.
+Conclusion: Windows host and Docker Desktop Linux are not one SQLite locking domain. Host-side file
+access requires the container to be stopped and restarted; host MCP must not concurrently share the
+container database.

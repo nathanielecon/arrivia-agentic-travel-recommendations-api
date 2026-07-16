@@ -1,0 +1,20 @@
+Evidence protocol: setup -> test start -> named assertions -> result
+Candidate base: 5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896 (working tree dirty)
+Image: arrivia-recs@sha256:eb5976b2f9e73c740d2b82aaecace4ca13764456929bf770259213928991fe96
+Environment: Docker Engine 29.6.1; one API container; digest-pinned WireMock 3.6.0 mocks
+
+SETUP
+docker compose --profile mocks up -d --no-build
+GET /health -> {"status":"ok"}
+GET /ready -> {"status":"ready"}
+
+TEST START live-arrivia-recs-demo
+Command: arrivia-recs-demo --member-id m1 --session-id certified-cli-20260716 --base-url http://127.0.0.1:8080
+
+ASSERTION audited-policy
+Observed: partner_id=p1; policy_source=partner-config-service; max_recommendations_per_session=3; exclude_cruise=true.
+
+ASSERTION exclusions-and-cap
+Observed: 3 recommendations; offer types hotel, package, flight; no cruise.
+
+RESULT passed (process exit 0).

@@ -9,6 +9,10 @@ from pydantic import ValidationError
 
 from arrivia_recs.domain.partner_policy import PartnerPolicy
 from arrivia_recs.integrations._util import response_body_snippet
+from arrivia_recs.integrations.circuit_breaker import (
+    AsyncCircuitBreaker,
+    CircuitOpenError,
+)
 from arrivia_recs.integrations.exceptions import (
     PartnerRulesNotFoundError,
     UpstreamResponseError,
@@ -28,10 +32,12 @@ class PartnerConfigError(Exception):
         *,
         status_code: int | None = None,
         code: str | None = None,
+        circuit_failure: bool = False,
     ) -> None:
         super().__init__(message)
         self.status_code = status_code
         self.code = code
+        self.circuit_failure = circuit_failure
 
 
 class PartnerConfigAdapter:
@@ -102,73 +108,75 @@ class PartnerConfigClient:
         base_url: str,
         *,
         client: httpx.AsyncClient | None = None,
-        timeout_seconds: float = 10.0,
+        timeout_seconds: float | None = None,
+        timeout: httpx.Timeout | None = None,
+        circuit: AsyncCircuitBreaker | None = None,
     ) -> None:
+        if timeout_seconds is not None and timeout is not None:
+            raise ValueError("timeout_seconds and timeout are mutually exclusive")
         self._base = base_url.rstrip("/")
-        self._timeout = timeout_seconds
+        self._timeout = timeout or (
+            httpx.Timeout(timeout_seconds)
+            if timeout_seconds is not None
+            else httpx.Timeout(connect=0.25, read=1.0, write=0.25, pool=0.25)
+        )
         self._client = client
+        self.circuit = circuit or AsyncCircuitBreaker("partner_config")
 
-    async def get_policy(self, partner_id: str) -> PartnerPolicy:
+    async def _request_policy(self, partner_id: str) -> PartnerPolicy:
         if self._client is not None:
             try:
-                response = await self._client.get(f"/partners/{partner_id}/policy")
+                response = await self._client.get(
+                    f"/partners/{quote(partner_id, safe='')}/policy",
+                    timeout=self._timeout,
+                )
+            except httpx.TimeoutException as exc:
+                raise PartnerConfigError(
+                    "partner config request timed out",
+                    status_code=502,
+                    code="upstream_timeout",
+                    circuit_failure=True,
+                ) from exc
             except httpx.RequestError as exc:
                 raise PartnerConfigError(
                     f"partner config request failed: {exc}",
                     status_code=502,
                     code="upstream_unreachable",
+                    circuit_failure=True,
                 ) from exc
-            if response.status_code == 404:
-                raise PartnerConfigError(
-                    "partner policy not found",
-                    status_code=404,
-                    code="partner_policy_not_found",
-                )
-            if response.is_error:
-                raise PartnerConfigError(
-                    f"partner config error: HTTP {response.status_code}",
-                    status_code=response.status_code,
-                    code="upstream_error",
-                )
+        else:
+            url = f"{self._base}/v1/partners/{quote(partner_id, safe='')}/policy"
             try:
-                payload = response.json()
-            except ValueError as exc:
+                async with httpx.AsyncClient(timeout=self._timeout) as client:
+                    response = await client.get(url)
+            except httpx.TimeoutException as exc:
                 raise PartnerConfigError(
-                    "partner config returned invalid JSON",
+                    "partner config request timed out",
                     status_code=502,
-                    code="upstream_invalid_payload",
+                    code="upstream_timeout",
+                    circuit_failure=True,
                 ) from exc
-            try:
-                return PartnerPolicy.model_validate(payload)
-            except ValidationError as exc:
+            except httpx.RequestError as exc:
                 raise PartnerConfigError(
-                    "partner config returned invalid policy payload",
+                    f"partner config request failed: {exc}",
                     status_code=502,
-                    code="upstream_invalid_payload",
+                    code="upstream_unreachable",
+                    circuit_failure=True,
                 ) from exc
-        url = f"{self._base}/v1/partners/{partner_id}/policy"
-        try:
-            async with httpx.AsyncClient(timeout=self._timeout) as client:
-                response = await client.get(url)
-                response.raise_for_status()
-        except httpx.RequestError as exc:
+
+        if response.status_code == 404:
             raise PartnerConfigError(
-                f"partner config request failed: {exc}",
-                status_code=502,
-                code="upstream_unreachable",
-            ) from exc
-        except httpx.HTTPStatusError as exc:
-            if exc.response.status_code == 404:
-                raise PartnerConfigError(
-                    "partner policy not found",
-                    status_code=404,
-                    code="partner_policy_not_found",
-                ) from exc
+                "partner policy not found",
+                status_code=404,
+                code="partner_policy_not_found",
+            )
+        if response.is_error:
             raise PartnerConfigError(
-                f"partner config error: HTTP {exc.response.status_code}",
-                status_code=exc.response.status_code,
+                f"partner config error: HTTP {response.status_code}",
+                status_code=response.status_code,
                 code="upstream_error",
-            ) from exc
+                circuit_failure=response.status_code == 429 or response.status_code >= 500,
+            )
 
         try:
             payload = response.json()
@@ -177,13 +185,36 @@ class PartnerConfigClient:
                 "partner config returned invalid JSON",
                 status_code=502,
                 code="upstream_invalid_payload",
+                circuit_failure=True,
             ) from exc
 
         try:
-            return PartnerPolicy.model_validate(payload)
+            policy = PartnerPolicy.model_validate(payload)
         except ValidationError as exc:
             raise PartnerConfigError(
                 "partner config returned invalid policy payload",
                 status_code=502,
                 code="upstream_invalid_payload",
+                circuit_failure=True,
+            ) from exc
+        if policy.partner_id != partner_id:
+            raise PartnerConfigError(
+                "partner config returned a policy for a different partner",
+                status_code=502,
+                code="upstream_invalid_payload",
+                circuit_failure=True,
+            )
+        return policy
+
+    async def get_policy(self, partner_id: str) -> PartnerPolicy:
+        try:
+            return await self.circuit.call(
+                lambda: self._request_policy(partner_id),
+                is_failure=lambda exc: bool(getattr(exc, "circuit_failure", False)),
+            )
+        except CircuitOpenError as exc:
+            raise PartnerConfigError(
+                str(exc),
+                status_code=502,
+                code="upstream_circuit_open",
             ) from exc

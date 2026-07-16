@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.12-slim@sha256:57cd7c3a7a273101a6485ba99423ee568157882804b1124b4dd04266317710de
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -8,10 +8,12 @@ WORKDIR /app
 
 RUN useradd --create-home --uid 10001 --shell /usr/sbin/nologin appuser
 
-COPY pyproject.toml README.md ./
+COPY pyproject.toml README.md requirements.lock requirements-build.lock ./
 COPY src ./src
 
-RUN pip install --no-cache-dir . \
+RUN pip install --no-cache-dir -r requirements-build.lock \
+    && pip install --no-cache-dir -r requirements.lock \
+    && pip install --no-cache-dir --no-build-isolation --no-deps . \
     && chown -R appuser:appuser /app
 
 USER appuser

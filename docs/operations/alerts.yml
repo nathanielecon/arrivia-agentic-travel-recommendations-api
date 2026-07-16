@@ -1,0 +1,57 @@
+groups:
+  - name: arrivia-recommendations
+    rules:
+      - alert: ArriviaReadinessUnavailable
+        expr: probe_success{job="arrivia-readiness"} == 0
+        for: 2m
+        labels: {severity: P1}
+        annotations: {summary: "Arrivia readiness has failed for two minutes"}
+      - alert: ArriviaRecommendationErrorRate
+        expr: |
+          (sum(rate(recommendation_requests_total{status_class="5xx"}[5m]))
+          / sum(rate(recommendation_requests_total[5m])) > 0.05)
+          and sum(increase(recommendation_requests_total[5m])) >= 50
+        for: 5m
+        labels: {severity: P1}
+        annotations: {summary: "Recommendation 5xx exceeds 5% with sufficient traffic"}
+      - alert: ArriviaPartnerConfigSuccessRate
+        expr: |
+          (sum(rate(partner_config_upstream_requests_total{outcome="success"}[5m]))
+          / sum(rate(partner_config_upstream_requests_total[5m])) < 0.99)
+          and sum(increase(partner_config_upstream_requests_total[5m])) >= 20
+        for: 5m
+        labels: {severity: P2}
+        annotations: {summary: "Partner-config success is below 99%"}
+      - alert: ArriviaPartnerConfigCircuitOpen
+        expr: circuit_breaker_state{dependency="partner_config",state="open"} == 1
+        for: 1m
+        labels: {severity: P2}
+        annotations: {summary: "Partner-config circuit has remained open"}
+      - alert: ArriviaPartnerConfigLatency
+        expr: |
+          histogram_quantile(0.95,
+          sum by (le) (rate(upstream_request_duration_seconds_bucket{dependency="partner_config"}[10m]))) > 0.25
+        for: 10m
+        labels: {severity: P2}
+        annotations: {summary: "Partner-config p95 latency exceeds 250 ms"}
+      - alert: ArriviaBudgetInfrastructureFailure
+        expr: sum(increase(budget_reservation_failures_total[5m])) > 0
+        for: 5m
+        labels: {severity: P2}
+        annotations: {summary: "Session-budget infrastructure failures are sustained"}
+      - alert: ArriviaExcludeCruisePolicyDrift
+        expr: |
+          (
+            sum by (partner_id) (increase(rule_evaluations_total{rule="exclude_cruise",value="true"}[15m]))
+            / sum by (partner_id) (increase(rule_evaluations_total{rule="exclude_cruise"}[15m]))
+          ) < 0.5 * (
+            sum by (partner_id) (increase(rule_evaluations_total{rule="exclude_cruise",value="true"}[7d]))
+            / sum by (partner_id) (increase(rule_evaluations_total{rule="exclude_cruise"}[7d]))
+          )
+          and (
+            sum by (partner_id) (increase(rule_evaluations_total{rule="exclude_cruise",value="true"}[7d]))
+            / sum by (partner_id) (increase(rule_evaluations_total{rule="exclude_cruise"}[7d]))
+          ) >= 0.05
+          and sum by (partner_id) (increase(rule_evaluations_total{rule="exclude_cruise"}[15m])) >= 100
+        labels: {severity: P2}
+        annotations: {summary: "Partner exclude-cruise share is below half its baseline"}

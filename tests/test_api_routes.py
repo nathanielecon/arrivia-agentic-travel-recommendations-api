@@ -6,7 +6,9 @@ from arrivia_recs.main import app
 
 
 def test_health_and_ready_routes_registered() -> None:
-    paths = {getattr(r, "path", None) for r in app.routes}
+    # Assert the public contract rather than FastAPI's internal router representation.
+    # Newer FastAPI releases retain included routers lazily in ``app.routes``.
+    paths = set(app.openapi()["paths"])
     assert "/health" in paths
     assert "/ready" in paths
 
@@ -18,6 +20,6 @@ def test_health_and_ready_response_contract() -> None:
 
 
 def test_only_primary_recommendation_route_is_registered() -> None:
-    paths = {getattr(r, "path", None) for r in app.routes}
+    paths = set(app.openapi()["paths"])
     assert "/v1/recommendations" in paths
     assert "/v1/recommendations-orchestrator" not in paths

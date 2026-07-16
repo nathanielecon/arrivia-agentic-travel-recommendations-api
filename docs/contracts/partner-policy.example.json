@@ -1,0 +1,5 @@
+{
+  "partner_id": "partner-demo",
+  "max_recommendations_per_session": 3,
+  "exclude_cruise": true
+}

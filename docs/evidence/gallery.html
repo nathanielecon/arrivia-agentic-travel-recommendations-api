@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1600, initial-scale=1">
+  <title>Arrivia working-candidate evidence</title>
+  <style>
+    *{box-sizing:border-box} body{margin:0;width:1600px;height:900px;background:#081321;color:#e8f4ff;font:28px/1.35 Arial,sans-serif;padding:56px}
+    h1{font-size:54px;margin:0 0 8px;color:#fff} .sub{color:#9cb5c9;margin-bottom:34px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .card{background:#10243a;border:2px solid #254764;border-radius:20px;padding:26px 30px;min-height:270px;position:relative}.tag{font-size:19px;color:#65d9b7;text-transform:uppercase;letter-spacing:2px}.value{font-size:48px;font-weight:700;margin:8px 0 14px}.detail{font-size:24px;color:#bdd0df}.warn{color:#ffd37a}.foot{position:absolute;bottom:40px;left:56px;color:#8aa4b8;font-size:19px}
+  </style>
+</head>
+<body>
+  <h1>Arrivia hardening — evidence snapshot</h1>
+  <div class="sub">Rendered from tracked raw transcripts · 2026-07-16 · source tree still uncommitted</div>
+  <main class="grid">
+    <section class="card"><div class="tag">Runtime</div><div class="value">122 tests pass</div><div class="detail">Locked clean env · Ruff clean · compilation clean · 29 focused circuit/policy/telemetry/race checks pass</div></section>
+    <section class="card"><div class="tag">Controlled failure</div><div class="value">502 → circuit open</div><div class="detail">Three WireMock failures; fourth response is <code>upstream_circuit_open</code>; half-open recovery returns 200</div></section>
+    <section class="card"><div class="tag">Atomic budget</div><div class="value">grants [0,1]</div><div class="detail">Two spawned processes contend for one final SQLite slot; persisted use equals cap</div></section>
+    <section class="card"><div class="tag">Claim boundary</div><div class="value warn">D4 / not D5-E6</div><div class="detail">One active replica · same-machine SQLite · no independent clean-context reproduction yet</div></section>
+  </main>
+  <div class="foot">Authority: docs/evidence/index.json · exact architecture: docs/architecture/arrivia-system.drawio</div>
+</body>
+</html>

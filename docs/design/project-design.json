@@ -1,0 +1,89 @@
+{
+  "$schema": "./project-design.schema.json",
+  "schema_version": "1.0",
+  "metadata": {
+    "owner": "P_authority / repository maintainer",
+    "status": "accepted",
+    "baseline_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+    "candidate_ref": "working-tree@5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+    "last_verified": "2026-07-16",
+    "review_trigger": "Any requirement, public interface, dependency, partition ownership, evidence claim, or deployment-boundary change"
+  },
+  "project": {
+    "name": "arrivia-agentic-travel-recs",
+    "repository": "local workspace C:/Users/natha/Downloads/arrivia-agentic-travel-recs",
+    "owner": "repository maintainer",
+    "target_depth": "D5",
+    "earned_depth": "D4",
+    "evidence_level": "E2",
+    "claim_boundary": "Single active API replica; REST and MCP may share same-machine SQLite state; upstream services are read-only; no production authentication, horizontal-scale, uptime, compliance, or independent-reimplementation claim"
+  },
+  "outcomes": [
+    "Return partner-aware travel recommendations through REST and MCP with equivalent policy enforcement",
+    "Fail explicitly when required member or partner-policy dependencies cannot be trusted",
+    "Make reliability, rollback, evidence, and reimplementation decisions reconstructable from tracked files"
+  ],
+  "non_goals": [
+    "Writing member or partner configuration data",
+    "Multi-replica or distributed session-budget guarantees",
+    "Production authentication, public-internet exposure, or compliance certification",
+    "Claiming D5 or E6 before independent clean-context reproduction"
+  ],
+  "environments": [
+    { "id": "local-python", "purpose": "Unit, integration, CLI, and stdio verification", "evidence_ceiling": "E2" },
+    { "id": "local-compose", "purpose": "Single-replica API plus controlled WireMock dependencies", "evidence_ceiling": "E4" },
+    { "id": "clean-review", "purpose": "Independent bootstrap, failure, recovery, and evidence-location review", "evidence_ceiling": "E6" }
+  ],
+  "components": [
+    { "id": "COMP-REST", "path": "src/arrivia_recs/main.py" },
+    { "id": "COMP-MCP", "path": "src/arrivia_recs/mcp/server.py" },
+    { "id": "COMP-SERVICE", "path": "src/arrivia_recs/services/recommendations.py" },
+    { "id": "COMP-UPSTREAM", "path": "src/arrivia_recs/integrations" },
+    { "id": "COMP-BUDGET", "path": "src/arrivia_recs/services/session_budget.py" }
+  ],
+  "interfaces": [
+    { "id": "IFACE-REST-001", "path": "docs/design/INTERFACE_CATALOG.md#iface-rest-001" },
+    { "id": "IFACE-MCP-001", "path": "docs/design/INTERFACE_CATALOG.md#iface-mcp-001" },
+    { "id": "IFACE-POLICY-001", "path": "docs/design/INTERFACE_CATALOG.md#iface-policy-001" },
+    { "id": "IFACE-BUDGET-001", "path": "docs/design/INTERFACE_CATALOG.md#iface-budget-001" },
+    { "id": "IFACE-OPS-001", "path": "docs/design/INTERFACE_CATALOG.md#iface-ops-001" }
+  ],
+  "dependencies": "docs/design/dependency-register.json",
+  "requirements": [
+    "REQ-REL-001",
+    "REQ-POL-001",
+    "REQ-OBS-001",
+    "REQ-OPS-001",
+    "REQ-DOC-001",
+    "REQ-EVID-001",
+    "REQ-EVID-002",
+    "REQ-EVID-003",
+    "REQ-PORT-001",
+    "REQ-ORCH-001"
+  ],
+  "partitions": [
+    { "id": "P_authority", "path": "docs/design/partition-manifest.json" },
+    { "id": "P_reliability", "path": "docs/design/partition-manifest.json" },
+    { "id": "P_operations", "path": "docs/design/partition-manifest.json" },
+    { "id": "P_portfolio", "path": "docs/design/partition-manifest.json" },
+    { "id": "P_integration", "path": "docs/design/partition-manifest.json" }
+  ],
+  "evidence_index": "docs/evidence/index.json",
+  "design_gate": {
+    "level": "D4",
+    "status": "passed",
+    "checklist": [
+      { "id": "DG-REQ", "status": "pass", "authority": "docs/design/REQUIREMENTS_TRACEABILITY.md" },
+      { "id": "DG-DEP", "status": "pass", "authority": "docs/design/dependency-register.json" },
+      { "id": "DG-RISK", "status": "pass", "authority": "docs/design/COMPLEXITY_AND_RISK_REGISTER.md" },
+      { "id": "DG-IFACE", "status": "pass", "authority": "docs/design/INTERFACE_CATALOG.md" },
+      { "id": "DG-PART", "status": "pass", "authority": "docs/design/partition-manifest.json" },
+      { "id": "DG-DEC", "status": "pass", "authority": "docs/decisions/ADR_LOG.md" }
+    ],
+    "limitations": [
+      "The accepted D4 gate is a design-completeness claim, not implementation or runtime evidence",
+      "E2 is the highest evidence currently recorded; D5/E6 require an independent clean-context reviewer",
+      "The baseline SHA precedes these uncommitted design files and must be rebound after commit"
+    ]
+  }
+}

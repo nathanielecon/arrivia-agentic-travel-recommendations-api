@@ -1,0 +1,863 @@
+{
+  "$schema": "./evidence-event.schema.json",
+  "schema_version": "1.0",
+  "index_metadata": {
+    "owner": "P_authority / repository maintainer",
+    "status": "accepted",
+    "baseline_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+    "candidate_ref": "working-tree@5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+    "last_verified": "2026-07-16",
+    "review_trigger": "Candidate, artifact, environment, result, assertion, requirement, or public claim change"
+  },
+  "append_only": true,
+  "current_claim": {
+    "design_depth": "D4",
+    "evidence_level": "E3",
+    "d5_earned": false,
+    "e6_earned": false,
+    "reason": "Terminal footage captured and local proofs pass, but immutable candidate rebind, distinct-image rollback drill completion, and independent Gate 6 remain outstanding"
+  },
+  "events": [
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-BASELINE-E2",
+      "requirement_ids": [],
+      "status": "passed",
+      "recorded_at": "2026-07-16T13:33:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": null
+      },
+      "environment": {
+        "id": "local-python",
+        "description": "Baseline local developer runtime reported in the accepted implementation plan"
+      },
+      "procedure": {
+        "preconditions": [
+          "Repository dependencies available in the local environment"
+        ],
+        "commands": [
+          "pytest",
+          "ruff check .",
+          "python -m compileall src"
+        ],
+        "cleanup": []
+      },
+      "assertions": [
+        {
+          "name": "baseline-tests",
+          "expected": "all tests pass",
+          "observed": "81 passed",
+          "result": "passed"
+        },
+        {
+          "name": "baseline-ruff",
+          "expected": "exit 0",
+          "observed": "passed",
+          "result": "passed"
+        },
+        {
+          "name": "baseline-compile",
+          "expected": "exit 0",
+          "observed": "passed",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [],
+      "tool_versions": {},
+      "claim_level": "E2",
+      "independent": false,
+      "notes": "Historical baseline transcribed from the user-approved plan. It is not proof for Phase 2 changes and is invalidated by implementation edits until rerun with versions and raw artifacts.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-WORKTREE-HARDENING",
+      "requirement_ids": [
+        "REQ-REL-001",
+        "REQ-POL-001",
+        "REQ-OBS-001",
+        "REQ-EVID-003"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T14:00:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": null
+      },
+      "environment": {
+        "id": "local-python",
+        "description": "Windows Python 3.14.3 working tree; not an immutable source candidate"
+      },
+      "procedure": {
+        "preconditions": [
+          "Editable project and development dependencies installed"
+        ],
+        "commands": [
+          "python -m pytest -q --ignore=tests/test_design_authority.py",
+          "python -m ruff check .",
+          "python -m compileall -q src tests scripts"
+        ],
+        "cleanup": []
+      },
+      "assertions": [
+        {
+          "name": "implementation-tests",
+          "expected": "full integrated suite passes",
+          "observed": "122 passed in locked clean environment; one upstream deprecation warning",
+          "result": "passed"
+        },
+        {
+          "name": "static-quality",
+          "expected": "Ruff and compilation exit 0",
+          "observed": "both exited 0",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/raw/20260716-hardening-tests.txt",
+          "sha256": "aaf211decd25c080908f7c8ea98885696e857adf56c306934c3bbd0002600ea4"
+        }
+      ],
+      "tool_versions": {
+        "python": "3.14.3",
+        "pytest": "8.4.1",
+        "ruff": "0.12.7"
+      },
+      "claim_level": "E2",
+      "independent": false,
+      "notes": "Local working-tree proof only. Interface hashes were intentionally refreshed after contract edits.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-LIVE-CLI",
+      "requirement_ids": [
+        "REQ-EVID-001",
+        "REQ-POL-001"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T14:01:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": "sha256:eb5976b2f9e73c740d2b82aaecace4ca13764456929bf770259213928991fe96"
+      },
+      "environment": {
+        "id": "local-compose",
+        "description": "Docker Engine 29.6.1; one API container and digest-pinned WireMock 3.6.0 dependencies"
+      },
+      "procedure": {
+        "preconditions": [
+          "Compose mocks healthy",
+          "Fresh session ID"
+        ],
+        "commands": [
+          "arrivia-recs-demo --member-id m1 --session-id certified-cli-20260716 --base-url http://127.0.0.1:8080"
+        ],
+        "cleanup": []
+      },
+      "assertions": [
+        {
+          "name": "cli-exit",
+          "expected": "exit 0 with JSON",
+          "observed": "exit 0",
+          "result": "passed"
+        },
+        {
+          "name": "policy-audit",
+          "expected": "p1, cap=3, exclude_cruise=true",
+          "observed": "exact audit values present",
+          "result": "passed"
+        },
+        {
+          "name": "cruise-exclusion",
+          "expected": "no cruise recommendation",
+          "observed": "hotel, package, flight",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/raw/20260716-live-cli.txt",
+          "sha256": "6ad9cf4eb37c055812283a35d95117ebbf7068a515c032d376ce41e7a4e49bf7"
+        }
+      ],
+      "tool_versions": {
+        "docker-engine": "29.6.1",
+        "wiremock": "3.6.0"
+      },
+      "claim_level": "E3",
+      "independent": false,
+      "notes": "Image-bound live proof; source tree is dirty, so it does not establish clean source reproducibility.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-LIVE-502",
+      "requirement_ids": [
+        "REQ-EVID-002",
+        "REQ-REL-001"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T14:03:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": "sha256:eb5976b2f9e73c740d2b82aaecace4ca13764456929bf770259213928991fe96"
+      },
+      "environment": {
+        "id": "local-compose",
+        "description": "Controlled WireMock partner-config failure with host-only admin binding"
+      },
+      "procedure": {
+        "preconditions": [
+          "Healthy request verified before fault",
+          "Circuit initially closed"
+        ],
+        "commands": [
+          "python scripts/wiremock_partner_fault.py enable --admin-url http://127.0.0.1:18082",
+          "four POST /v1/recommendations requests",
+          "python scripts/wiremock_partner_fault.py disable --admin-url http://127.0.0.1:18082",
+          "wait 31 seconds and send recovery request"
+        ],
+        "cleanup": [
+          "Remove temporary WireMock mapping"
+        ]
+      },
+      "assertions": [
+        {
+          "name": "controlled-502",
+          "expected": "REST 502 with captured exact body",
+          "observed": "{\"detail\":\"upstream_error\"}",
+          "result": "passed"
+        },
+        {
+          "name": "circuit-open",
+          "expected": "fourth request fails fast",
+          "observed": "502 {\"detail\":\"upstream_circuit_open\"}",
+          "result": "passed"
+        },
+        {
+          "name": "recovery",
+          "expected": "half-open probe succeeds",
+          "observed": "HTTP 200 after 31 seconds",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/raw/20260716-partner-fault.txt",
+          "sha256": "c1c2be5dabeaed25a127b32d62909870cec6b68a1a19280bbac912487b3e0cc4"
+        }
+      ],
+      "tool_versions": {
+        "docker-engine": "29.6.1",
+        "wiremock": "3.6.0"
+      },
+      "claim_level": "E3",
+      "independent": false,
+      "notes": "The first unavailable-curl attempt is retained in BF-20260716-003; this event records the successful rerun.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-BUDGET-RACE",
+      "requirement_ids": [
+        "REQ-EVID-003"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T14:00:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": null
+      },
+      "environment": {
+        "id": "local-python",
+        "description": "Windows spawned-process SQLite integration test"
+      },
+      "procedure": {
+        "preconditions": [
+          "SQLite initialized to used = cap - 1",
+          "spawn start method"
+        ],
+        "commands": [
+          "python -m pytest -q tests/test_session_budget_multiprocess.py"
+        ],
+        "cleanup": [
+          "pytest temporary directory removal"
+        ]
+      },
+      "assertions": [
+        {
+          "name": "final-slot-grants",
+          "expected": "sorted grants [0,1] and sum 1",
+          "observed": "test passed",
+          "result": "passed"
+        },
+        {
+          "name": "persisted-cap",
+          "expected": "persisted used = 2",
+          "observed": "test passed",
+          "result": "passed"
+        },
+        {
+          "name": "transaction-shape",
+          "expected": "BEGIN IMMEDIATE precedes read and write",
+          "observed": "source invariant assertion passed",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/raw/20260716-hardening-tests.txt",
+          "sha256": "aaf211decd25c080908f7c8ea98885696e857adf56c306934c3bbd0002600ea4"
+        }
+      ],
+      "tool_versions": {
+        "python": "3.14.3",
+        "sqlite": "CPython bundled"
+      },
+      "claim_level": "E2",
+      "independent": false,
+      "notes": "Behavior is verified locally but not yet rebound to a clean commit.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-OBS-RUNTIME",
+      "requirement_ids": [
+        "REQ-OBS-001",
+        "REQ-OPS-001"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T14:04:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": "sha256:eb5976b2f9e73c740d2b82aaecace4ca13764456929bf770259213928991fe96"
+      },
+      "environment": {
+        "id": "local-compose",
+        "description": "Running single-replica API with controlled upstreams"
+      },
+      "procedure": {
+        "preconditions": [
+          "Healthy Compose deployment",
+          "METRICS_ENABLED=true"
+        ],
+        "commands": [
+          "python scripts/deployment_verifier.py --base-url http://127.0.0.1:8080",
+          "docker compose logs --no-color --tail 40 api"
+        ],
+        "cleanup": []
+      },
+      "assertions": [
+        {
+          "name": "deployment-verifier",
+          "expected": "health, readiness, metrics, audit, exclusion, cap pass",
+          "observed": "all six checks passed",
+          "result": "passed"
+        },
+        {
+          "name": "completion-log",
+          "expected": "audit block and hashed identifiers",
+          "observed": "structured audit and sha256 prefixes present; raw IDs absent",
+          "result": "passed"
+        },
+        {
+          "name": "distinct-previous-image-rollback",
+          "expected": "rollback to a separately verified previous digest",
+          "observed": null,
+          "result": "untested"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/raw/20260716-verifier-observability.txt",
+          "sha256": "b81b8a142a8e592d31ab0ce1f8085e9a531afeb4d9aa5cd9ee83488cfa9f3ed1"
+        }
+      ],
+      "tool_versions": {
+        "docker-engine": "29.6.1",
+        "prometheus-client": "0.25.0"
+      },
+      "claim_level": "E3",
+      "independent": false,
+      "notes": "Verifier and emitted telemetry passed, then a cross-kernel bind-mount failure was retained and repaired before a final pass. A genuine rollback drill is still blocked by the absence of a separate previously verified compatible image.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-ARCH-EXACT",
+      "requirement_ids": [
+        "REQ-PORT-001"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T13:50:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": null
+      },
+      "environment": {
+        "id": "documentation",
+        "description": "Tracked draw.io source plus exact SVG/PNG review renders"
+      },
+      "procedure": {
+        "preconditions": [
+          "Six required topology views frozen"
+        ],
+        "commands": [
+          "headless Chrome exact SVG screenshot",
+          "python -m pytest -q tests/test_design_authority.py"
+        ],
+        "cleanup": []
+      },
+      "assertions": [
+        {
+          "name": "six-pages",
+          "expected": "all required draw.io views",
+          "observed": "6 pages",
+          "result": "passed"
+        },
+        {
+          "name": "claim-parity",
+          "expected": "single-replica and no D5/E6 claim",
+          "observed": "present in exact render",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/architecture/arrivia-system.drawio",
+          "sha256": "00fc484ce8441b207247a0502c43b7b64eb58d6d7b6502519e6fa8e458588692"
+        },
+        {
+          "path": "docs/architecture/arrivia-system.svg",
+          "sha256": "f607fc7d9977e2254c8c7cbf5938baaadc19d8f82f795036b8283b73393c60b3"
+        },
+        {
+          "path": "docs/architecture/arrivia-system.png",
+          "sha256": "af37b7624e2e33bd50d45d92fec7e7d7b75e08bfd9a1f48015304a8c202e6064"
+        }
+      ],
+      "tool_versions": {
+        "chrome": "local headless render"
+      },
+      "claim_level": "E3",
+      "independent": false,
+      "notes": "The draw.io source is authoritative; presentation derivatives cannot amend topology.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-WALKTHROUGH",
+      "requirement_ids": [
+        "REQ-PORT-001"
+      ],
+      "status": "superseded",
+      "recorded_at": "2026-07-16T14:11:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": null
+      },
+      "environment": {
+        "id": "portfolio-render",
+        "description": "HyperFrames 0.7.60, Node 24.13.1, isolated FFmpeg 6.1.1"
+      },
+      "procedure": {
+        "preconditions": [
+          "Five-minute timeline frozen",
+          "Tracked raw transcripts available"
+        ],
+        "commands": [
+          "npx hyperframes lint walkthrough",
+          "npx hyperframes check walkthrough",
+          "npx hyperframes snapshot walkthrough --at 0,25,70,115,170,260",
+          "npx hyperframes render walkthrough -o walkthrough/arrivia-walkthrough.mp4 --fps 1 --quality draft --workers 4 --strict --crf 30"
+        ],
+        "cleanup": [
+          "Temporary npm encoder toolchain remains outside repository"
+        ]
+      },
+      "assertions": [
+        {
+          "name": "deterministic-source",
+          "expected": "runtime/layout/motion/contrast checks pass",
+          "observed": "passed; one timeline-density warning",
+          "result": "passed"
+        },
+        {
+          "name": "five-minute-render",
+          "expected": "300-second MP4",
+          "observed": "300.0 seconds; 891.9 KB",
+          "result": "passed"
+        },
+        {
+          "name": "actual-terminal-footage",
+          "expected": "real terminal recording retained beneath annotations",
+          "observed": null,
+          "result": "blocked"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "walkthrough/index.html",
+          "sha256": null
+        },
+        {
+          "path": "walkthrough/arrivia-walkthrough.mp4",
+          "sha256": null
+        },
+        {
+          "path": "walkthrough/snapshots/contact-sheet.jpg",
+          "sha256": null
+        }
+      ],
+      "tool_versions": {
+        "hyperframes": "0.7.60",
+        "node": "24.13.1",
+        "ffmpeg": "6.1.1"
+      },
+      "claim_level": "E3",
+      "independent": false,
+      "notes": "Superseded by EVID-WALKTHROUGH-FOOTAGE after live terminal footage was captured under HyperFrames annotations. Original block reason retained: presentation-only panels lacked a real terminal-video layer. Artifact digests nulled because composition files were replaced; do not treat this row as current proof.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-PORTFOLIO",
+      "requirement_ids": [
+        "REQ-PORT-001"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T14:28:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": null
+      },
+      "environment": {
+        "id": "image2-presentation",
+        "description": "OpenAI image-generation derivative from the approved exact architecture PNG"
+      },
+      "procedure": {
+        "preconditions": [
+          "Architecture PNG hash approved",
+          "README/evidence claim boundary frozen",
+          "Prompt prohibits unsupported components and claims"
+        ],
+        "commands": [
+          "OpenAI image generation with approved PNG as Image 1",
+          "FFmpeg 6.1.1 Lanczos resize to 2048x1152",
+          "manual topology and claim parity review"
+        ],
+        "cleanup": [
+          "Original generated output retained"
+        ]
+      },
+      "assertions": [
+        {
+          "name": "topology-parity",
+          "expected": "only approved surfaces, service, upstreams, and SQLite",
+          "observed": "matched approved topology",
+          "result": "passed"
+        },
+        {
+          "name": "claim-parity",
+          "expected": "exact v0 and no-D5/E6 boundary",
+          "observed": "exact band present",
+          "result": "passed"
+        },
+        {
+          "name": "forbidden-claims",
+          "expected": "no scale, uptime, compliance, autonomy, authentication, or invented metrics",
+          "observed": "none present",
+          "result": "passed"
+        },
+        {
+          "name": "dimensions",
+          "expected": "2048x1152",
+          "observed": "2048x1152",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/portfolio/image2-prompt.txt",
+          "sha256": "51abab61256434e7c9bb26f7f1e2f0862ff98795d0889a150abcc3f360ed8905"
+        },
+        {
+          "path": "docs/portfolio/arrivia-infographic-image2-original.png",
+          "sha256": "fe65030d1776aaf5f62072e922c85266644e23910956dcd1b2f3c60d0f0b3b99"
+        },
+        {
+          "path": "docs/portfolio/arrivia-infographic.png",
+          "sha256": "5ca75edb82714e938cd6f478e4bbccfdce5ab94a2b2735e6be06da189f491d7a"
+        }
+      ],
+      "tool_versions": {
+        "openai-image-generation": "backend identifier not exposed",
+        "ffmpeg": "6.1.1"
+      },
+      "claim_level": "E3",
+      "independent": false,
+      "notes": "Presentation only. The exact draw.io source and render remain normative.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-MCP-STDIO",
+      "requirement_ids": [
+        "REQ-REL-001",
+        "REQ-EVID-003"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T15:05:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": null
+      },
+      "environment": {
+        "id": "local-mcp-stdio",
+        "description": "Windows Python 3.14.3; independently spawned MCP stdio server, temporary HTTP upstreams, and shared SQLite store"
+      },
+      "procedure": {
+        "preconditions": [
+          "Official MCP client SDK installed",
+          "Temporary localhost ports and SQLite path available"
+        ],
+        "commands": [
+          "python -m pytest tests/test_mcp_stdio_smoke.py -q"
+        ],
+        "cleanup": [
+          "Test closes MCP subprocesses, temporary upstream servers, and temporary storage"
+        ]
+      },
+      "assertions": [
+        {
+          "name": "stdio-discovery",
+          "expected": "real MCP subprocess exposes get_travel_recommendations",
+          "observed": "tool returned by list_tools",
+          "result": "passed"
+        },
+        {
+          "name": "stdio-invocation",
+          "expected": "audited p1 response with cruise excluded",
+          "observed": "partner, member, audit source, and exclusion assertions passed",
+          "result": "passed"
+        },
+        {
+          "name": "rest-mcp-final-slot",
+          "expected": "MCP observes a final slot already consumed by REST through shared SQLite",
+          "observed": "MCP returned no recommendations",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/raw/20260716-mcp-stdio.txt",
+          "sha256": "81fdc2b8365c09ba81574d2bf048fef94296217bee3db04809868c64cd4972cd"
+        }
+      ],
+      "tool_versions": {
+        "python": "3.14.3",
+        "mcp": "1.27.0",
+        "pytest": "8.4.1"
+      },
+      "claim_level": "E2",
+      "independent": false,
+      "notes": "This is a live subprocess proof in the dirty working tree; it is not an independent clean-checkout review.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-CLEAN-LOCKED",
+      "requirement_ids": [
+        "REQ-ORCH-001"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T14:37:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": "sha256:eb5976b2f9e73c740d2b82aaecace4ca13764456929bf770259213928991fe96"
+      },
+      "environment": {
+        "id": "clean-locked-venv",
+        "description": "Fresh temporary Python 3.14.3 virtual environment installed from requirements-dev.lock"
+      },
+      "procedure": {
+        "preconditions": [
+          "Fresh virtual environment path",
+          "Tracked development lock"
+        ],
+        "commands": [
+          "python -m venv <temp>/arrivia-clean-venv-20260716",
+          "python -m pip install -r requirements-dev.lock",
+          "python -m pip install --no-deps -e .",
+          "python -m pytest -q",
+          "python -m ruff check .",
+          "python -m compileall -q src tests scripts"
+        ],
+        "cleanup": [
+          "Temporary environment intentionally retained for audit during this run"
+        ]
+      },
+      "assertions": [
+        {
+          "name": "locked-install",
+          "expected": "all locked packages and project install",
+          "observed": "installed successfully",
+          "result": "passed"
+        },
+        {
+          "name": "locked-tests",
+          "expected": "full suite passes",
+          "observed": "122 passed; one framework deprecation warning",
+          "result": "passed"
+        },
+        {
+          "name": "locked-static-quality",
+          "expected": "Ruff and compilation exit 0",
+          "observed": "both exited 0",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "requirements-dev.lock",
+          "sha256": "b0999532941f47fee6d83a2b4ecea890fc4206f621c0acddbf45e240241d8cd3"
+        },
+        {
+          "path": "docs/evidence/raw/20260716-hardening-tests.txt",
+          "sha256": "aaf211decd25c080908f7c8ea98885696e857adf56c306934c3bbd0002600ea4"
+        }
+      ],
+      "tool_versions": {
+        "python": "3.14.3",
+        "pytest": "9.1.1",
+        "ruff": "0.15.22"
+      },
+      "claim_level": "E3",
+      "independent": false,
+      "notes": "Clean dependency environment, but not a clean committed source checkout and not independent Gate 6.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-WALKTHROUGH-FOOTAGE",
+      "requirement_ids": [
+        "REQ-PORT-001"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T16:50:00-04:00",
+      "candidate": {
+        "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+        "working_tree_clean": false,
+        "image_digest": "sha256:aeac46f4dac14a7a443c21197a3ebc520c7bbc83f100ed955b58bcf66dc2c1f4"
+      },
+      "environment": {
+        "id": "portfolio-render",
+        "description": "HyperFrames 0.7.60, Node 24.13.1, FFmpeg 8.1.2; live Compose API for session capture"
+      },
+      "procedure": {
+        "preconditions": [
+          "Compose mocks and API healthy",
+          "Five-minute timeline frozen",
+          "Live CLI/fault/final-slot commands executable"
+        ],
+        "commands": [
+          "python walkthrough/record_live_sessions.py",
+          "npx hyperframes@0.7.60 lint walkthrough",
+          "npx hyperframes@0.7.60 check walkthrough",
+          "npx hyperframes@0.7.60 snapshot walkthrough --at 0,25,70,115,170,260",
+          "npx hyperframes@0.7.60 render walkthrough -o walkthrough/arrivia-walkthrough.mp4 --fps 1 --quality draft --workers 4 --strict --crf 30"
+        ],
+        "cleanup": [
+          "Temporary npm/hyperframes toolchain remains outside repository"
+        ]
+      },
+      "assertions": [
+        {
+          "name": "deterministic-source",
+          "expected": "runtime/layout/motion/contrast checks pass",
+          "observed": "passed; one timeline-density warning",
+          "result": "passed"
+        },
+        {
+          "name": "five-minute-render",
+          "expected": "300-second MP4",
+          "observed": "300.0 seconds",
+          "result": "passed"
+        },
+        {
+          "name": "actual-terminal-footage",
+          "expected": "real terminal recording retained beneath annotations",
+          "observed": "cli-success, partner-fault, and final-slot MP4s on track 0 under annotation track 1",
+          "result": "passed"
+        },
+        {
+          "name": "visual-claim-boundary",
+          "expected": "no invented scale/uptime/compliance; v0 boundary preserved",
+          "observed": "frame inspection retained claim language; footage under annotations",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "walkthrough/index.html",
+          "sha256": "c5e2226f589aad6e29653a83702491a65e5dfccefa41688008665135b5d6543d"
+        },
+        {
+          "path": "walkthrough/arrivia-walkthrough.mp4",
+          "sha256": "ce66c80f9c4ddc2c0dc3802a2dfee6bd07c970117110b2dbc0c5c73216e4124d"
+        },
+        {
+          "path": "walkthrough/snapshots/contact-sheet.jpg",
+          "sha256": "967339920bcdb97af6f65b34d144d3043ea4828304b3f9c011731421a5a7d4d6"
+        },
+        {
+          "path": "walkthrough/footage/cli-success.mp4",
+          "sha256": "653ace2aeea702bee3d8054218b3eef9a8540f49d4272a566172e79ed90847e4"
+        },
+        {
+          "path": "walkthrough/footage/partner-fault.mp4",
+          "sha256": "eac1276d69d7f6c59b7849aae28db22e2b5d6175afed5dfa91743b5d53005ffd"
+        },
+        {
+          "path": "walkthrough/footage/final-slot.mp4",
+          "sha256": "32a42de719f65dbc209b517cb61e3e4411385639b84aa320baf4b9ddf09f7d1b"
+        }
+      ],
+      "tool_versions": {
+        "hyperframes": "0.7.60",
+        "node": "24.13.1",
+        "ffmpeg": "8.1.2"
+      },
+      "claim_level": "E3",
+      "independent": false,
+      "notes": "Live command sessions captured then composed under HyperFrames annotations. Dirty-tree bound until immutable candidate rebind.",
+      "supersedes": [
+        "EVID-WALKTHROUGH"
+      ]
+    }
+  ],
+  "planned_event_ids": [
+    "EVID-REL-CIRCUIT",
+    "EVID-POL-STRICT",
+    "EVID-OBS-LOG",
+    "EVID-OBS-METRICS",
+    "EVID-OPS-ROLLBACK",
+    "EVID-DOC-CONTRACT",
+    "EVID-ORCH-VALIDATION",
+    "EVID-CLEAN-REVIEW"
+  ]
+}

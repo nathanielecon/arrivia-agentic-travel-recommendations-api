@@ -1,0 +1,30 @@
+Evidence protocol: setup -> test start -> named assertions -> cleanup -> recovery
+Candidate base: 5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896 (working tree dirty)
+Image: arrivia-recs@sha256:eb5976b2f9e73c740d2b82aaecace4ca13764456929bf770259213928991fe96
+Environment: Docker Engine 29.6.1; WireMock admin bound to 127.0.0.1:18082 for this host
+
+SETUP
+python scripts/wiremock_partner_fault.py enable --admin-url http://127.0.0.1:18082
+Observed: {"result":"pass","fault":true}
+
+TEST START partner-config-502-and-circuit
+attempt=1 status=502 body={"detail":"upstream_error"}
+attempt=2 status=502 body={"detail":"upstream_error"}
+attempt=3 status=502 body={"detail":"upstream_error"}
+attempt=4 status=502 body={"detail":"upstream_circuit_open"}
+
+ASSERTION no-retry-and-open
+Expected: each request makes at most one upstream call; after three qualifying failures, the fourth fails fast.
+Observed: first three controlled 502 responses; fourth exact circuit-open payload.
+
+CLEANUP
+python scripts/wiremock_partner_fault.py disable --admin-url http://127.0.0.1:18082
+Observed: {"result":"pass","fault":false}
+
+ASSERTION half-open-recovery
+After 31 seconds, a fresh request returned HTTP 200.
+
+RESULT passed.
+
+Retained failed attempt: the first capture command used unavailable curl.exe. The helper still ran cleanup;
+see BF-20260716-003 in BREAK_FIX_LOG.md.

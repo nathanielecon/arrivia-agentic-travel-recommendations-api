@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "candidate_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+  "candidate_state": "working tree based on candidate_sha; Phase 0 files are uncommitted and must be rebound after commit",
+  "generated_at": "2026-07-16T13:33:00-04:00",
+  "owner": "P_authority / repository maintainer",
+  "status": "accepted",
+  "last_verified": "2026-07-16",
+  "review_trigger": "Owned path, interface contract/hash, dependency, validator, integration order, or claim ceiling change",
+  "ownership_rule": "Paths are exact files or recursive directory prefixes ending in /**; no path may match more than one partition",
+  "partitions": [
+    {
+      "partition_id": "P_authority",
+      "capability": "Design authority, decisions, schemas, evidence index, and append-only break/fix authority",
+      "owner": "design authority",
+      "owned_paths": ["docs/design/**", "docs/decisions/**", "docs/evidence/evidence-event.schema.json", "docs/evidence/index.json", "BREAK_FIX_LOG.md"],
+      "shared_interfaces_owned": [],
+      "interfaces_consumed": ["IFACE-REST-001", "IFACE-MCP-001", "IFACE-POLICY-001", "IFACE-BUDGET-001", "IFACE-OPS-001"],
+      "dependencies": [],
+      "requirement_ids": ["REQ-ORCH-001"],
+      "validator_ids": ["TEST-TASK-SCHEMA", "TEST-PARTITION-OWNERSHIP", "TEST-INTERFACE-HASH"],
+      "runtime_check_ids": [],
+      "evidence_paths": ["docs/evidence/index.json"],
+      "claim_ceiling": "E3",
+      "integration_order": 1,
+      "status": "complete-for-phase-0"
+    },
+    {
+      "partition_id": "P_reliability",
+      "capability": "Timeouts, circuits, strict policy, public error parity, and atomic session reservation",
+      "owner": "reliability implementer",
+      "owned_paths": ["src/arrivia_recs/config.py", "src/arrivia_recs/domain/partner_policy.py", "src/arrivia_recs/integrations/circuit_breaker.py", "src/arrivia_recs/integrations/member_client.py", "src/arrivia_recs/integrations/partner_config_client.py", "src/arrivia_recs/api/deps.py", "src/arrivia_recs/api/routes/recommendations.py", "src/arrivia_recs/mcp/server.py", "src/arrivia_recs/services/session_budget.py", "docs/contracts/**", "tests/test_circuit_breaker.py", "tests/test_policy_contract.py", "tests/test_upstream_hardening.py", "tests/test_session_budget_multiprocess.py", "docs/evidence/events/reliability/**"],
+      "shared_interfaces_owned": ["IFACE-REST-001", "IFACE-MCP-001", "IFACE-POLICY-001", "IFACE-BUDGET-001"],
+      "interfaces_consumed": ["IFACE-OPS-001"],
+      "dependencies": ["DEP-HTTPX", "DEP-PYDANTIC-SETTINGS", "DEP-SQLITE", "DEP-MCP"],
+      "requirement_ids": ["REQ-REL-001", "REQ-POL-001", "REQ-EVID-003"],
+      "validator_ids": ["TEST-CB-UNIT", "TEST-UPSTREAM-REST", "TEST-UPSTREAM-MCP", "TEST-HALFOPEN-RACE", "TEST-POLICY-SCHEMA", "TEST-POLICY-CONTRACT", "TEST-BUDGET-CROSSPROCESS"],
+      "runtime_check_ids": ["CHECK-CIRCUIT-RECOVERY", "CHECK-FINAL-SLOT"],
+      "evidence_paths": ["docs/evidence/events/reliability/**"],
+      "claim_ceiling": "E4",
+      "integration_order": 2,
+      "status": "implemented-working-candidate"
+    },
+    {
+      "partition_id": "P_operations",
+      "capability": "Runtime logging, metrics, alerts, packaging, verifier, and rollback",
+      "owner": "operations implementer",
+      "owned_paths": ["src/arrivia_recs/observability/**", "src/arrivia_recs/main.py", "src/arrivia_recs/services/recommendations.py", "tests/test_observability.py", "tests/test_metrics.py", "tests/test_deployment_verifier.py", "scripts/**", "docs/operations/**", "docs/evidence/events/operations/**", ".env.example", "pyproject.toml", "Dockerfile", "docker-compose.yml"],
+      "shared_interfaces_owned": ["IFACE-OPS-001"],
+      "interfaces_consumed": ["IFACE-REST-001", "IFACE-POLICY-001", "IFACE-BUDGET-001"],
+      "dependencies": ["DEP-FASTAPI", "DEP-STRUCTLOG", "DEP-UVICORN", "DEP-PROMETHEUS", "DEP-DOCKER", "DEP-WIREMOCK"],
+      "requirement_ids": ["REQ-OBS-001", "REQ-OPS-001"],
+      "validator_ids": ["TEST-LOG-SCHEMA", "TEST-METRICS", "TEST-ALERT-RULES", "TEST-DEPLOY-VERIFY", "TEST-ROLLBACK-STATE"],
+      "runtime_check_ids": ["CHECK-HEALTH", "CHECK-READY", "CHECK-METRICS", "CHECK-ROLLBACK"],
+      "evidence_paths": ["docs/evidence/events/operations/**"],
+      "claim_ceiling": "E5",
+      "integration_order": 2,
+      "status": "implemented-working-candidate"
+    },
+    {
+      "partition_id": "P_portfolio",
+      "capability": "README, architecture, canonical evaluation response, evidence gallery, Image2 derivative, and walkthrough",
+      "owner": "portfolio implementer",
+      "owned_paths": ["README.md", "docs/architecture/**", "docs/portfolio/**", "docs/evaluation/**", "docs/evidence/events/portfolio/**", "docs/evidence/assets/**", "walkthrough/**"],
+      "shared_interfaces_owned": [],
+      "interfaces_consumed": ["IFACE-REST-001", "IFACE-MCP-001", "IFACE-POLICY-001", "IFACE-OPS-001"],
+      "dependencies": ["DEP-DRAWIO", "DEP-IMAGE2", "DEP-HYPERFRAMES-FFMPEG", "DEP-WIREMOCK"],
+      "requirement_ids": ["REQ-DOC-001", "REQ-EVID-001", "REQ-EVID-002", "REQ-PORT-001"],
+      "validator_ids": ["TEST-DOC-CONTRACT", "TEST-B2-CONTRACT", "TEST-LIVE-CLI", "TEST-LIVE-502", "TEST-DIAGRAM-PARITY", "TEST-PORTFOLIO-CLAIMS", "TEST-WALKTHROUGH"],
+      "runtime_check_ids": ["CHECK-LIVE-CLI", "CHECK-LIVE-502-RECOVERY", "CHECK-VISUAL-PARITY"],
+      "evidence_paths": ["docs/evidence/events/portfolio/**", "docs/evidence/assets/**"],
+      "claim_ceiling": "E5",
+      "integration_order": 3,
+      "status": "partial-terminal-footage-and-image2-pending"
+    },
+    {
+      "partition_id": "P_integration",
+      "capability": "Serialized reconciliation, lock/SBOM, certification, and independent-review handoff",
+      "owner": "integration reviewer",
+      "owned_paths": ["requirements.lock", "sbom/**", "docs/certification/**", "docs/evidence/events/integration/**"],
+      "shared_interfaces_owned": [],
+      "interfaces_consumed": ["IFACE-REST-001", "IFACE-MCP-001", "IFACE-POLICY-001", "IFACE-BUDGET-001", "IFACE-OPS-001"],
+      "dependencies": ["DEP-PYTHON", "DEP-PYTEST-RUFF", "DEP-DOCKER"],
+      "requirement_ids": ["REQ-ORCH-001"],
+      "validator_ids": ["TEST-INTERFACE-HASH", "TEST-PARTITION-OWNERSHIP", "TEST-CLEAN-INSTALL", "TEST-EVIDENCE-FRESHNESS"],
+      "runtime_check_ids": ["CHECK-FULL-PROOF-FLOW", "CHECK-CLEAN-REVIEW"],
+      "evidence_paths": ["docs/evidence/events/integration/**"],
+      "claim_ceiling": "E6",
+      "integration_order": 4,
+      "status": "integration-in-progress-independent-review-pending"
+    }
+  ],
+  "shared_interfaces": [
+    {
+      "interface_id": "IFACE-REST-001",
+      "owner_partition": "P_reliability",
+      "consumer_partitions": ["P_operations", "P_portfolio", "P_integration"],
+      "contract_paths": ["src/arrivia_recs/api/routes/recommendations.py", "src/arrivia_recs/domain/models.py"],
+      "contract_hash": "7805e3e0a07816e1c8e1efd806cf16def13551e4714cffe5c60e108ae187d517",
+      "compatibility_policy": "Additive optional fields only within v1; removal, rename, type/status, or semantic changes require versioning",
+      "invalidation_rule": "Any material change revalidates all consumers and REST evidence"
+    },
+    {
+      "interface_id": "IFACE-MCP-001",
+      "owner_partition": "P_reliability",
+      "consumer_partitions": ["P_portfolio", "P_integration"],
+      "contract_paths": ["src/arrivia_recs/mcp/server.py"],
+      "contract_hash": "7196d54e49810be8533441b8ad8289d0c8198032e60b30a27ac8ff9b6559ea52",
+      "compatibility_policy": "Stable tool name and existing arguments; additive optional arguments require stdio smoke",
+      "invalidation_rule": "Any material change revalidates MCP consumers and stdio evidence"
+    },
+    {
+      "interface_id": "IFACE-POLICY-001",
+      "owner_partition": "P_reliability",
+      "consumer_partitions": ["P_operations", "P_portfolio", "P_integration"],
+      "contract_paths": ["src/arrivia_recs/domain/partner_policy.py", "src/arrivia_recs/integrations/partner_config_client.py"],
+      "contract_hash": "655594f875e82a446fa481c6afbf879606b745ef8df78c21c6d63978063d48c1",
+      "compatibility_policy": "Known values are dynamic; new fields/types/semantics require versioned support and fail closed before deployment",
+      "invalidation_rule": "Any change revalidates evaluator, REST/MCP parity, schema docs, and policy evidence"
+    },
+    {
+      "interface_id": "IFACE-BUDGET-001",
+      "owner_partition": "P_reliability",
+      "consumer_partitions": ["P_operations", "P_integration"],
+      "contract_paths": ["src/arrivia_recs/services/session_budget.py"],
+      "contract_hash": "59526af08329377ee613ebc16bf8acde730bd18d3c5a5b6af1e2ab92addd8770",
+      "compatibility_policy": "Atomic reserve invariant and persisted schema cannot change without migration/rollback ADR",
+      "invalidation_rule": "Any change revalidates cross-process race, rollback state, and cap claims"
+    },
+    {
+      "interface_id": "IFACE-OPS-001",
+      "owner_partition": "P_operations",
+      "consumer_partitions": ["P_reliability", "P_portfolio", "P_integration"],
+      "contract_paths": ["docs/design/INTERFACE_CATALOG.md", "src/arrivia_recs/config.py"],
+      "contract_hash": "c7abdc102407bed42f8388c82167f1e91b76e4eb7e5312ebf5f2cb7917f823a5",
+      "compatibility_policy": "Existing setting, metric, log, and error names remain stable; label additions require cardinality review",
+      "invalidation_rule": "Any change revalidates operations tests, docs, dashboards, evidence, and reliability consumer configuration"
+    }
+  ],
+  "dependency_contract_hashes": {
+    "pyproject.toml": "f2256116816b1acb07e7e3ae2a3837e44e1b2dbe80ef8d5cfeb8e71daff38e6a",
+    "docker-compose.yml": "1a8f28c569962429e0cad16cc0bee176a29b1617d2299eeb7f08af745b1a4526",
+    "Dockerfile": "97cd5bc77689af84ba6bbe0978cab87bd87dc132ba6fa2cb9b93fafc4aefce73"
+  }
+}

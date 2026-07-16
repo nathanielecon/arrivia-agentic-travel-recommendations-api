@@ -1,0 +1,3 @@
+# Build-only lock for the pinned Python 3.12 container. Regenerate deliberately.
+setuptools==83.0.0
+wheel==0.47.0

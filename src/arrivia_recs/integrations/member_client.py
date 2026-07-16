@@ -9,6 +9,10 @@ from pydantic import ValidationError
 
 from arrivia_recs.domain.models import MemberProfile
 from arrivia_recs.integrations._util import response_body_snippet
+from arrivia_recs.integrations.circuit_breaker import (
+    AsyncCircuitBreaker,
+    CircuitOpenError,
+)
 from arrivia_recs.integrations.exceptions import (
     MemberNotFoundError,
     UpstreamResponseError,
@@ -85,10 +89,12 @@ class MemberServiceError(Exception):
         *,
         status_code: int | None = None,
         code: str | None = None,
+        circuit_failure: bool = False,
     ) -> None:
         super().__init__(message)
         self.status_code = status_code
         self.code = code
+        self.circuit_failure = circuit_failure
 
 
 class MemberClient:
@@ -99,22 +105,45 @@ class MemberClient:
         base_url: str,
         *,
         client: httpx.AsyncClient | None = None,
-        timeout_seconds: float = 10.0,
+        timeout_seconds: float | None = None,
+        timeout: httpx.Timeout | None = None,
+        circuit: AsyncCircuitBreaker | None = None,
     ) -> None:
+        if timeout_seconds is not None and timeout is not None:
+            raise ValueError("timeout_seconds and timeout are mutually exclusive")
         self._base_url = base_url.rstrip("/")
-        self._timeout = timeout_seconds
+        self._timeout = timeout or (
+            httpx.Timeout(timeout_seconds)
+            if timeout_seconds is not None
+            else httpx.Timeout(connect=0.25, read=1.0, write=0.25, pool=0.25)
+        )
         self._client = client
+        self.circuit = circuit or AsyncCircuitBreaker("member")
 
-    async def _get_member_injected(self, member_id: str) -> MemberProfile:
-        client = self._client
-        assert client is not None
+    async def _request_member(self, member_id: str) -> MemberProfile:
         try:
-            response = await client.get(f"/members/{member_id}")
+            if self._client is not None:
+                response = await self._client.get(
+                    f"/members/{quote(member_id, safe='')}",
+                    timeout=self._timeout,
+                )
+            else:
+                url = f"{self._base_url}/v1/members/{quote(member_id, safe='')}"
+                async with httpx.AsyncClient(timeout=self._timeout) as client:
+                    response = await client.get(url)
+        except httpx.TimeoutException as exc:
+            raise MemberServiceError(
+                "member service request timed out",
+                status_code=502,
+                code="upstream_timeout",
+                circuit_failure=True,
+            ) from exc
         except httpx.RequestError as exc:
             raise MemberServiceError(
                 f"member service request failed: {exc}",
                 status_code=502,
                 code="upstream_unreachable",
+                circuit_failure=True,
             ) from exc
 
         if response.status_code == 404:
@@ -124,6 +153,7 @@ class MemberClient:
                 f"member service error: HTTP {response.status_code}",
                 status_code=response.status_code,
                 code="upstream_error",
+                circuit_failure=response.status_code == 429 or response.status_code >= 500,
             )
         try:
             payload = response.json()
@@ -132,6 +162,7 @@ class MemberClient:
                 "member service returned invalid JSON",
                 status_code=502,
                 code="upstream_invalid_payload",
+                circuit_failure=True,
             ) from exc
 
         try:
@@ -141,49 +172,18 @@ class MemberClient:
                 "member service returned invalid member payload",
                 status_code=502,
                 code="upstream_invalid_payload",
+                circuit_failure=True,
             ) from exc
 
     async def get_member(self, member_id: str) -> MemberProfile:
-        if self._client is not None:
-            return await self._get_member_injected(member_id)
-        url = f"{self._base_url}/v1/members/{member_id}"
         try:
-            async with httpx.AsyncClient(timeout=self._timeout) as client:
-                response = await client.get(url)
-                response.raise_for_status()
-        except httpx.RequestError as exc:
+            return await self.circuit.call(
+                lambda: self._request_member(member_id),
+                is_failure=lambda exc: bool(getattr(exc, "circuit_failure", False)),
+            )
+        except CircuitOpenError as exc:
             raise MemberServiceError(
-                f"member service request failed: {exc}",
+                str(exc),
                 status_code=502,
-                code="upstream_unreachable",
-            ) from exc
-        except httpx.HTTPStatusError as exc:
-            if exc.response.status_code == 404:
-                raise MemberServiceError(
-                    "member not found",
-                    status_code=404,
-                    code="member_not_found",
-                ) from exc
-            raise MemberServiceError(
-                f"member service error: HTTP {exc.response.status_code}",
-                status_code=exc.response.status_code,
-                code="upstream_error",
-            ) from exc
-
-        try:
-            payload = response.json()
-        except ValueError as exc:
-            raise MemberServiceError(
-                "member service returned invalid JSON",
-                status_code=502,
-                code="upstream_invalid_payload",
-            ) from exc
-
-        try:
-            return MemberProfile.model_validate(payload)
-        except ValidationError as exc:
-            raise MemberServiceError(
-                "member service returned invalid member payload",
-                status_code=502,
-                code="upstream_invalid_payload",
+                code="upstream_circuit_open",
             ) from exc

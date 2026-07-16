@@ -1,5 +1,6 @@
 services:
   api:
+    image: ${ARRIVIA_RECS_IMAGE:-arrivia-recs:local}
     build:
       context: .
       dockerfile: Dockerfile
@@ -28,7 +29,7 @@ services:
       start_period: 20s
 
   member-service:
-    image: wiremock/wiremock:3.6.0
+    image: wiremock/wiremock:3.6.0@sha256:1cf76043f9052c32d13fb06b562e3328e284fc46cf04c756595201f5de7d3c75
     command: ["--port", "8081", "--disable-banner", "--verbose"]
     volumes:
       - ./mocks/member-service:/home/wiremock
@@ -39,10 +40,12 @@ services:
     restart: unless-stopped
 
   partner-config-service:
-    image: wiremock/wiremock:3.6.0
+    image: wiremock/wiremock:3.6.0@sha256:1cf76043f9052c32d13fb06b562e3328e284fc46cf04c756595201f5de7d3c75
     command: ["--port", "8082", "--disable-banner", "--verbose"]
     volumes:
       - ./mocks/partner-config-service:/home/wiremock
+    ports:
+      - "127.0.0.1:${PARTNER_CONFIG_ADMIN_PORT:-8082}:8082"
     networks:
       - app
     profiles:

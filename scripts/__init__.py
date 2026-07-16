@@ -1,0 +1,1 @@
+"""Reproducible operational verification helpers."""

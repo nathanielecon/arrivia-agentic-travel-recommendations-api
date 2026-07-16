@@ -1,0 +1,23 @@
+Evidence protocol: setup -> named assertions -> result
+Candidate base: 5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896 (working tree dirty)
+Environment: Windows local Python
+Tools: Python 3.14.3; pytest 8.4.1; Ruff 0.12.7
+
+SETUP
+Command: python -m pytest -q tests/test_session_budget_multiprocess.py tests/test_circuit_breaker.py tests/test_policy_contract.py tests/test_upstream_hardening.py tests/test_observability.py tests/test_metrics.py
+
+ASSERTION final-slot-cross-process
+Expected: independently spawned grants sort to [0,1], their sum is 1, and persisted used is 2.
+Observed: test_session_budget_multiprocess.py passed.
+
+ASSERTION resilience-policy-observability
+Expected: circuit, strict schema, timeout/error parity, JSON redaction, and metrics tests pass.
+Observed: all focused tests passed.
+
+RESULT
+29 passed, 19 upstream-library deprecation warnings, in 3.10s.
+
+Final locked clean-environment run after interface hash refresh:
+122 passed, one upstream-library deprecation warning, in 19.35s; Ruff passed; compileall passed.
+Environment: fresh temporary Python 3.14.3 virtual environment installed from requirements-dev.lock,
+then the project installed editable with --no-deps.

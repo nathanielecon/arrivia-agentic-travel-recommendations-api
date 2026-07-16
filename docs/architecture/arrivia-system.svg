@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Arrivia recommendations architecture and evidence story</title>
+  <desc id="desc">REST and MCP callers use one recommendation service. Guarded upstream clients read member and partner policy data. SQLite enforces same-machine session caps. JSON logs, Prometheus metrics, rollback, and candidate-bound evidence surround the single-replica v0 runtime.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#65e0d0"/></marker>
+    <marker id="amberArrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#f3b943"/></marker>
+    <style>
+      .title{font:700 34px Arial,sans-serif;fill:#eaf6ff}.sub{font:18px Arial,sans-serif;fill:#8ecfe0}.band{fill:#0b2030;stroke:#2a6f83;stroke-width:2}.label{font:700 14px Arial,sans-serif;letter-spacing:1.5px;fill:#8ecfe0}.node{fill:#12394a;stroke:#36a4b8;stroke-width:2}.core{fill:#0e5a62;stroke:#4fd1c5;stroke-width:2}.state{fill:#0a696d;stroke:#65e0d0;stroke-width:2}.risk{fill:#59461e;stroke:#f3b943;stroke-width:2}.proof{fill:#3d354b;stroke:#d5a84b;stroke-width:2}.n1{font:700 17px Arial,sans-serif;fill:#fff;text-anchor:middle}.n2{font:14px Arial,sans-serif;fill:#dbeef5;text-anchor:middle}.foot{font:15px Arial,sans-serif;fill:#a9c9d6;text-anchor:middle}.line{fill:none;stroke:#65e0d0;stroke-width:3;marker-end:url(#arrow)}.amber{fill:none;stroke:#f3b943;stroke-width:3;marker-end:url(#amberArrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="#081827"/>
+  <text x="55" y="58" class="title">arrivia Agentic Travel Recommendations API</text>
+  <text x="57" y="91" class="sub">One policy engine • guarded dependencies • atomic session caps • candidate-bound proof</text>
+
+  <rect x="50" y="125" width="1500" height="270" rx="18" class="band"/>
+  <text x="80" y="158" class="label">PRIMARY USER JOURNEY — REST AND MCP, ONE BUSINESS-LOGIC PATH</text>
+  <rect x="85" y="220" width="220" height="95" rx="14" class="node"/><text x="195" y="258" class="n1">REST caller</text><text x="195" y="285" class="n2">POST /v1/recommendations</text>
+  <rect x="85" y="325" width="220" height="52" rx="14" class="node"/><text x="195" y="357" class="n1">MCP client</text>
+  <rect x="430" y="235" width="330" height="125" rx="14" class="core"/><text x="595" y="276" class="n1">RecommendationService</text><text x="595" y="305" class="n2">candidates • exclusions • caps</text><text x="595" y="330" class="n2">structured policy audit</text>
+  <rect x="885" y="205" width="260" height="100" rx="14" class="risk"/><text x="1015" y="245" class="n1">Guarded upstreams</text><text x="1015" y="273" class="n2">timeouts • circuit breakers</text>
+  <rect x="885" y="320" width="260" height="60" rx="14" class="state"/><text x="1015" y="356" class="n1">SQLite budget</text>
+  <rect x="1260" y="185" width="240" height="80" rx="14" class="risk"/><text x="1380" y="218" class="n1">Member service</text><text x="1380" y="243" class="n2">read-only profile</text>
+  <rect x="1260" y="295" width="240" height="80" rx="14" class="risk"/><text x="1380" y="328" class="n1">Partner config</text><text x="1380" y="353" class="n2">authoritative policy</text>
+  <path d="M305 270 H430" class="line"/><path d="M305 351 H385 V320 H430" class="line"/><path d="M760 275 H885" class="amber"/><path d="M760 325 H885" class="line"/><path d="M1145 235 H1260" class="amber"/><path d="M1145 270 H1200 V335 H1260" class="amber"/>
+
+  <rect x="50" y="430" width="1500" height="190" rx="18" class="band"/>
+  <text x="80" y="463" class="label">OPERABILITY AND TRUST BOUNDARY</text>
+  <rect x="95" y="505" width="260" height="75" rx="14" class="node"/><text x="225" y="536" class="n1">Validated input</text><text x="225" y="561" class="n2">partner_id from member data</text>
+  <rect x="435" y="505" width="260" height="75" rx="14" class="state"/><text x="565" y="536" class="n1">JSON lifecycle logs</text><text x="565" y="561" class="n2">hashed member/session IDs</text>
+  <rect x="775" y="505" width="260" height="75" rx="14" class="state"/><text x="905" y="536" class="n1">Prometheus metrics</text><text x="905" y="561" class="n2">internal operational surface</text>
+  <rect x="1115" y="505" width="335" height="75" rx="14" class="risk"/><text x="1282" y="536" class="n1">Fail fast on unknown policy</text><text x="1282" y="561" class="n2">no invented or silently ignored rules</text>
+  <path d="M355 542 H435" class="line"/><path d="M695 542 H775" class="line"/><path d="M1035 542 H1115" class="line"/>
+
+  <rect x="50" y="655" width="1500" height="165" rx="18" class="band"/>
+  <text x="80" y="688" class="label">FAILURE → RECOVERY → EVIDENCE</text>
+  <rect x="95" y="720" width="255" height="65" rx="14" class="risk"/><text x="222" y="748" class="n1">Inject 502 / race</text><text x="222" y="772" class="n2">safe, repeatable failures</text>
+  <rect x="430" y="720" width="255" height="65" rx="14" class="state"/><text x="557" y="748" class="n1">Recover and verify</text><text x="557" y="772" class="n2">preserve SQLite volume</text>
+  <rect x="765" y="720" width="255" height="65" rx="14" class="proof"/><text x="892" y="748" class="n1">Requirement → test</text><text x="892" y="772" class="n2">candidate-bound evidence</text>
+  <rect x="1100" y="720" width="350" height="65" rx="14" class="proof"/><text x="1275" y="748" class="n1">README + evidence gallery</text><text x="1275" y="772" class="n2">Image2 never changes topology</text>
+  <path d="M350 752 H430" class="amber"/><path d="M685 752 H765" class="line"/><path d="M1020 752 H1100" class="line"/>
+  <text x="800" y="865" class="foot">Claim boundary: E2 local runtime until newer candidate-bound evidence exists; single active replica; no horizontal-scale or production-authentication claim.</text>
+</svg>

@@ -2,6 +2,22 @@
 
 Internal service for AI-driven, partner-aware travel recommendations that power an "AI Concierge" experience inside partner booking flows. The service combines member context with read-only partner rules and returns recommendations with an audit block so multi-tenant policy decisions stay traceable.
 
+![Arrivia architecture-first portfolio infographic showing REST and MCP parity, guarded upstreams, strict policy, SQLite budget state, telemetry, and the v0 claim boundary](docs/portfolio/arrivia-infographic.png)
+
+**Current certification: D4 Operable design / E2 repository claim.** The working candidate has 122 passing tests in the locked clean environment, clean Ruff output, successful Python compilation, and image-bound local Compose proof. Those results are useful local evidence, but the dirty source tree has not yet been rebound to a clean candidate or independently reproduced. D5/E6 is deliberately unclaimed until a fresh reviewer completes Gate 6 without chat history.
+
+Verified in the current working candidate:
+
+- REST and MCP both use one `RecommendationService` and translate an open upstream circuit to `upstream_circuit_open` ([contract tests](tests/test_upstream_hardening.py)).
+- Partner policy rejects unknown rules and mismatched partner identity instead of inventing defaults ([schema](docs/contracts/partner-policy.schema.json), [tests](tests/test_policy_contract.py)).
+- Two independently spawned processes contend for the final SQLite slot and produce grants `[0,1]` with persisted usage equal to the cap ([proof test](tests/test_session_budget_multiprocess.py)).
+- JSON completion logs contain the policy audit while member/session identifiers remain hashed; `/metrics` exposes the frozen operational signals ([observability contract](docs/operations/OBSERVABILITY.md)).
+- Immutable image rollback preserves `.data` and distinguishes code rollback from database restore ([runbook](docs/operations/ROLLBACK_RUNBOOK.md)).
+
+**Exact claim boundary:** v0 supports one active recommendation-serving replica. REST and MCP may share session-cap state only through the same SQLite file in one filesystem-locking domain (both bare-metal processes, or both inside the container). A Windows host MCP process must not concurrently open the Docker Desktop Linux bind-mounted database; run MCP inside the API container for that topology. The project does not claim production authentication, safe public-internet exposure, multi-replica consistency, uptime, compliance, autonomous policy creation, or independent reimplementability.
+
+Architecture authority and evidence: [six-page draw.io source](docs/architecture/arrivia-system.drawio) · [exact SVG](docs/architecture/arrivia-system.svg) · [Image2 provenance and parity review](docs/portfolio/README.md) · [evidence index](docs/evidence/index.json) · [requirements matrix](docs/design/REQUIREMENTS_TRACEABILITY.md) · [five-minute walkthrough source](walkthrough/README.md)
+
 Goals, constraints, and delivery expectations come from the program brief in `Prompt.md` (maintained outside this repository).
 
 ## Constraints From The Brief
@@ -11,6 +27,18 @@ Goals, constraints, and delivery expectations come from the program brief in `Pr
 - Four-week first step: scope is limited to what one engineer can credibly ship first and own on call.
 - On-call ownership: prefer simple behavior, explicit failures, and clear auditability over hidden fallback logic.
 - Multi-tenant boundaries: partner isolation matters, and policy decisions must remain reviewable during incident response.
+
+## Architecture Assumption Matrix
+
+| Assumption | Violation impact | Current defense | Target mitigation | Owner | Validation | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| Member and partner-config usually respond inside the timeout budget | Requests fail `502`; repeated dependency failures open a circuit | `0.25/1.0/0.25/0.25s` connect/read/write/pool timeouts, no retry, separate circuits | Tune only from measured histograms and upstream SLOs | Reliability | `tests/test_upstream_hardening.py`, `/metrics` | implemented; live drill pending |
+| Member `partner_id` and returned policy `partner_id` agree | Wrong-tenant policy could be enforced | Strict equality check fails closed as `upstream_invalid_payload` | Upstream contract monitoring and signed tenant context | Security/reliability | mismatch contract test | implemented |
+| Known policy fields retain schema and meaning | Unsafe policy bypass or evaluator drift | Strict schema, unknown-property rejection, explicit alias conflict handling | Versioned compatibility window before semantic changes | Product/platform | schema and policy tests | implemented |
+| One active replica is sufficient for v0 | Multiple independent SQLite files could over-grant a cap | Explicit single-replica claim and rollout guardrail | Shared transactional budget store before horizontal scaling | Service owner | topology review and rollout YAML | accepted v0 |
+| `.data` remains on one durable volume and all writers share one filesystem-locking domain | Counts can be lost or SQLite locking can fail across Windows/Docker Linux | Bind mount, WAL mode, stop-before-host-access rule, DB/WAL/SHM snapshot | Shared transactional store before cross-host/kernel writers | Operations | verifier, integrity check, BF-20260716-007 | implemented with topology restriction |
+| Session cardinality stays within 10,000 live keys and 1,800s TTL | Disk/lookup pressure and premature eviction | Configured TTL and bounded least-recently-touched pruning | Load test with representative session distribution | Service owner | budget tests and future benchmark | assumed; unmeasured |
+| Metrics endpoint and evidence artifacts remain available only to operators/reviewers | Operational metadata leaks or proof becomes unavailable | `METRICS_ENABLED`, no public route auth claim, tracked append-only index | Network policy and durable artifact store in target environment | Operations | metrics gating and link checks | local only |
 
 ## Fastest Reviewer Path
 
@@ -68,6 +96,12 @@ arrivia-recs-demo --member-id m1 --session-id review-session-1
 ## MCP Quick Start
 
 The MCP server is a stdio process exposed by `python -m arrivia_recs.mcp.server`.
+
+When the API itself runs in Docker Desktop, launch MCP in that same container/filesystem domain (for
+example, an MCP client command equivalent to `docker exec -i <api-container> python -m
+arrivia_recs.mcp.server`). Do not concurrently open the bind-mounted SQLite file from Windows and
+the Linux container. The host command below is safe when only the mocks run in Docker and both the
+API/MCP correctness processes run on the host.
 
 Canonical reviewer-facing surfaces for this challenge:
 
@@ -131,6 +165,11 @@ python -m venv .venv
 pip install -e ".[dev]"
 ```
 
+For reproducible installs, `requirements.lock` is generated under the pinned Linux/Python 3.12
+container, `requirements-dev.lock` captures the Windows evaluation toolchain, and
+`requirements-build.lock` pins the container build backend. Prefer the applicable lock over a
+fresh unconstrained resolution.
+
 Bare-metal API run:
 
 ```powershell
@@ -169,6 +208,12 @@ ruff check .
 python -m compileall src tests
 ```
 
+The authoritative design validators also check schemas, partition ownership, interface hashes, diagram page coverage, and evidence references:
+
+```powershell
+python -m pytest tests/test_design_authority.py -q
+```
+
 ## Judge Proof
 
 This submission is intentionally scoped to a single-active-replica v0. It does not claim horizontally scaled session-cap consistency.
@@ -198,13 +243,16 @@ Reviewer map:
 - Explicit failure handling for invalid input and upstream failures on the primary REST surface
 - Single-active-replica rollout with same-machine session-cap semantics for reviewer and first-production use
 - Checked-in rollout guardrail at `docs/examples/v0-rollout.yaml`
+- Per-dependency circuit breakers with strict timeouts and no automatic retry
+- Newline-delimited JSON logs, internal Prometheus metrics, and executable alert rules
+- Immutable-image deployment verification and a SQLite-preserving rollback procedure
 
 ## What Comes Later
 
 - Live upstream authn/authz and production secrets management
 - Shared distributed session-budget state for horizontal scale across hosts/replicas
 - Richer ranking, inventory-aware offers, and experimentation support
-- Production telemetry, SLOs, and deployment manifests tuned for arrivia environments
+- Target-environment dashboards, network policy, measured SLOs, and deployment manifests tuned for arrivia environments
 
 ## Four-Week Delivery Plan
 

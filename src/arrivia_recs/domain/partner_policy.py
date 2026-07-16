@@ -1,8 +1,10 @@
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class PartnerPolicy(BaseModel):
     """Read-only partner configuration: caps and exclusions enforced by this service."""
+
+    model_config = ConfigDict(extra="forbid", strict=True)
 
     partner_id: str
     max_recommendations_per_session: int | None = Field(
@@ -16,9 +18,15 @@ class PartnerPolicy(BaseModel):
     def _normalize_exclude_aliases(cls, data: object) -> object:
         if not isinstance(data, dict):
             return data
-        if "exclude_cruise" not in data and "exclude_cruises" in data:
-            data = {**data, "exclude_cruise": data["exclude_cruises"]}
-        return data
+        canonical = data.get("exclude_cruise")
+        if "exclude_cruises" not in data:
+            return data
+        alias = data["exclude_cruises"]
+        if "exclude_cruise" in data and canonical != alias:
+            raise ValueError("exclude_cruise and exclude_cruises cannot conflict")
+        normalized = {**data, "exclude_cruise": alias}
+        normalized.pop("exclude_cruises", None)
+        return normalized
 
     @property
     def exclude_cruises(self) -> bool:

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arrivia.example.invalid/schemas/evidence-event-1.0.json",
+  "title": "Append-only candidate-bound evidence event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "evidence_id", "requirement_ids", "status", "recorded_at",
+    "candidate", "environment", "procedure", "assertions", "artifacts",
+    "tool_versions", "claim_level", "independent", "supersedes"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "evidence_id": { "pattern": "^EVID-[A-Z0-9-]+$" },
+    "requirement_ids": { "type": "array", "uniqueItems": true, "items": { "pattern": "^REQ-[A-Z]+-[0-9]{3}$" } },
+    "status": { "enum": ["planned", "passed", "failed", "blocked", "superseded"] },
+    "recorded_at": { "format": "date-time" },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["git_sha", "working_tree_clean", "image_digest"],
+      "properties": {
+        "git_sha": { "pattern": "^[0-9a-f]{40}$" },
+        "working_tree_clean": { "type": "boolean" },
+        "image_digest": { "type": ["string", "null"] }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "description"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 }
+      }
+    },
+    "procedure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preconditions", "commands", "cleanup"],
+      "properties": {
+        "preconditions": { "type": "array", "items": { "type": "string" } },
+        "commands": { "type": "array", "items": { "type": "string" } },
+        "cleanup": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "assertions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "expected", "observed", "result"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "expected": { "type": "string" },
+          "observed": { "type": ["string", "null"] },
+          "result": { "enum": ["passed", "failed", "blocked", "untested"] }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" }
+        }
+      }
+    },
+    "tool_versions": { "type": "object", "additionalProperties": { "type": "string" } },
+    "claim_level": { "pattern": "^E[0-6]$" },
+    "independent": { "type": "boolean" },
+    "notes": { "type": "string" },
+    "supersedes": { "type": "array", "uniqueItems": true, "items": { "pattern": "^EVID-[A-Z0-9-]+$" } }
+  }
+}
