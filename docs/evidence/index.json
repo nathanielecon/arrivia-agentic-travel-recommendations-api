@@ -985,11 +985,11 @@
       "artifacts": [
         {
           "path": "docs/certification/CHECK_MATRIX.md",
-          "sha256": "504faf9841e6e10d0a768c4e51da81b7086d6cea06241f6bfc1934bc02ab10af"
+          "sha256": "7e486f8d2ee6e7e75c5fd6581c7088da0108ec829273e7ecd9ab6368b72b6678"
         },
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "18f132b9b421ab97939ed139f73dfb37e72839780e13f309a224b2b5d3002bce"
+          "sha256": "5270cae4877ed0a25de4c8115647cafd48e064051318e481eaa45cf06ef824bc"
         }
       ],
       "tool_versions": {
