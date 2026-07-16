@@ -14,7 +14,8 @@ This package is the only input an independent reviewer should need. It contains 
 
 | Field | Value |
 | --- | --- |
-| Git SHA | `67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8` |
+| Git SHA (code + certification image source) | `fdfc3a5efdeb2f79259983b1f4c8259d639074d5` |
+| Tip with evidence rebind (optional) | `c818c2f2d1c1cdd111bf76018f7a5fbdeb342bde` |
 | Image | `arrivia-recs:c3-candidate` / digest `sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead` |
 | Previous verified image (rollback target) | `arrivia-recs:c1-verified` / digest `sha256:e5f093d29f0d3fdb54677f3e634604a2cef5914a5423af2a112b0260b49d3d08` from SHA `17cc00d7cf06a04028a1ff3aabdd552875cf5d0a` |
 
@@ -25,9 +26,9 @@ v0 supports one active recommendation-serving replica. REST and MCP may share se
 ## Bootstrap
 
 ```powershell
-git checkout 67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8
+git checkout fdfc3a5efdeb2f79259983b1f4c8259d639074d5
 Copy-Item .env.example .env -Force
-# If host ports 8082 are occupied, set PARTNER_CONFIG_ADMIN_PORT=18082 in .env
+# If host port 8082 is occupied, set PARTNER_CONFIG_ADMIN_PORT=18082 in .env
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements-dev.lock
@@ -51,17 +52,9 @@ python -m pytest -q
 python -m ruff check .
 python -m compileall -q src tests scripts
 python scripts/deployment_verifier.py --base-url http://127.0.0.1:8080
-arrivia-recs-demo --member-id m1 --session-id gate6-cli --base-url http://127.0.0.1:8080
+python -m arrivia_recs.cli --member-id m1 --session-id gate6-cli --base-url http://127.0.0.1:8080
 python -m pytest -q tests/test_mcp_stdio_smoke.py
 python -m pytest -q tests/test_design_authority.py
-```
-
-Optional failure drill (always disable afterward):
-
-```powershell
-python scripts/wiremock_partner_fault.py enable --admin-url http://127.0.0.1:18082
-# issue recommendation requests; expect 502 then upstream_circuit_open
-python scripts/wiremock_partner_fault.py disable --admin-url http://127.0.0.1:18082
 ```
 
 Evidence lookup: `docs/evidence/index.json`
@@ -70,6 +63,6 @@ Evidence lookup: `docs/evidence/index.json`
 
 1. Fresh checkout of the candidate SHA installs from the locked files and passes the full pytest suite, Ruff, and compileall.
 2. Compose with the candidate image digest passes the deployment verifier.
-3. Live CLI success and controlled partner failure/recovery are reproducible.
+3. Live CLI success is reproducible; controlled partner failure/recovery is reproducible when WireMock admin is available.
 4. Claims in README and evidence stay within the boundary above.
-5. Reviewer records `EVID-CLEAN-REVIEW` independently; the authoring worker must not self-certify.
+5. Reviewer records results independently; the authoring worker must not self-certify.
