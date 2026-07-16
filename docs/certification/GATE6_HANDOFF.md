@@ -69,4 +69,6 @@ Evidence lookup: `docs/evidence/index.json`
 
 ## Independent attempt outcome
 
-The arrivia Environment `6a594effc15c8191a0b7fd4af300dda1` warmed successfully with GPT-5.4 and an offline wheel cache. A first independent proof on the superseded candidate reached a clean checkout but exposed the unmarked Windows-only `pywin32` pin. After repairing that lock portability defect, three clean-suite attempts and one verdict-only task terminated with Codex task status `ERROR` and no command output. Independent reproduction of this candidate is therefore blocked, not passed; D5/E6 is not earned.
+The arrivia Environment `6a594effc15c8191a0b7fd4af300dda1` previously warmed successfully with GPT-5.4 (`task_e_6a59589ef838832b84bdd5f12a19cb65`). A first independent proof on the superseded candidate reached a clean checkout but exposed the unmarked Windows-only `pywin32` pin. After the lock portability repair, Gate 6 tasks terminated `ERROR` with no agent output.
+
+A local bottleneck then diagnosed a compound failure: (1) in-repo Environment setup/maintenance had hard-failed on wheelhouse `pip download` under `set -e` (removed); (2) Codex CloudWarm platform ERROR persisted across arrivia warm/Gate 6 retries and a ContinuityOps control probe. Final Gate 6 attempt `task_e_6a596b804c1c832ba1c6ce70b0584eac` still ERROR. Independent reproduction is blocked, not passed; D5/E6 is not earned.

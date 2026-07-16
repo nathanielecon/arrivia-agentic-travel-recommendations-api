@@ -15,7 +15,7 @@
     "evidence_level": "E4",
     "d5_earned": false,
     "e6_earned": false,
-    "reason": "Local candidate-bound evidence (including rollback, footage, and the C5 runtime verifier) exists; GPT-5.4 CloudWarm is registered and warm, but repaired-candidate clean-reproduction tasks terminated at the Codex platform layer"
+    "reason": "Local C5 candidate-bound evidence remains; local bottleneck diagnosed Codex CloudWarm platform ERROR across arrivia and ContinuityOps after one prior warm READY; Gate 6 independent reproduction not demonstrated"
   },
   "events": [
     {
@@ -985,11 +985,11 @@
       "artifacts": [
         {
           "path": "docs/certification/CHECK_MATRIX.md",
-          "sha256": "eb3ae9355cb575b1ed3855641a252f32d731eb6452cbf9b86f97ed1eb428d7ce"
+          "sha256": "b9c0f6c99638256e2f8132538ee17be2a06a7b10c09e038fbb9e779c13fb190a"
         },
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "3ba0aa61c163104340a865e90d6d4a661cce557736c7b0e6839237602fccc731"
+          "sha256": "95053da93701bdc4ef8aeec28652f3c8bd614967dede6ccc0a7cdcc6a0ff74fb"
         }
       ],
       "tool_versions": {
@@ -1068,7 +1068,7 @@
       "requirement_ids": [
         "REQ-ORCH-001"
       ],
-      "status": "blocked",
+      "status": "superseded",
       "recorded_at": "2026-07-16T18:40:00-04:00",
       "candidate": {
         "git_sha": "446679405d41bfd91d6b273e269d35f50afed458",
@@ -1120,11 +1120,11 @@
       "artifacts": [
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "3ba0aa61c163104340a865e90d6d4a661cce557736c7b0e6839237602fccc731"
+          "sha256": null
         },
         {
           "path": "docs/certification/CHECK_MATRIX.md",
-          "sha256": "eb3ae9355cb575b1ed3855641a252f32d731eb6452cbf9b86f97ed1eb428d7ce"
+          "sha256": null
         }
       ],
       "tool_versions": {
@@ -1134,7 +1134,7 @@
       },
       "claim_level": "E4",
       "independent": true,
-      "notes": "Independent GPT-5.4 CloudWarm reproduction is blocked by Codex task-level ERROR outcomes. Local C5 checks do not substitute for Gate 6. D5/E6 is not earned.",
+      "notes": "Independent GPT-5.4 CloudWarm reproduction is blocked by Codex task-level ERROR outcomes. Local C5 checks do not substitute for Gate 6. D5/E6 is not earned. Superseded by EVID-CLEAN-REVIEW-BOTTLENECK after local bottleneck diagnosis.",
       "supersedes": [
         "EVID-CLEAN-REVIEW"
       ]
@@ -1225,6 +1225,102 @@
       "independent": false,
       "notes": "Both failed verifier attempts are retained. Database restore followed demonstrated corruption and used a snapshot that passed integrity_check inside the Docker locking domain. This local evidence does not satisfy Gate 6.",
       "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-CLEAN-REVIEW-BOTTLENECK",
+      "requirement_ids": [
+        "REQ-ORCH-001"
+      ],
+      "status": "blocked",
+      "recorded_at": "2026-07-16T19:35:00-04:00",
+      "candidate": {
+        "git_sha": "446679405d41bfd91d6b273e269d35f50afed458",
+        "working_tree_clean": true,
+        "image_digest": "sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720"
+      },
+      "environment": {
+        "id": "local-bottleneck+codex-cloudwarm:6a594effc15c8191a0b7fd4af300dda1",
+        "description": "Laptop Codex doctor/login plus GPT-5.4 CloudWarm probes"
+      },
+      "procedure": {
+        "preconditions": [
+          "ChatGPT-authenticated Codex CLI on laptop",
+          "Arrivia ENV_ID registered",
+          "No Cursor Cloud Agents"
+        ],
+        "commands": [
+          "codex login status",
+          "codex doctor",
+          "npm install -g @openai/codex@0.144.5",
+          "codex cloud status <failed-task-ids>",
+          "pwsh -File scripts/Invoke-CodexCloudWarm.ps1 -Force",
+          "codex cloud exec --env 6a594effc15c8191a0b7fd4af300dda1 -c model=\"gpt-5.4\" <Gate6>"
+        ],
+        "cleanup": []
+      },
+      "assertions": [
+        {
+          "name": "local-auth-doctor",
+          "expected": "ChatGPT auth and reachable provider",
+          "observed": "Logged in using ChatGPT; doctor network/websocket OK; CLI 0.144.5",
+          "result": "passed"
+        },
+        {
+          "name": "in-repo-wheelhouse-abort",
+          "expected": "Environment setup must not hard-fail on pip download",
+          "observed": "Removed wheelhouse pip download from .codex/cloud-setup.sh and cloud-maintenance.sh",
+          "result": "passed"
+        },
+        {
+          "name": "platform-control-probe",
+          "expected": "ContinuityOps GPT-5.4 smoke READY",
+          "observed": "task_e_6a596a44d680832bbd2f3f91ce1822d6 ERROR",
+          "result": "failed"
+        },
+        {
+          "name": "arrivia-warm-after-fix",
+          "expected": "Force warm READY",
+          "observed": "task_e_6a596b495bcc832b878e320d79e03e39 ERROR after 35s",
+          "result": "failed"
+        },
+        {
+          "name": "gate6-independent-reproduction",
+          "expected": "GPT-5.4 clean-context Gate 6 READY with suite results",
+          "observed": "task_e_6a596b804c1c832ba1c6ce70b0584eac ERROR; no agent output",
+          "result": "blocked"
+        },
+        {
+          "name": "d5-e6-verdict",
+          "expected": "independent clean reproduction passes",
+          "observed": "not demonstrated; platform ceiling",
+          "result": "blocked"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/certification/GATE6_HANDOFF.md",
+          "sha256": "95053da93701bdc4ef8aeec28652f3c8bd614967dede6ccc0a7cdcc6a0ff74fb"
+        },
+        {
+          "path": "docs/certification/CHECK_MATRIX.md",
+          "sha256": "b9c0f6c99638256e2f8132538ee17be2a06a7b10c09e038fbb9e779c13fb190a"
+        },
+        {
+          "path": "BREAK_FIX_LOG.md",
+          "sha256": "d905ab1e33f39bae892e5cdc257c62fef1f933e9711754feb4e085a04a33cfdd"
+        }
+      ],
+      "tool_versions": {
+        "codex-cli": "0.144.5",
+        "model": "gpt-5.4"
+      },
+      "claim_level": "E4",
+      "independent": true,
+      "notes": "Local bottleneck completed. In-repo setup abort fixed by removing wheelhouse downloads. Remaining Gate 6 blocker is Codex CloudWarm platform ERROR (cross-repo). D5/E6 not earned. Gate score below 9.5.",
+      "supersedes": [
+        "EVID-CLEAN-REVIEW-GPT54"
+      ]
     }
   ],
   "planned_event_ids": [

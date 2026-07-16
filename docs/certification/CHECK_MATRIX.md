@@ -23,7 +23,7 @@ recorded_at: 2026-07-16T17:10:00-04:00
 | Rollback A←B | passed | seed session remained at cap (`0` grants); `.data` preserved |
 | Links / evidence freshness | passed | candidate-bound index + handoff |
 | Visual inspection | passed | Walkthrough frames; footage under annotations |
-| Gate 6 independent review | blocked | GPT-5.4 CloudWarm registered/warm; three repaired-candidate proof tasks and one verdict-only task ended `ERROR` without command output |
+| Gate 6 independent review | blocked | Local bottleneck diagnosed platform ERROR (arrivia + ContinuityOps); wheelhouse setup abort removed; warm/Gate 6 still ERROR (`task_e_6a596b804c1c832ba1c6ce70b0584eac`) |
 
 ## Digests
 

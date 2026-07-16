@@ -169,3 +169,17 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Repair: Within the Docker locking domain, integrity-checked retained snapshots, selected `session_budget.20260716T1840.snapshot.sqlite3` after `PRAGMA integrity_check` returned `ok`, preserved the failed files, and restored the verified snapshot without host SQLite access.
 - Verification: Restored database integrity returned `ok`; the unchanged C5 image then passed health, readiness, metrics, audit/exclusion, and session-cap checks.
 - Owner/status: P_operations / verified locally.
+
+### BF-20260716-013 — Local bottleneck: Gate 6 CloudWarm ERROR is platform-ceilinged
+
+- Time: 2026-07-16T19:30:00-04:00
+- Candidate: `446679405d41bfd91d6b273e269d35f50afed458`; tip tooling through `d116ece`.
+- Detection: Local bottleneck ran `codex login status` (ChatGPT), `codex doctor` (auth/network OK; CLI upgraded 0.144.1→0.144.5), inspected ERROR task pages (no agent logs; “Failed after 31s–1m40s”), and escalated probes.
+- Impact: Gate 6 / `CHECK-CLEAN-REVIEW` / D5/E6 remain blocked. Warm smoke and Gate 6 cannot complete.
+- Cause (compound):
+  1. In-repo: Environment setup/maintenance previously hard-failed on `pip download` for a wheelhouse under `set -e` when Cloud egress returned 403 (first force-warm showed “Environment setup failed”). Softened, then removed that wheelhouse path.
+  2. Platform: After one successful warm (`task_e_6a59589ef838832b84bdd5f12a19cb65`), subsequent arrivia tasks ERROR with no output; ContinuityOps control probe `task_e_6a596a44d680832bbd2f3f91ce1822d6` also ERROR; one `create_task` call failed with HTTP transport error. Not arrivia-repo specific.
+- Containment: Stopped blind Gate 6 retries. Removed wheelhouse downloads from [`.codex/cloud-setup.sh`](.codex/cloud-setup.sh) / [`.codex/cloud-maintenance.sh`](.codex/cloud-maintenance.sh).
+- Repair: In-repo setup hardened; platform ERROR is outside repo control and requires Codex Cloud recovery or Environment re-wire by the account owner.
+- Verification: Post-removal force warm `task_e_6a596b495bcc832b878e320d79e03e39` and Gate 6 `task_e_6a596b804c1c832ba1c6ce70b0584eac` still ERROR. D5/E6 not earned.
+- Owner/status: P_integration / diagnosed-blocked.

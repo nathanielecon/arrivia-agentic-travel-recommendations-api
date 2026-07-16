@@ -4,7 +4,7 @@ Internal service for AI-driven, partner-aware travel recommendations that power 
 
 ![Arrivia architecture-first portfolio infographic showing REST and MCP parity, guarded upstreams, strict policy, SQLite budget state, telemetry, and the v0 claim boundary](docs/portfolio/arrivia-infographic.png)
 
-**Current certification: D4 Operable design / E4 candidate-bound local evidence.** Immutable candidate `446679405d41bfd91d6b273e269d35f50afed458` with image digest `sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720`. D5/E6 remains unclaimed because the GPT-5.4 CloudWarm clean-reproduction tasks terminated at the Codex platform layer.
+**Current certification: D4 Operable design / E4 candidate-bound local evidence.** Immutable candidate `446679405d41bfd91d6b273e269d35f50afed458` with image digest `sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720`. D5/E6 remains unclaimed: local bottleneck diagnosed Codex CloudWarm platform ERROR after GPT-5.4 Gate 6 tasks failed without agent output.
 
 Verified in the current working candidate:
 
