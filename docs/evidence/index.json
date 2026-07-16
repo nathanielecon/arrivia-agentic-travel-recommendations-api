@@ -4,18 +4,18 @@
   "index_metadata": {
     "owner": "P_authority / repository maintainer",
     "status": "accepted",
-    "baseline_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
-    "candidate_ref": "working-tree@5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
+    "baseline_sha": "17cc00d7cf06a04028a1ff3aabdd552875cf5d0a",
+    "candidate_ref": "67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8",
     "last_verified": "2026-07-16",
     "review_trigger": "Candidate, artifact, environment, result, assertion, requirement, or public claim change"
   },
   "append_only": true,
   "current_claim": {
     "design_depth": "D4",
-    "evidence_level": "E3",
+    "evidence_level": "E4",
     "d5_earned": false,
     "e6_earned": false,
-    "reason": "Terminal footage captured and local proofs pass, but immutable candidate rebind, distinct-image rollback drill completion, and independent Gate 6 remain outstanding"
+    "reason": "Candidate-bound rollback and footage exist; D5/E6 require independent Gate 6 clean-context reproduction"
   },
   "events": [
     {
@@ -848,16 +848,99 @@
       "supersedes": [
         "EVID-WALKTHROUGH"
       ]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-OPS-ROLLBACK",
+      "requirement_ids": [
+        "REQ-OPS-001"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T16:53:30-04:00",
+      "candidate": {
+        "git_sha": "67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8",
+        "working_tree_clean": false,
+        "image_digest": "sha256:b22ece3e69eb8be4026b0f93493c1300245316e3bec04514bae60431c3bcd200"
+      },
+      "environment": {
+        "id": "local-compose",
+        "description": "Staged rollback from image B to previously verified image A with .data preserved; Windows Docker Desktop"
+      },
+      "procedure": {
+        "preconditions": [
+          "Image A verified from C1",
+          "Image B verified from C2",
+          "Session seeded to cap before rollback"
+        ],
+        "commands": [
+          "docker compose stop api",
+          "snapshot docs/evidence/raw/rollback-snapshot-20260716-165326",
+          "ARRIVIA_RECS_IMAGE=arrivia-recs:c1-verified docker compose up -d --no-build api",
+          "python scripts/deployment_verifier.py --base-url http://127.0.0.1:8080",
+          "POST /v1/recommendations with pre-rollback session expects 0 grants",
+          "ARRIVIA_RECS_IMAGE=arrivia-recs:c2-candidate docker compose up -d --no-build api"
+        ],
+        "cleanup": [
+          "Returned API to image B"
+        ]
+      },
+      "assertions": [
+        {
+          "name": "distinct-previous-image",
+          "expected": "rollback to sha256:e5f093d29f0d3fdb54677f3e634604a2cef5914a5423af2a112b0260b49d3d08",
+          "observed": "api container ran arrivia-recs:c1-verified (sha256:e5f093d29f0d3fdb54677f3e634604a2cef5914a5423af2a112b0260b49d3d08)",
+          "result": "passed"
+        },
+        {
+          "name": "verifier-on-previous",
+          "expected": "health, readiness, metrics, audit, exclusion, cap pass",
+          "observed": "all six checks passed",
+          "result": "passed"
+        },
+        {
+          "name": "sqlite-state-preserved",
+          "expected": "pre-rollback capped session grants 0",
+          "observed": "PRESERVED_USED_CAP 0",
+          "result": "passed"
+        },
+        {
+          "name": "no-rebuild-rollback",
+          "expected": "start previous digest with --no-build",
+          "observed": "compose up -d --no-build api",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/raw/20260716-rollback-verifier.txt",
+          "sha256": "d2eedf44e8a9da075a4605b19ed5f62b6e58df4684a9417c519788e4736a1c5a"
+        },
+        {
+          "path": "docs/evidence/raw/rollback-snapshot-20260716-165326/session_budget.sqlite3",
+          "sha256": "fdee360d4d541a784f72493ebad8323fdcdc5670c0fa52c0831446835eb40bdc"
+        },
+        {
+          "path": "docs/evidence/raw/rollback-snapshot-20260716-165326/SHA256SUMS.txt",
+          "sha256": "eb2e24a368fe2521c4bc09fc68e1ef2f87de445725d57cc6c14c7d8ee25a1bc5"
+        }
+      ],
+      "tool_versions": {
+        "docker-engine": "29.6.1",
+        "compose": "local"
+      },
+      "claim_level": "E4",
+      "independent": false,
+      "notes": "Previous image A built from 17cc00d7cf06a04028a1ff3aabdd552875cf5d0a; candidate B from 67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8. DB snapshot retained; restore not used.",
+      "supersedes": []
     }
   ],
   "planned_event_ids": [
-    "EVID-REL-CIRCUIT",
-    "EVID-POL-STRICT",
+    "EVID-CLEAN-REVIEW",
+    "EVID-DOC-CONTRACT",
     "EVID-OBS-LOG",
     "EVID-OBS-METRICS",
-    "EVID-OPS-ROLLBACK",
-    "EVID-DOC-CONTRACT",
     "EVID-ORCH-VALIDATION",
-    "EVID-CLEAN-REVIEW"
+    "EVID-POL-STRICT",
+    "EVID-REL-CIRCUIT"
   ]
 }

@@ -109,3 +109,27 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Repair: Stop API, integrity-check and preserve timestamped snapshots, copy identical database bytes to a new NTFS file identity, restart the unchanged image, and narrow documentation to one filesystem-locking domain. For Compose, run MCP inside the API container.
 - Verification: Container integrity check returned `ok`, `BEGIN IMMEDIATE` succeeded, and the deployment verifier again passed health, readiness, metrics, audit, exclusion, and cap checks.
 - Owner/status: P_operations / verified locally; distinct-image rollback remains untested.
+
+### BF-20260716-008 — Distinct-image rollback drill completed
+
+- Time: 2026-07-16T16:53:30-04:00
+- Candidate: C2 `67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8` image B `sha256:b22ece3e69eb8be4026b0f93493c1300245316e3bec04514bae60431c3bcd200`; previous A `sha256:e5f093d29f0d3fdb54677f3e634604a2cef5914a5423af2a112b0260b49d3d08` from C1
+- Detection: REQ-OPS-001 required a previously verified distinct digest; earlier EVID-OBS-RUNTIME left rollback untested.
+- Impact: Unblocked CHECK-ROLLBACK / EVID-OPS-ROLLBACK; does not itself earn D5/E6.
+- Cause: Missing separately verified prior app image before staged C1/C2 builds.
+- Containment: N/A — rehearsal, not an incident.
+- Repair: Build/verify A from C1; LABEL-only C2 → B; stop API; snapshot SQLite; start A with `--no-build`; verify; confirm capped session grants 0; return to B.
+- Verification: `EVID-OPS-ROLLBACK` passed; deployment verifier green on A and B.
+- Owner/status: P_operations / verified.
+
+### BF-20260716-009 — Host MCP smoke opened Docker bind-mounted SQLite
+
+- Time: 2026-07-16T16:58:00-04:00
+- Candidate: dirty tree after C2 `67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8`
+- Detection: Locked clean pytest failed MCP stdio smoke with `database disk image is malformed`; structured logs also polluted MCP stdout.
+- Impact: `TEST-CLEAN-INSTALL` / MCP stdio gate red; confirms BF-007 topology risk.
+- Cause: Smoke test omitted `SESSION_BUDGET_STORE_PATH` and defaulted to `.data` used by the Linux container; MCP `configure_logging` wrote JSON to stdout.
+- Containment: Do not treat the failed clean-venv run as certification.
+- Repair: Temp SQLite path in smoke test; MCP logs to stderr; refresh MCP interface hash.
+- Verification: Pending locked clean pytest rerun.
+- Owner/status: P_reliability / contained-open.

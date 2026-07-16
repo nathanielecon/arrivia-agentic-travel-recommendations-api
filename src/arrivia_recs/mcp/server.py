@@ -137,7 +137,10 @@ async def get_travel_recommendations(member_id: str, session_id: str | None = No
 
 
 def main() -> None:
-    configure_logging(settings.log_level)
+    # Keep stdout exclusive for JSON-RPC; emit structured logs on stderr.
+    import sys
+
+    configure_logging(settings.log_level, stream=sys.stderr)
     mcp.run(transport="stdio")
 
 

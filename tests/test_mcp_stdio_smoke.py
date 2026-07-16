@@ -58,7 +58,7 @@ def _serve_json(routes: dict[str, dict[str, object]]):
 
 
 @pytest.mark.asyncio
-async def test_mcp_stdio_server_supports_external_client_smoke() -> None:
+async def test_mcp_stdio_server_supports_external_client_smoke(tmp_path: Path) -> None:
     member_routes = {
         "/v1/members/m1": {
             "member_id": "m1",
@@ -81,6 +81,8 @@ async def test_mcp_stdio_server_supports_external_client_smoke() -> None:
             "exclude_cruise": True,
         }
     }
+    # Never open the Compose bind-mounted DB from the Windows host (BF-007).
+    db_path = tmp_path / "mcp-stdio-smoke.sqlite3"
 
     with _serve_json(member_routes) as member_url, _serve_json(partner_routes) as partner_url:
         server = StdioServerParameters(
@@ -91,6 +93,7 @@ async def test_mcp_stdio_server_supports_external_client_smoke() -> None:
                 "PYTHONPATH": str(ROOT / "src"),
                 "MEMBER_SERVICE_BASE_URL": member_url,
                 "PARTNER_CONFIG_BASE_URL": partner_url,
+                "SESSION_BUDGET_STORE_PATH": str(db_path),
             },
         )
 

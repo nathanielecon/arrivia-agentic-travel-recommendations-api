@@ -1,7 +1,7 @@
 ---
 owner: P_portfolio / repository maintainer
 status: deterministic source with live terminal footage track under annotations
-candidate: working-tree@pending-immutable-commit
+candidate: 67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8
 last_verified: 2026-07-16
 review_trigger: Candidate, timing, evidence transcript, claim, HyperFrames, browser, or FFmpeg change
 ---

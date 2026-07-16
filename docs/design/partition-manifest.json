@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "candidate_sha": "17cc00d7cf06a04028a1ff3aabdd552875cf5d0a",
-  "candidate_state": "C1 verified; C2 Dockerfile LABEL pending commit",
+  "candidate_sha": "67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8",
+  "candidate_state": "immutable candidate C2; image B verified; rollback to A passed; Gate 6 pending",
   "generated_at": "2026-07-16T13:33:00-04:00",
   "owner": "P_authority / repository maintainer",
   "status": "accepted",
@@ -290,7 +290,7 @@
       "contract_paths": [
         "src/arrivia_recs/mcp/server.py"
       ],
-      "contract_hash": "7196d54e49810be8533441b8ad8289d0c8198032e60b30a27ac8ff9b6559ea52",
+      "contract_hash": "c84f63fecee6e09a31bc347aba5d0fc7ed839c364b2e46cf68b2454185bebd56",
       "compatibility_policy": "Stable tool name and existing arguments; additive optional arguments require stdio smoke",
       "invalidation_rule": "Any material change revalidates MCP consumers and stdio evidence"
     },
