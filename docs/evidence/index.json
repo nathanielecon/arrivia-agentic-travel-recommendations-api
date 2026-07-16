@@ -15,7 +15,7 @@
     "evidence_level": "E4",
     "d5_earned": false,
     "e6_earned": false,
-    "reason": "Local candidate-bound evidence (including rollback and footage) exists; Gate 6 via Codex CLI CloudWarm GPT-5.4 is blocked pending arrivia ENV_ID registration"
+    "reason": "Local candidate-bound evidence (including rollback and footage) exists; arrivia GPT-5.4 CloudWarm is registered and Gate 6 remains pending after the dev-lock portability repair"
   },
   "events": [
     {
@@ -985,11 +985,11 @@
       "artifacts": [
         {
           "path": "docs/certification/CHECK_MATRIX.md",
-          "sha256": "7e486f8d2ee6e7e75c5fd6581c7088da0108ec829273e7ecd9ab6368b72b6678"
+          "sha256": "a3f257aa5aa95dcd1b7ffad2767647bcd1defd1f7dd2eccc527fb577c17a84e8"
         },
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "5270cae4877ed0a25de4c8115647cafd48e064051318e481eaa45cf06ef824bc"
+          "sha256": "edbdbb6aa3bd1bc522ea4afbf59d7e854ae41c026f735d33e6debb1505be77ea"
         }
       ],
       "tool_versions": {
@@ -1047,7 +1047,7 @@
       "artifacts": [
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "5270cae4877ed0a25de4c8115647cafd48e064051318e481eaa45cf06ef824bc"
+          "sha256": "edbdbb6aa3bd1bc522ea4afbf59d7e854ae41c026f735d33e6debb1505be77ea"
         },
         {
           "path": ".codex/README.md",

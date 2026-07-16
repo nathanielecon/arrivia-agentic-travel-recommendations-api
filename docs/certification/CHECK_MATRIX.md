@@ -1,7 +1,7 @@
 ---
 owner: P_integration / repository maintainer
-candidate: fdfc3a5efdeb2f79259983b1f4c8259d639074d5
-image_digest: sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead
+candidate: supplied-by-attestation
+image_digest: supplied-by-attestation
 recorded_at: 2026-07-16T17:10:00-04:00
 ---
 
@@ -23,7 +23,7 @@ recorded_at: 2026-07-16T17:10:00-04:00
 | Rollback A←B | passed | seed session remained at cap (`0` grants); `.data` preserved |
 | Links / evidence freshness | passed | candidate-bound index + handoff |
 | Visual inspection | passed | Walkthrough frames; footage under annotations |
-| Gate 6 independent review | blocked | No arrivia Codex ENV_ID in warm registry; must use GPT-5.4 CloudWarm |
+| Gate 6 independent review | pending | Arrivia GPT-5.4 CloudWarm environment registered; candidate rebuild and review pending |
 
 ## Digests
 

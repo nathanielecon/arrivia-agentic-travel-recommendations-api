@@ -1,8 +1,8 @@
 ---
 owner: P_integration / repository maintainer
 status: ready-for-independent-review
-candidate: fdfc3a5efdeb2f79259983b1f4c8259d639074d5
-image_digest: sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead
+candidate: supplied-by-attestation
+image_digest: supplied-by-attestation
 last_verified: 2026-07-16
 ---
 
@@ -14,9 +14,9 @@ This package is the only input an independent reviewer should need. It contains 
 
 | Field | Value |
 | --- | --- |
-| Git SHA (code + certification image source) | `fdfc3a5efdeb2f79259983b1f4c8259d639074d5` |
-| Tip with evidence rebind (optional) | `c818c2f2d1c1cdd111bf76018f7a5fbdeb342bde` |
-| Image | `arrivia-recs:c3-candidate` / digest `sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead` |
+| Git SHA (code + certification image source) | Supplied in the candidate-bound attestation event |
+| Tip with evidence rebind | Repository tip containing the attestation event |
+| Image | Immutable digest supplied in the candidate-bound attestation event |
 | Previous verified image (rollback target) | `arrivia-recs:c1-verified` / digest `sha256:e5f093d29f0d3fdb54677f3e634604a2cef5914a5423af2a112b0260b49d3d08` from SHA `17cc00d7cf06a04028a1ff3aabdd552875cf5d0a` |
 
 ## Claim boundary
@@ -26,14 +26,14 @@ v0 supports one active recommendation-serving replica. REST and MCP may share se
 ## Bootstrap
 
 ```powershell
-git checkout fdfc3a5efdeb2f79259983b1f4c8259d639074d5
+git checkout <candidate-sha-from-attestation>
 Copy-Item .env.example .env -Force
 # If host port 8082 is occupied, set PARTNER_CONFIG_ADMIN_PORT=18082 in .env
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements-dev.lock
 python -m pip install --no-deps -e .
-$env:ARRIVIA_RECS_IMAGE = "arrivia-recs:c3-candidate"
+$env:ARRIVIA_RECS_IMAGE = "<candidate-image-ref-or-digest>"
 docker compose --profile mocks up --build -d
 ```
 
