@@ -23,7 +23,7 @@ recorded_at: 2026-07-16T17:10:00-04:00
 | Rollback A←B | passed | seed session remained at cap (`0` grants); `.data` preserved |
 | Links / evidence freshness | passed | candidate-bound index + handoff |
 | Visual inspection | passed | Walkthrough frames; footage under annotations |
-| Gate 6 independent review | pending | Clean-context agent |
+| Gate 6 independent review | blocked | No arrivia Codex ENV_ID in warm registry; must use GPT-5.4 CloudWarm |
 
 ## Digests
 

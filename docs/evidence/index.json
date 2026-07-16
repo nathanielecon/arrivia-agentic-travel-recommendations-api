@@ -15,7 +15,7 @@
     "evidence_level": "E4",
     "d5_earned": false,
     "e6_earned": false,
-    "reason": "Candidate-bound local evidence including rollback and footage; Gate 6 independent review pending"
+    "reason": "Local candidate-bound evidence (including rollback and footage) exists; Gate 6 via Codex CLI CloudWarm GPT-5.4 is blocked pending arrivia ENV_ID registration"
   },
   "events": [
     {
@@ -1000,10 +1000,70 @@
       "independent": false,
       "notes": "Orchestrator certification before Gate 6; not independent review.",
       "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-CLEAN-REVIEW",
+      "requirement_ids": [
+        "REQ-ORCH-001"
+      ],
+      "status": "blocked",
+      "recorded_at": "2026-07-16T17:30:00-04:00",
+      "candidate": {
+        "git_sha": "fdfc3a5efdeb2f79259983b1f4c8259d639074d5",
+        "working_tree_clean": true,
+        "image_digest": "sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead"
+      },
+      "environment": {
+        "id": "codex-cloudwarm",
+        "description": "Gate 6 requires Codex CLI CloudWarm GPT-5.4 for this repo Environment"
+      },
+      "procedure": {
+        "preconditions": [
+          "Codex Environment wired for nathanielecon/arrivia-agentic-travel-recommendations-api",
+          "ENV_ID registered in %LOCALAPPDATA%\\\\codex-cloud-warm\\\\environments.json",
+          "Invoke-CodexCloudWarm.ps1 succeeded"
+        ],
+        "commands": [
+          "pwsh -File scripts/Invoke-CodexCloudWarm.ps1 -Repo nathanielecon/arrivia-agentic-travel-recommendations-api",
+          "codex cloud exec --env <ENV_ID> --branch main -c model=\"gpt-5.4\" <Gate6 prompt from docs/certification/GATE6_HANDOFF.md>"
+        ],
+        "cleanup": []
+      },
+      "assertions": [
+        {
+          "name": "codex-cloudwarm-env",
+          "expected": "registered ENV_ID for arrivia repo",
+          "observed": "missing from local warm registry (only aws-landing-zone-lab and dailydigits present)",
+          "result": "blocked"
+        },
+        {
+          "name": "independent-reproduction",
+          "expected": "clean-context GPT-5.4 CloudWarm worker reproduces candidate",
+          "observed": null,
+          "result": "blocked"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/certification/GATE6_HANDOFF.md",
+          "sha256": "5270cae4877ed0a25de4c8115647cafd48e064051318e481eaa45cf06ef824bc"
+        },
+        {
+          "path": ".codex/README.md",
+          "sha256": "983caafd6b3ec3ef750fbb162d8bdb7e6088204d472cfa6beeaa1e8f01d6a6c7"
+        }
+      ],
+      "tool_versions": {
+        "codex-cli": "0.144.1"
+      },
+      "claim_level": "E3",
+      "independent": true,
+      "notes": "Blocked: no Codex Cloud Environment id for this repository. Wrong Cursor Cloud Agents were stopped; PR #1 closed. Do not claim D5/E6 until a GPT-5.4 CloudWarm Gate 6 passes.",
+      "supersedes": []
     }
   ],
   "planned_event_ids": [
-    "EVID-CLEAN-REVIEW",
     "EVID-DOC-CONTRACT",
     "EVID-OBS-LOG",
     "EVID-OBS-METRICS",

@@ -133,3 +133,15 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Repair: Temp SQLite path in smoke test; MCP logs to stderr; refresh MCP interface hash.
 - Verification: Pending locked clean pytest rerun.
 - Owner/status: P_reliability / verified.
+
+### BF-20260716-010 — Cursor Cloud Agents used instead of Codex CloudWarm GPT-5.4
+
+- Time: 2026-07-16T17:08:00-04:00
+- Candidate: tip through `fc9122594d76eed402de3c21020b8a6a0be59ac1`; tooling commit `ab11530bf3e188c83a83311d27283f246f33447d`
+- Detection: User stop; Cursor Cloud Composer agents launched for SBOM and Gate 6 contrary to Codex CLI CloudWarm GPT-5.4-only rule.
+- Impact: Draft PR #1 and branch `cursor/sbom-and-pip-audit-refresh-c59a` created; Gate 6 not valid.
+- Cause: Orchestrator misinterpreted `CODEX_AUTH_JSON_GZB64` as authorization to use Cursor Cloud Agents.
+- Containment: Stopped Cursor agents; closed PR #1; deleted Cursor branch.
+- Repair: Added `.codex/` + warm/register scripts; Gate 6 remains blocked until arrivia Codex Environment id is registered and a GPT-5.4 `codex cloud exec` review passes.
+- Verification: PR #1 closed; branch deleted; `EVID-CLEAN-REVIEW` recorded blocked.
+- Owner/status: P_integration / contained-open (ENV_ID pending).
