@@ -145,3 +145,15 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Repair: Added `.codex/` + warm/register scripts; Gate 6 remains blocked until arrivia Codex Environment id is registered and a GPT-5.4 `codex cloud exec` review passes.
 - Verification: PR #1 closed; branch deleted; `EVID-CLEAN-REVIEW` recorded blocked.
 - Owner/status: P_integration / contained-open (ENV_ID pending).
+
+### BF-20260716-011 — Development lock was not portable to Linux CloudWarm
+
+- Time: 2026-07-16T18:24:00-04:00
+- Candidate: certification source `fdfc3a5efdeb2f79259983b1f4c8259d639074d5`; CloudWarm tooling tip after `1268ecb`.
+- Detection: Independent GPT-5.4 locked-suite proof reached the exact clean candidate, but `pip install -r requirements-dev.lock` could not install in Linux; the lock pinned Windows-only `pywin32==312` without a platform marker.
+- Impact: `TEST-CLEAN-INSTALL` and Gate 6 remained blocked; pytest and Ruff were unavailable in the fresh Cloud venv.
+- Cause: The development lock was generated on Windows without preserving the `sys_platform == "win32"` marker inherited from MCP.
+- Containment: The failed Cloud proof remains visible and cannot support D5/E6.
+- Repair: Add `sys_platform == "win32"` to the `pywin32` pin and populate an Environment-cached offline wheelhouse from the marked locks.
+- Verification: Pending forced CloudWarm setup and a new GPT-5.4 locked-suite proof.
+- Owner/status: P_integration / contained-open.

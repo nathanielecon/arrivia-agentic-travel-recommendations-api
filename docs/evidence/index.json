@@ -683,7 +683,7 @@
       "requirement_ids": [
         "REQ-ORCH-001"
       ],
-      "status": "passed",
+      "status": "superseded",
       "recorded_at": "2026-07-16T14:37:00-04:00",
       "candidate": {
         "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
@@ -734,7 +734,7 @@
       "artifacts": [
         {
           "path": "requirements-dev.lock",
-          "sha256": "b0999532941f47fee6d83a2b4ecea890fc4206f621c0acddbf45e240241d8cd3"
+          "sha256": null
         },
         {
           "path": "docs/evidence/raw/20260716-hardening-tests.txt",
@@ -748,7 +748,7 @@
       },
       "claim_level": "E3",
       "independent": false,
-      "notes": "Clean dependency environment, but not a clean committed source checkout and not independent Gate 6.",
+      "notes": "Historical Windows clean dependency proof. Superseded when the dev lock added an explicit Windows marker for pywin32 so Linux CloudWarm reviews can install the same lock; not independent Gate 6.",
       "supersedes": []
     },
     {
