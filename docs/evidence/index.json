@@ -5,7 +5,7 @@
     "owner": "P_authority / repository maintainer",
     "status": "accepted",
     "baseline_sha": "17cc00d7cf06a04028a1ff3aabdd552875cf5d0a",
-    "candidate_ref": "fdfc3a5efdeb2f79259983b1f4c8259d639074d5",
+    "candidate_ref": "446679405d41bfd91d6b273e269d35f50afed458",
     "last_verified": "2026-07-16",
     "review_trigger": "Candidate, artifact, environment, result, assertion, requirement, or public claim change"
   },
@@ -15,7 +15,7 @@
     "evidence_level": "E4",
     "d5_earned": false,
     "e6_earned": false,
-    "reason": "Local candidate-bound evidence (including rollback and footage) exists; arrivia GPT-5.4 CloudWarm is registered and Gate 6 remains pending after the dev-lock portability repair"
+    "reason": "Local candidate-bound evidence (including rollback, footage, and the C5 runtime verifier) exists; GPT-5.4 CloudWarm is registered and warm, but repaired-candidate clean-reproduction tasks terminated at the Codex platform layer"
   },
   "events": [
     {
@@ -985,11 +985,11 @@
       "artifacts": [
         {
           "path": "docs/certification/CHECK_MATRIX.md",
-          "sha256": "a3f257aa5aa95dcd1b7ffad2767647bcd1defd1f7dd2eccc527fb577c17a84e8"
+          "sha256": "eb3ae9355cb575b1ed3855641a252f32d731eb6452cbf9b86f97ed1eb428d7ce"
         },
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "edbdbb6aa3bd1bc522ea4afbf59d7e854ae41c026f735d33e6debb1505be77ea"
+          "sha256": "3ba0aa61c163104340a865e90d6d4a661cce557736c7b0e6839237602fccc731"
         }
       ],
       "tool_versions": {
@@ -1007,7 +1007,7 @@
       "requirement_ids": [
         "REQ-ORCH-001"
       ],
-      "status": "blocked",
+      "status": "superseded",
       "recorded_at": "2026-07-16T17:30:00-04:00",
       "candidate": {
         "git_sha": "fdfc3a5efdeb2f79259983b1f4c8259d639074d5",
@@ -1047,7 +1047,7 @@
       "artifacts": [
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "edbdbb6aa3bd1bc522ea4afbf59d7e854ae41c026f735d33e6debb1505be77ea"
+          "sha256": null
         },
         {
           "path": ".codex/README.md",
@@ -1060,6 +1060,170 @@
       "claim_level": "E3",
       "independent": true,
       "notes": "Blocked: no Codex Cloud Environment id for this repository. Wrong Cursor Cloud Agents were stopped; PR #1 closed. Do not claim D5/E6 until a GPT-5.4 CloudWarm Gate 6 passes.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-CLEAN-REVIEW-GPT54",
+      "requirement_ids": [
+        "REQ-ORCH-001"
+      ],
+      "status": "blocked",
+      "recorded_at": "2026-07-16T18:40:00-04:00",
+      "candidate": {
+        "git_sha": "446679405d41bfd91d6b273e269d35f50afed458",
+        "working_tree_clean": true,
+        "image_digest": "sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720"
+      },
+      "environment": {
+        "id": "codex-cloudwarm:6a594effc15c8191a0b7fd4af300dda1",
+        "description": "Codex CLI CloudWarm worker pinned to GPT-5.4"
+      },
+      "procedure": {
+        "preconditions": [
+          "Arrivia Environment registered and warm",
+          "Fresh reviewer receives candidate, digest, acceptance IDs, and claim boundary only",
+          "No Cursor Cloud Agent results accepted"
+        ],
+        "commands": [
+          "codex cloud exec --env 6a594effc15c8191a0b7fd4af300dda1 --branch main -c model=\"gpt-5.4\" <clean locked-suite prompt>",
+          "codex cloud status <task-id>"
+        ],
+        "cleanup": []
+      },
+      "assertions": [
+        {
+          "name": "codex-cloudwarm-env",
+          "expected": "registered and warm arrivia GPT-5.4 Environment",
+          "observed": "warm task task_e_6a59589ef838832b84bdd5f12a19cb65 reached READY",
+          "result": "passed"
+        },
+        {
+          "name": "superseded-candidate-clean-checkout",
+          "expected": "independent worker reaches an exact clean candidate",
+          "observed": "task_e_6a59564f69d4832b8d1a7a2a9b12d100 checked out fdfc3a5efdeb2f79259983b1f4c8259d639074d5 cleanly; compileall passed; locked install exposed the unmarked Windows-only pywin32 pin",
+          "result": "failed"
+        },
+        {
+          "name": "repaired-candidate-independent-reproduction",
+          "expected": "fresh GPT-5.4 CloudWarm worker installs and runs the C5 acceptance suite",
+          "observed": "tasks task_e_6a595b25ec58832ba90732608b3b2195, task_e_6a595be0204c832bbc8864855507fc0e, and task_e_6a595c8d2164832b9d598fbbbcd634cf terminated ERROR without command output; verdict task task_e_6a595d4126b4832b8b47ac0518cea443 also terminated ERROR",
+          "result": "blocked"
+        },
+        {
+          "name": "d5-e6-verdict",
+          "expected": "independent clean reproduction passes",
+          "observed": "not demonstrated",
+          "result": "blocked"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/certification/GATE6_HANDOFF.md",
+          "sha256": "3ba0aa61c163104340a865e90d6d4a661cce557736c7b0e6839237602fccc731"
+        },
+        {
+          "path": "docs/certification/CHECK_MATRIX.md",
+          "sha256": "eb3ae9355cb575b1ed3855641a252f32d731eb6452cbf9b86f97ed1eb428d7ce"
+        }
+      ],
+      "tool_versions": {
+        "codex-cli": "0.144.5",
+        "cloud-python": "3.12.13",
+        "model": "gpt-5.4"
+      },
+      "claim_level": "E4",
+      "independent": true,
+      "notes": "Independent GPT-5.4 CloudWarm reproduction is blocked by Codex task-level ERROR outcomes. Local C5 checks do not substitute for Gate 6. D5/E6 is not earned.",
+      "supersedes": [
+        "EVID-CLEAN-REVIEW"
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-C5-RUNTIME",
+      "requirement_ids": [
+        "REQ-OPS-001",
+        "REQ-EVID-001"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T18:41:00-04:00",
+      "candidate": {
+        "git_sha": "446679405d41bfd91d6b273e269d35f50afed458",
+        "working_tree_clean": true,
+        "image_digest": "sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720"
+      },
+      "environment": {
+        "id": "local-compose-docker-desktop",
+        "description": "Windows host with Docker Desktop Linux containers; SQLite accessed only inside the Docker locking domain during recovery"
+      },
+      "procedure": {
+        "preconditions": [
+          "C5 image built with provenance and SBOM attestations disabled",
+          "API stopped before SQLite integrity checks or restore"
+        ],
+        "commands": [
+          "docker build --provenance=false --sbom=false -t arrivia-recs:gate6-4466794 .",
+          "python scripts/deployment_verifier.py --base-url http://127.0.0.1:8080",
+          "docker run --rm -v <data>:/data <image> python -c <pragma integrity_check>",
+          "docker run --rm -v <data>:/data <image> <preserve failed files and restore verified snapshot>",
+          "python scripts/deployment_verifier.py --base-url http://127.0.0.1:8080"
+        ],
+        "cleanup": [
+          "Malformed database, WAL, and SHM retained with failed suffixes"
+        ]
+      },
+      "assertions": [
+        {
+          "name": "initial-verifier",
+          "expected": "candidate passes runtime verifier",
+          "observed": "HTTP 500; database disk image malformed",
+          "result": "failed"
+        },
+        {
+          "name": "host-reidentity",
+          "expected": "byte-identical new file identity clears cross-kernel state",
+          "observed": "HTTP 500 remained",
+          "result": "failed"
+        },
+        {
+          "name": "docker-domain-restore-integrity",
+          "expected": "restored retained snapshot passes PRAGMA integrity_check",
+          "observed": "ok",
+          "result": "passed"
+        },
+        {
+          "name": "candidate-runtime-verifier",
+          "expected": "health, readiness, metrics, audit/exclusion, and session cap pass",
+          "observed": "all passed with unchanged C5 image",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/raw/candidate-db-recovery-20260716-182519/verifier-after-reidentity.txt",
+          "sha256": "61d3b4857198333317942bd309380ce91ada61f0bf6d2cfbecb17680405fe013"
+        },
+        {
+          "path": "docs/evidence/raw/candidate-db-recovery-20260716-182519/verifier-after-restore.txt",
+          "sha256": "61d3b4857198333317942bd309380ce91ada61f0bf6d2cfbecb17680405fe013"
+        },
+        {
+          "path": "docs/evidence/raw/candidate-db-recovery-20260716-182519/integrity-after-docker-restore.txt",
+          "sha256": "7546a3648fee8c05b3f60f3c4801b42dd46c9ca5fa9ea04efc5aebb8ec2a2a5f"
+        },
+        {
+          "path": "docs/evidence/raw/candidate-db-recovery-20260716-182519/verifier-after-docker-restore.txt",
+          "sha256": "d2eedf44e8a9da075a4605b19ed5f62b6e58df4684a9417c519788e4736a1c5a"
+        }
+      ],
+      "tool_versions": {
+        "docker": "Docker Desktop",
+        "python": "3.14.3"
+      },
+      "claim_level": "E4",
+      "independent": false,
+      "notes": "Both failed verifier attempts are retained. Database restore followed demonstrated corruption and used a snapshot that passed integrity_check inside the Docker locking domain. This local evidence does not satisfy Gate 6.",
       "supersedes": []
     }
   ],

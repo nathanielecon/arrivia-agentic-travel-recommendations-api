@@ -1,0 +1,25 @@
+{
+  "result": "pass",
+  "checks": [
+    {
+      "check": "/health",
+      "result": "pass"
+    },
+    {
+      "check": "/ready",
+      "result": "pass"
+    },
+    {
+      "check": "/metrics",
+      "result": "pass"
+    },
+    {
+      "check": "audit_and_cruise_exclusion",
+      "result": "pass"
+    },
+    {
+      "check": "session_cap",
+      "result": "pass"
+    }
+  ]
+}

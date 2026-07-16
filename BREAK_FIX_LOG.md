@@ -155,5 +155,17 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Cause: The development lock was generated on Windows without preserving the `sys_platform == "win32"` marker inherited from MCP.
 - Containment: The failed Cloud proof remains visible and cannot support D5/E6.
 - Repair: Add `sys_platform == "win32"` to the `pywin32` pin and populate an Environment-cached offline wheelhouse from the marked locks.
-- Verification: Pending forced CloudWarm setup and a new GPT-5.4 locked-suite proof.
-- Owner/status: P_integration / contained-open.
+- Verification: Forced CloudWarm setup succeeded and cached the marked lock. Three repaired-candidate locked-suite tasks still terminated with Codex task status `ERROR` and no command output, so Gate 6 remains blocked.
+- Owner/status: P_integration / repaired locally; independent reproduction blocked by Cloud task failures.
+
+### BF-20260716-012 — Candidate verifier encountered malformed cross-kernel SQLite state
+
+- Time: 2026-07-16T18:25:00-04:00
+- Candidate: `446679405d41bfd91d6b273e269d35f50afed458`; image `sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720`.
+- Detection: The first deployment-verifier POST returned HTTP 500; structured logs reported `sqlite3.DatabaseError: database disk image is malformed`.
+- Impact: The first C5 runtime verification failed and cannot be used as passing evidence.
+- Cause: The Windows host had touched the Docker Desktop bind-mounted SQLite path, crossing the documented locking-domain boundary.
+- Containment: Stopped the API and retained the malformed database, WAL, and SHM files. A byte-for-byte host-side reidentity attempt also failed and remains failed evidence.
+- Repair: Within the Docker locking domain, integrity-checked retained snapshots, selected `session_budget.20260716T1840.snapshot.sqlite3` after `PRAGMA integrity_check` returned `ok`, preserved the failed files, and restored the verified snapshot without host SQLite access.
+- Verification: Restored database integrity returned `ok`; the unchanged C5 image then passed health, readiness, metrics, audit/exclusion, and session-cap checks.
+- Owner/status: P_operations / verified locally.

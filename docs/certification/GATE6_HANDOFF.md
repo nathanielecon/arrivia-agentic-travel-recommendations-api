@@ -1,8 +1,8 @@
 ---
 owner: P_integration / repository maintainer
-status: ready-for-independent-review
-candidate: supplied-by-attestation
-image_digest: supplied-by-attestation
+status: blocked-after-independent-attempts
+candidate: 446679405d41bfd91d6b273e269d35f50afed458
+image_digest: sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720
 last_verified: 2026-07-16
 ---
 
@@ -14,9 +14,9 @@ This package is the only input an independent reviewer should need. It contains 
 
 | Field | Value |
 | --- | --- |
-| Git SHA (code + certification image source) | Supplied in the candidate-bound attestation event |
+| Git SHA (code + certification image source) | `446679405d41bfd91d6b273e269d35f50afed458` |
 | Tip with evidence rebind | Repository tip containing the attestation event |
-| Image | Immutable digest supplied in the candidate-bound attestation event |
+| Image | `arrivia-recs:gate6-4466794` / digest `sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720` |
 | Previous verified image (rollback target) | `arrivia-recs:c1-verified` / digest `sha256:e5f093d29f0d3fdb54677f3e634604a2cef5914a5423af2a112b0260b49d3d08` from SHA `17cc00d7cf06a04028a1ff3aabdd552875cf5d0a` |
 
 ## Claim boundary
@@ -26,14 +26,14 @@ v0 supports one active recommendation-serving replica. REST and MCP may share se
 ## Bootstrap
 
 ```powershell
-git checkout <candidate-sha-from-attestation>
+git checkout 446679405d41bfd91d6b273e269d35f50afed458
 Copy-Item .env.example .env -Force
 # If host port 8082 is occupied, set PARTNER_CONFIG_ADMIN_PORT=18082 in .env
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements-dev.lock
 python -m pip install --no-deps -e .
-$env:ARRIVIA_RECS_IMAGE = "<candidate-image-ref-or-digest>"
+$env:ARRIVIA_RECS_IMAGE = "arrivia-recs:gate6-4466794"
 docker compose --profile mocks up --build -d
 ```
 
@@ -66,3 +66,7 @@ Evidence lookup: `docs/evidence/index.json`
 3. Live CLI success is reproducible; controlled partner failure/recovery is reproducible when WireMock admin is available.
 4. Claims in README and evidence stay within the boundary above.
 5. Reviewer records results independently; the authoring worker must not self-certify.
+
+## Independent attempt outcome
+
+The arrivia Environment `6a594effc15c8191a0b7fd4af300dda1` warmed successfully with GPT-5.4 and an offline wheel cache. A first independent proof on the superseded candidate reached a clean checkout but exposed the unmarked Windows-only `pywin32` pin. After repairing that lock portability defect, three clean-suite attempts and one verdict-only task terminated with Codex task status `ERROR` and no command output. Independent reproduction of this candidate is therefore blocked, not passed; D5/E6 is not earned.
