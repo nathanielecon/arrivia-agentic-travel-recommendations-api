@@ -1,6 +1,6 @@
 ---
 owner: P_integration / repository maintainer
-candidate: PENDING_C3_SHA
+candidate: fdfc3a5efdeb2f79259983b1f4c8259d639074d5
 image_digest: sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead
 recorded_at: 2026-07-16T16:55:00-04:00
 ---

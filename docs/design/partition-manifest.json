@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "candidate_sha": "67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8",
-  "candidate_state": "immutable candidate C2; image B verified; rollback to A passed; Gate 6 pending",
+  "candidate_sha": "fdfc3a5efdeb2f79259983b1f4c8259d639074d5",
+  "candidate_state": "immutable candidate C3; image digest sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead; Gate 6 pending",
   "generated_at": "2026-07-16T13:33:00-04:00",
   "owner": "P_authority / repository maintainer",
   "status": "accepted",

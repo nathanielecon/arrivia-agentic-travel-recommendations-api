@@ -4,7 +4,7 @@ Internal service for AI-driven, partner-aware travel recommendations that power 
 
 ![Arrivia architecture-first portfolio infographic showing REST and MCP parity, guarded upstreams, strict policy, SQLite budget state, telemetry, and the v0 claim boundary](docs/portfolio/arrivia-infographic.png)
 
-**Current certification: D4 Operable design / E4 candidate-bound local evidence.** Immutable candidate `PENDING_C3_SHA` with image digest `sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead`. D5/E6 remains unclaimed until Gate 6 independent clean-context review passes.
+**Current certification: D4 Operable design / E4 candidate-bound local evidence.** Immutable candidate `fdfc3a5efdeb2f79259983b1f4c8259d639074d5` with image digest `sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead`. D5/E6 remains unclaimed until Gate 6 independent clean-context review passes.
 
 Verified in the current working candidate:
 

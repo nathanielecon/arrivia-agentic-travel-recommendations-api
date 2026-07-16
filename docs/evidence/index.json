@@ -5,7 +5,7 @@
     "owner": "P_authority / repository maintainer",
     "status": "accepted",
     "baseline_sha": "17cc00d7cf06a04028a1ff3aabdd552875cf5d0a",
-    "candidate_ref": "67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8",
+    "candidate_ref": "fdfc3a5efdeb2f79259983b1f4c8259d639074d5",
     "last_verified": "2026-07-16",
     "review_trigger": "Candidate, artifact, environment, result, assertion, requirement, or public claim change"
   },
@@ -15,7 +15,7 @@
     "evidence_level": "E4",
     "d5_earned": false,
     "e6_earned": false,
-    "reason": "Candidate-bound rollback and footage exist; D5/E6 require independent Gate 6 clean-context reproduction"
+    "reason": "Candidate-bound local evidence including rollback and footage; Gate 6 independent review pending"
   },
   "events": [
     {
@@ -932,6 +932,74 @@
       "independent": false,
       "notes": "Previous image A built from 17cc00d7cf06a04028a1ff3aabdd552875cf5d0a; candidate B from 67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8. DB snapshot retained; restore not used.",
       "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-ORCH-VALIDATION",
+      "requirement_ids": [
+        "REQ-ORCH-001"
+      ],
+      "status": "passed",
+      "recorded_at": "2026-07-16T17:05:00-04:00",
+      "candidate": {
+        "git_sha": "fdfc3a5efdeb2f79259983b1f4c8259d639074d5",
+        "working_tree_clean": false,
+        "image_digest": "sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead"
+      },
+      "environment": {
+        "id": "local-python",
+        "description": "Locked clean venv + design authority after MCP isolation fix"
+      },
+      "procedure": {
+        "preconditions": [
+          "requirements-dev.lock install"
+        ],
+        "commands": [
+          "pytest -q",
+          "ruff check .",
+          "compileall",
+          "tests/test_design_authority.py"
+        ],
+        "cleanup": []
+      },
+      "assertions": [
+        {
+          "name": "locked-clean-suite",
+          "expected": "122 passed",
+          "observed": "122 passed",
+          "result": "passed"
+        },
+        {
+          "name": "interface-hashes",
+          "expected": "match contract files",
+          "observed": "design authority passed",
+          "result": "passed"
+        },
+        {
+          "name": "partition-ownership",
+          "expected": "no overlapping owners",
+          "observed": "design authority passed",
+          "result": "passed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/certification/CHECK_MATRIX.md",
+          "sha256": "504faf9841e6e10d0a768c4e51da81b7086d6cea06241f6bfc1934bc02ab10af"
+        },
+        {
+          "path": "docs/certification/GATE6_HANDOFF.md",
+          "sha256": "18f132b9b421ab97939ed139f73dfb37e72839780e13f309a224b2b5d3002bce"
+        }
+      ],
+      "tool_versions": {
+        "python": "3.14.3",
+        "pytest": "locked"
+      },
+      "claim_level": "E3",
+      "independent": false,
+      "notes": "Orchestrator certification before Gate 6; not independent review.",
+      "supersedes": []
     }
   ],
   "planned_event_ids": [
@@ -939,7 +1007,6 @@
     "EVID-DOC-CONTRACT",
     "EVID-OBS-LOG",
     "EVID-OBS-METRICS",
-    "EVID-ORCH-VALIDATION",
     "EVID-POL-STRICT",
     "EVID-REL-CIRCUIT"
   ]

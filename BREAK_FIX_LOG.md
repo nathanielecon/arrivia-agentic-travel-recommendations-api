@@ -132,4 +132,4 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Containment: Do not treat the failed clean-venv run as certification.
 - Repair: Temp SQLite path in smoke test; MCP logs to stderr; refresh MCP interface hash.
 - Verification: Pending locked clean pytest rerun.
-- Owner/status: P_reliability / contained-open.
+- Owner/status: P_reliability / verified.
