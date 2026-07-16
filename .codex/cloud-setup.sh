@@ -73,6 +73,28 @@ if [[ -f "$HOME/.bashrc" ]] || touch "$HOME/.bashrc"; then
     echo 'export TF_IN_AUTOMATION=1 POWERSHELL_TELEMETRY_OPTOUT=1' >> "$HOME/.bashrc"
 fi
 
+echo "== Arrivia Python wheelhouse (offline task installs) =="
+if [[ -f requirements-dev.lock && -f requirements-build.lock ]]; then
+  WHEELHOUSE="$HOME/.cache/arrivia-wheelhouse"
+  LOCK_STAMP="$WHEELHOUSE/locks.sha256"
+  mkdir -p "$WHEELHOUSE"
+  current_stamp="$(
+    sha256sum requirements-dev.lock requirements-build.lock \
+      | sha256sum \
+      | awk '{print $1}'
+  )"
+  cached_stamp="$(cat "$LOCK_STAMP" 2>/dev/null || true)"
+  if [[ "$cached_stamp" != "$current_stamp" ]]; then
+    rm -f "$WHEELHOUSE"/*.whl "$WHEELHOUSE"/*.tar.gz
+    python -m pip download \
+      --dest "$WHEELHOUSE" \
+      -r requirements-dev.lock \
+      -r requirements-build.lock
+    printf '%s\n' "$current_stamp" > "$LOCK_STAMP"
+  fi
+  echo "wheelhouse=$WHEELHOUSE files=$(find "$WHEELHOUSE" -maxdepth 1 -type f | wc -l)"
+fi
+
 echo "== Verify toolchain =="
 git --version
 node --version

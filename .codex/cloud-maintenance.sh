@@ -25,6 +25,22 @@ if [[ "$ok" -ne 1 ]]; then
   fi
 fi
 
+# Cloud tasks have restricted egress. Keep the locked Python artifacts in the
+# Environment cache so independent reviews can create genuinely fresh venvs
+# and install with --no-index.
+if [[ -f requirements-dev.lock && -f requirements-build.lock ]]; then
+  wheelhouse="$HOME/.cache/arrivia-wheelhouse"
+  stamp="$wheelhouse/locks.sha256"
+  current_stamp="$(
+    sha256sum requirements-dev.lock requirements-build.lock \
+      | sha256sum \
+      | awk '{print $1}'
+  )"
+  if [[ ! -f "$stamp" || "$(cat "$stamp")" != "$current_stamp" ]]; then
+    bash .codex/cloud-setup.sh
+  fi
+fi
+
 # Optional: start Docker if the image provides it (ignore failures).
 if command -v service >/dev/null 2>&1; then
   sudo service docker start 2>/dev/null || true
