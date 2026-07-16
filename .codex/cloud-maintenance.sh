@@ -33,5 +33,7 @@ fi
 echo "Codex cloud maintenance OK:"
 node --version
 pwsh -NoLogo -NoProfile -Command '$PSVersionTable.PSVersion.ToString()'
-terraform version -json 2>/dev/null | head -c 120 || terraform version
-aws --version | head -n 1
+# Do not pipe through head under pipefail — SIGPIPE aborts maintenance and
+# Cloud tasks ERROR before the agent runs (empty transcript).
+terraform version
+aws --version
