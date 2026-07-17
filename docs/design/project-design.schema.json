@@ -31,9 +31,9 @@
         "name": { "type": "string", "minLength": 1 },
         "repository": { "type": "string", "minLength": 1 },
         "owner": { "type": "string", "minLength": 1 },
-        "target_depth": { "enum": ["D0", "D1", "D2", "D3", "D4", "D5"] },
-        "earned_depth": { "enum": ["D0", "D1", "D2", "D3", "D4", "D5"] },
-        "evidence_level": { "pattern": "^E[0-6]$" },
+        "target_depth": { "description": "Target project-local design depth on the D0-D5 axis defined in docs/certification/CERTIFICATION_LEVELS.md; no D6 level exists.", "enum": ["D0", "D1", "D2", "D3", "D4", "D5"] },
+        "earned_depth": { "description": "Earned project-local design depth on the D0-D5 axis defined in docs/certification/CERTIFICATION_LEVELS.md; separate from evidence strength.", "enum": ["D0", "D1", "D2", "D3", "D4", "D5"] },
+        "evidence_level": { "description": "Project-local evidence strength on the E0-E6 axis defined in docs/certification/CERTIFICATION_LEVELS.md; not external accreditation or a production-readiness guarantee.", "pattern": "^E[0-6]$" },
         "claim_boundary": { "type": "string", "minLength": 1 }
       }
     },

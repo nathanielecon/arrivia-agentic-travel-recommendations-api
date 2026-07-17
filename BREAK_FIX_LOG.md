@@ -347,3 +347,73 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: Rendered README HTML contains an inline video player for `https://github.com/user-attachments/assets/c6e92ce5-6680-4235-95f0-3d68bd518fc9`; design/docs contracts and README guidance tests pass.
 - Owner/status: P_portfolio / verified.
 
+### BF-20260717-028 — Post-merge portfolio retained pre-certification claims
+
+- Time: 2026-07-17T12:30:00-04:00.
+- Candidate: post-merge portfolio working tree; independently reviewed runtime remains `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` and image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`.
+- Detection: The repository claimed D5/E6 while README simultaneously disclaimed independent reimplementability; the infographic and evidence gallery still said no D5/E6/D4; the architecture hash table was stale; and no current visual or evidence event described the council-assisted PR #2 integration.
+- Impact: Runtime certification remained valid, but the public portfolio was semantically inconsistent and the inline user-attachment pointed to a superseded cut.
+- Cause: Certification, merge integration, Pages publication, and later walkthrough fixes landed in separate commits without one final claim-parity pass over every mutable derivative.
+- Containment: Preserve the historical 131-test Gate 6 and 132-test merge facts separately. Remove the stale inline attachment until a refreshed upload is published; do not rewrite runtime/image identities or introduce a D6 tier.
+- Repair: Correct current claims; add the read-only council/lead-only writer lane to draw.io delivery authority; rerender exact PNG/SVG, evidence gallery, Image2 derivative, and the 160-second walkthrough; add current hash/claim/orchestration validators.
+- Verification: 136 pytest passed; Ruff and compilation passed; HyperFrames lint/check passed with one retained density warning; 160/160 frames, four 40-frame sheets, eight full-resolution scene samples, audio levels, duration, codecs, and artifact dimensions passed visual/technical review.
+- Owner/status: P_portfolio and P_integration / repaired locally; candidate-bound evidence and fresh review pending.
+
+### BF-20260717-029 — Fresh review exposed a false evidence-index schema declaration
+
+- Time: 2026-07-17T14:35:00-04:00.
+- Candidate: `3cb02be1da257d5cb4d31de412be2c151878ec68` in a separate clean detached checkout.
+- Detection: A fresh no-write Codex reviewer validated the advertised `$schema` for `docs/evidence/index.json` and found that it pointed to the per-event schema, which cannot validate the index envelope. Existing tests validated only the 37 `events[]` entries.
+- Impact: Candidate `3cb02be1` failed independent review despite 136 passing tests and otherwise clean repository, hash, link, and visual checks. No final refresh event or ready PR may be claimed from it.
+- Cause: The append-only index reused `evidence-event.schema.json` as a documentation pointer without defining an envelope schema; the validator mirrored that assumption.
+- Containment: Preserve the failed review report and candidate SHA. Keep PR #3 draft and do not bind the candidate as passing evidence.
+- Repair: Add `evidence-index.schema.json`, point the index to it, register the new authority path in partition ownership, validate the full wrapper plus embedded events, and retain individual event validation.
+- Verification: 137 tests, Ruff, and compilation pass locally after repair. A new immutable candidate and fresh clean-context review are required.
+- Owner/status: P_authority and P_integration / repaired locally; replacement candidate pending.
+
+### BF-20260717-030 — Replacement review exposed mutable append-only evidence
+
+- Time: 2026-07-17T15:20:00-04:00.
+- Candidate: `7e58f3a66462779e03a547f10df72fb8ffea4d3b` in a separate clean detached checkout.
+- Detection: A fresh no-write Codex reviewer passed 137 tests, Ruff, compilation, schema validation, runtime-identity checks, hashes, and architecture checks, then found that historical evidence events had been edited to track newer presentation files even though the index declares `append_only: true`.
+- Impact: Candidate `7e58f3a` failed independent review. The already-certified runtime D5/E6 identity remains unchanged, but the portfolio refresh cannot be attested or readied from this candidate.
+- Cause: Mutable presentation paths and immutable historical event records were treated as the same authority. The refresh report also claimed a binding that had not yet been appended, and the final attestation called an older walkthrough cut current.
+- Containment: Preserve this failure report and candidate SHA; retain PR #3 as draft; do not edit historical events or claim a current refresh event.
+- Repair: Restore the historical event array byte-for-byte, retain changed historical bytes in a content-addressed `artifact_archive`, validate archive hashes, mark the refresh event planned until fresh review passes, and correct the premature authority wording.
+- Verification: Full suite, Ruff, compilation, schema/ownership/hash checks, an exact diff proving no historical event edits, then a new immutable candidate and fresh clean-context review.
+- Owner/status: P_authority and P_integration / repair in progress; replacement candidate pending.
+
+### BF-20260717-031 — MCP smoke child escaped the locked offline interpreter
+
+- Time: 2026-07-17T16:10:00-04:00.
+- Candidate: `35d2ab60aa101d93124c31060cc9730db26fe3c6` in a separate clean detached checkout and fresh network-disabled Python 3.12 containers.
+- Detection: The clean reviewer passed 139 local tests, Ruff, compilation, evidence history, schemas, hashes, claims, and media checks, but the full locked offline container suite reproducibly returned 137 passed and two MCP stdio failures.
+- Impact: Candidate `35d2ab6` failed independent review. The production runtime and already-earned D5/E6 result are unchanged; the post-merge refresh remains planned.
+- Cause: Both MCP tests passed a replacement environment without `PATH` to `StdioServerParameters(command="python", ...)`. Linux selected the container's system Python for the child instead of the virtual-environment Python, so the child could not import installed dependencies even though the wheelhouse contained and installed `httpx==0.28.1`.
+- Containment: Preserve the reviewer report and candidate SHA; keep PR #3 draft; do not append the refresh event.
+- Repair: Spawn the MCP child with absolute `sys.executable`, binding it to the interpreter running the locked test suite while retaining the deliberately bounded child environment.
+- Verification: Full local suite, Ruff, compilation, and two fresh no-network Python 3.12 container runs; then freeze a replacement candidate and repeat clean-context review.
+- Owner/status: P_integration / repair implemented; replacement candidate pending.
+
+### BF-20260717-032 — Correct BF-031: offline failure was a review-command error
+
+- Time: 2026-07-17T16:35:00-04:00.
+- Candidate: `35d2ab60aa101d93124c31060cc9730db26fe3c6` in a separate clean detached checkout.
+- Detection: Before issuing its final verdict, the reviewer repeated the repository's exact documented handoff: run the locked installer, source the generated virtual environment, then invoke pytest. The network-disabled Python 3.12 container passed 139 tests.
+- Correction: BF-031's initial cause attribution was wrong. The failing exploratory command invoked `/tmp/g6v/bin/python` directly without sourcing the environment, so the parent `PATH` still pointed the MCP child at system Python. The repository installer, wheelhouse, and documented bootstrap were not defective.
+- Independent result: Candidate `35d2ab6` passed all 160-frame sheets, five scene-boundary pairs, media properties, hashes, schemas, unmodified historical event comparison, protected-tree comparison, and the exact offline handoff. Its final reviewer verdict is PASS.
+- Follow-through: Retain the preliminary failure transcript and this correction. Keep the already-committed `sys.executable` change as test-harness defense-in-depth, freeze its own candidate, and require an exact-candidate fresh review before appending the refresh event.
+- Owner/status: P_integration / corrected; no runtime defect; replacement candidate review pending.
+
+### BF-20260717-033 — Exhaustive walkthrough review missed baked-in terminal-row overlap
+
+- Time: 2026-07-17T17:55:00-04:00.
+- Candidate: `1a24156e381bdad09de8c554448cab6a17b320ec`; tracked walkthrough SHA-256 `e2e6a88ab84a9b1c95fe5d5ef1778ab0872bda0e9373cb700c0ab4200a878463`.
+- Detection: User inspection at global timestamp 1:17 found white `502` response text painted through green Python command text in the dependency-failure terminal panel. Extraction at 77 seconds reproduced the defect in both the final mux and source footage.
+- Impact: The `EVID-POSTMERGE-PORTFOLIO-REFRESH` no-overlap assertion is contradicted and retained historically. Runtime D5/E6, API behavior, image identity, and the intentional three-failure-plus-circuit-open sequence are unaffected.
+- Cause: `record_live_sessions.py` stored a command containing embedded newlines as one logical item. Pillow rendered several physical rows, while the outer loop advanced the cursor by only one line height. CLI command displays were also not width-wrapped and could clip horizontally.
+- Containment: Return PR #3 to draft; archive every currently bound mutable presentation artifact before replacement; append this failed visual event rather than editing prior evidence.
+- Repair: Normalize commands and outputs into newline-free, width-bounded physical rows; use a concise checked request probe; regenerate all footage; add a five-second D5/E6 definition card; render an exactly duration-matched, fully faded soundtrack; verify every final frame through contact sheets and targeted full-resolution boundaries.
+- Verification: Unit row-layout tests, HyperFrames lint/check, deterministic media verifier, two read-only media reviewers, then a clean-context exact-candidate review.
+- Owner/status: P_portfolio and P_integration / defect preserved; repair in progress.
+

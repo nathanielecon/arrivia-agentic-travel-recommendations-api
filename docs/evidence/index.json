@@ -1,12 +1,13 @@
 {
-  "$schema": "./evidence-event.schema.json",
+  "$schema": "./evidence-index.schema.json",
   "schema_version": "1.0",
   "index_metadata": {
     "owner": "P_authority / repository maintainer",
     "status": "accepted",
     "baseline_sha": "17cc00d7cf06a04028a1ff3aabdd552875cf5d0a",
     "candidate_ref": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c",
-    "last_verified": "2026-07-16",
+    "portfolio_candidate_ref": "ca8a1ad9b81730adbaf4f5d74070a0f04f8763ad",
+    "last_verified": "2026-07-17",
     "review_trigger": "Candidate, artifact, environment, result, assertion, requirement, or public claim change"
   },
   "append_only": true,
@@ -15,7 +16,33 @@
     "evidence_level": "E6",
     "d5_earned": true,
     "e6_earned": true,
-    "reason": "Fresh local Codex review at f4c6d504 passed every required clean-install, static, runtime, failure/recovery, evidence, rollback, visual, and cleanup check"
+    "reason": "Runtime Gate 6 passed at f4c6d504; three fresh exact-candidate tracks at ca8a1ad then passed the canonical definitions, protected-tree checks, and repaired 165-frame portfolio walkthrough"
+  },
+  "artifact_archive": {
+    "1d1fdfb8cbbb2415d5c6a7c3a95d6569919ebbc500b7b5faeca2fe843b7c4024": "docs/evidence/archive/1d1fdfb8cbbb2415d5c6a7c3a95d6569919ebbc500b7b5faeca2fe843b7c4024-cli-success.mp4",
+    "18dd1e78e9be3425641ff7ee60e9bc216546a28110e254e935444e882dfb6afc": "docs/evidence/archive/18dd1e78e9be3425641ff7ee60e9bc216546a28110e254e935444e882dfb6afc-final-slot.mp4",
+    "5b8308efef179a5a890505822f0ad7fdddbe74c4d0d289390d3ee3ffe3086fb0": "docs/evidence/archive/5b8308efef179a5a890505822f0ad7fdddbe74c4d0d289390d3ee3ffe3086fb0-partner-fault.mp4",
+    "00fc484ce8441b207247a0502c43b7b64eb58d6d7b6502519e6fa8e458588692": "docs/evidence/archive/00fc484ce8441b207247a0502c43b7b64eb58d6d7b6502519e6fa8e458588692-arrivia-system.drawio",
+    "2d02b8cc332053601a9dbad0fc31f3ee67d39ce5e845f44849dc562fa79f94e6": "docs/evidence/archive/2d02b8cc332053601a9dbad0fc31f3ee67d39ce5e845f44849dc562fa79f94e6-walkthrough-index.html",
+    "3bea44bcf8e3ad549ed44a92522a9ea06251216574b3e99e7804442b19f32b12": "docs/evidence/archive/3bea44bcf8e3ad549ed44a92522a9ea06251216574b3e99e7804442b19f32b12-check-matrix.md",
+    "50d5a2c2702651f403368e307054036db85e64da15aa7ce973db033b7320dc0e": "docs/evidence/archive/50d5a2c2702651f403368e307054036db85e64da15aa7ce973db033b7320dc0e-contact-sheet.jpg",
+    "51abab61256434e7c9bb26f7f1e2f0862ff98795d0889a150abcc3f360ed8905": "docs/evidence/archive/51abab61256434e7c9bb26f7f1e2f0862ff98795d0889a150abcc3f360ed8905-image2-prompt.txt",
+    "52e52a7412cfef664f9d1fe7500acd7ecb8775405f9526e0511db92a733fe268": "docs/evidence/archive/52e52a7412cfef664f9d1fe7500acd7ecb8775405f9526e0511db92a733fe268-walkthrough-readme.md",
+    "5475cb88449dc27daaa537d157d46c688eb5ab0ef54aa76d7c7db5b18ed12d60": "docs/evidence/archive/5475cb88449dc27daaa537d157d46c688eb5ab0ef54aa76d7c7db5b18ed12d60-render.ps1",
+    "5ca75edb82714e938cd6f478e4bbccfdce5ab94a2b2735e6be06da189f491d7a": "docs/evidence/archive/5ca75edb82714e938cd6f478e4bbccfdce5ab94a2b2735e6be06da189f491d7a-arrivia-infographic.png",
+    "6079b7f11c574f4f41dd337dd2629762f5b0bab433701063fa0f8a8aa1092ddb": "docs/evidence/archive/6079b7f11c574f4f41dd337dd2629762f5b0bab433701063fa0f8a8aa1092ddb-arrivia-walkthrough.mp4",
+    "793e9bba78679925c080364a7e2185f0780a1753926fd95ad842b32d0817531f": "docs/evidence/archive/793e9bba78679925c080364a7e2185f0780a1753926fd95ad842b32d0817531f-final-attestation.md",
+    "8e2e41d2cd66bb58102da75d25d65783d498d8fd8f3e716ef0b31f23e3a85b0b": "docs/evidence/archive/8e2e41d2cd66bb58102da75d25d65783d498d8fd8f3e716ef0b31f23e3a85b0b-evidence-readme.md",
+    "0a44e38c959af2bd2932d7e8b6ed5464c6feae354c37abbb1e6f3f1c5618dd45": "docs/evidence/archive/0a44e38c959af2bd2932d7e8b6ed5464c6feae354c37abbb1e6f3f1c5618dd45-arrivia-infographic.png",
+    "1ddc2a9d90b5c9be7b2ff6e017f79357dbfef08259f96d4303a9c6919b4ad37f": "docs/evidence/archive/1ddc2a9d90b5c9be7b2ff6e017f79357dbfef08259f96d4303a9c6919b4ad37f-arrivia-infographic-image2-original.png",
+    "41aec2bb42be70c884d0be12a17ed816de8f5b1726b53b2e4e894c7cf0518075": "docs/evidence/archive/41aec2bb42be70c884d0be12a17ed816de8f5b1726b53b2e4e894c7cf0518075-arrivia-system.svg",
+    "88836ff46f3dba37ad11a87633d09a5b624f3d6f7c65d9442e8c52a42ede35f4": "docs/evidence/archive/88836ff46f3dba37ad11a87633d09a5b624f3d6f7c65d9442e8c52a42ede35f4-contact-sheet.jpg",
+    "aae1d7df9caef07b86337ebeed6542b51267d95883bb0630d0db9d20854f98b6": "docs/evidence/archive/aae1d7df9caef07b86337ebeed6542b51267d95883bb0630d0db9d20854f98b6-arrivia-system.png",
+    "af37b7624e2e33bd50d45d92fec7e7d7b75e08bfd9a1f48015304a8c202e6064": "docs/evidence/archive/af37b7624e2e33bd50d45d92fec7e7d7b75e08bfd9a1f48015304a8c202e6064-arrivia-system.png",
+    "bd218257b96e97bc5a5a390ef32b54f78c675e70f25c009a7d91753716826020": "docs/evidence/archive/bd218257b96e97bc5a5a390ef32b54f78c675e70f25c009a7d91753716826020-arrivia-system.drawio",
+    "dc183927e3437121e4e23424b893e0293a88e539b5366f2c46fe1034c8fc7bf9": "docs/evidence/archive/dc183927e3437121e4e23424b893e0293a88e539b5366f2c46fe1034c8fc7bf9-evidence-gallery.png",
+    "e2e6a88ab84a9b1c95fe5d5ef1778ab0872bda0e9373cb700c0ab4200a878463": "docs/evidence/archive/e2e6a88ab84a9b1c95fe5d5ef1778ab0872bda0e9373cb700c0ab4200a878463-arrivia-walkthrough.mp4",
+    "fe65030d1776aaf5f62072e922c85266644e23910956dcd1b2f3c60d0f0b3b99": "docs/evidence/archive/fe65030d1776aaf5f62072e922c85266644e23910956dcd1b2f3c60d0f0b3b99-arrivia-infographic-image2-original.png"
   },
   "events": [
     {
@@ -1733,6 +1760,156 @@
       "independent": false,
       "notes": "User-selected portfolio soundtrack. No license or ownership claim beyond user-supplied provenance is inferred. Production D5/E6 runtime identity is unchanged.",
       "supersedes": ["EVID-WALKTHROUGH-PACED-MUSIC"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-POSTMERGE-FAIL-3CB02BE",
+      "requirement_ids": ["REQ-PORT-001", "REQ-ORCH-001"],
+      "status": "failed",
+      "recorded_at": "2026-07-17T14:35:00-04:00",
+      "candidate": {"git_sha": "3cb02be1da257d5cb4d31de412be2c151878ec68", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "clean-local-codex-postmerge-1", "description": "Fresh detached no-write checkout for post-merge portfolio and evidence-authority review"},
+      "procedure": {"preconditions": ["Exact clean candidate", "No repair narrative"], "commands": ["pytest, Ruff, compilation, schema/hash/link/visual checks"], "cleanup": ["No repository writes"]},
+      "assertions": [
+        {"name": "evidence-index-envelope-schema", "expected": "advertised schema validates the complete index envelope", "observed": "index advertised the per-event schema; wrapper validation failed", "result": "failed"},
+        {"name": "otherwise-clean-candidate", "expected": "runtime and portfolio checks remain inspectable", "observed": "136 tests and all completed protected-tree/hash/visual checks passed", "result": "passed"}
+      ],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/postmerge-review-3cb02be-failed.md", "sha256": "fa4ac17710fcd109f40c17451eeff72bdf5caa380c76d30f3e51e8782dbe647f"}],
+      "tool_versions": {"reviewer": "fresh local Codex", "pytest": "9.1.1"},
+      "claim_level": "E5",
+      "independent": true,
+      "notes": "Failed candidate retained; it did not replace the already-earned runtime D5/E6 result.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-POSTMERGE-FAIL-7E58F3A",
+      "requirement_ids": ["REQ-PORT-001", "REQ-ORCH-001"],
+      "status": "failed",
+      "recorded_at": "2026-07-17T15:20:00-04:00",
+      "candidate": {"git_sha": "7e58f3a66462779e03a547f10df72fb8ffea4d3b", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "clean-local-codex-postmerge-2", "description": "Fresh detached no-write checkout for append-only evidence and complete media review"},
+      "procedure": {"preconditions": ["Exact clean candidate", "No repair narrative"], "commands": ["pytest, Ruff, compilation, full schema/hash/link checks, all-frame media review"], "cleanup": ["No repository writes"]},
+      "assertions": [
+        {"name": "append-only-history", "expected": "historical events are unchanged and replacement bytes are retained", "observed": "four historical events were rewritten to follow mutable paths", "result": "failed"},
+        {"name": "media-and-implementation", "expected": "current media and protected implementation pass", "observed": "137 tests, hashes, six-page architecture, and 160-frame review passed", "result": "passed"}
+      ],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/postmerge-review-7e58f3a-failed.md", "sha256": "8fa4255d97ee5df2f7d5d74086f427dffda9a979654f415e02a80229a8515106"}],
+      "tool_versions": {"reviewer": "fresh local Codex", "pytest": "9.1.1", "hyperframes": "0.7.60", "ffmpeg": "8.1.2"},
+      "claim_level": "E5",
+      "independent": true,
+      "notes": "Failed candidate retained; content-addressed archival and claim-parity repair followed.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-POSTMERGE-PORTFOLIO-REFRESH",
+      "requirement_ids": ["REQ-DOC-001", "REQ-PORT-001", "REQ-ORCH-001"],
+      "status": "passed",
+      "recorded_at": "2026-07-17T17:30:00-04:00",
+      "candidate": {"git_sha": "86fd185d4f31bfea2eaa12e5e1f625909982d642", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "clean-local-codex-postmerge-final", "description": "Fresh detached no-write checkout plus network-disabled Python 3.12 container and exhaustive media inspection"},
+      "procedure": {
+        "preconditions": ["Exact pushed candidate", "Certified runtime/image identity frozen", "No conversation or repair context supplied"],
+        "commands": ["locked offline install and 139-test suite", "Ruff and compilation", "schema/event/archive/link/protected-tree checks", "FFprobe and FFmpeg audio inspection", "four chronological 40-frame sheets plus five boundary pairs"],
+        "cleanup": ["Reviewer wrote no repository files", "Temporary review outputs stayed outside the checkout"]
+      },
+      "assertions": [
+        {"name": "clean-offline-reproduction", "expected": "locked no-network install and complete suite pass", "observed": "Python 3.12.13; 139/139 passed; Ruff and compilation passed", "result": "passed"},
+        {"name": "append-only-authority", "expected": "historical events unchanged and old bytes recoverable", "observed": "37 historical events equal main; 13/13 archive keys match retained bytes", "result": "passed"},
+        {"name": "protected-runtime-identity", "expected": "refresh changes no runtime, public interface, container, lock, SBOM, or soundtrack source", "observed": "all protected comparisons and certified image identity passed", "result": "passed"},
+        {"name": "orchestration-and-claim-parity", "expected": "six-page authority records advisory council and sole writer without D6", "observed": "diagrams, README, requirements, and attestation agree on D5/E6 boundary", "result": "passed"},
+        {"name": "exhaustive-media-review", "expected": "current 160-second cut has correct streams and no visual mismatch", "observed": "160/160 frames, all five boundary pairs, audio levels, hashes, diagrams, gallery, and infographics passed", "result": "passed"}
+      ],
+      "artifacts": [
+        {"path": "docs/evidence/raw/final-certification/postmerge-review-86fd185-passed.md", "sha256": "4b59f6c704825084ec2635ba94e483fa5a443aab31f306cb725670651ddf43dd"},
+        {"path": "docs/evidence/raw/final-certification/postmerge-portfolio-refresh.md", "sha256": "565e0f025bab80aae93daf6b314c60e2b9050fe26eb99c11556f992c5f0276de"},
+        {"path": "docs/architecture/arrivia-system.drawio", "sha256": "bd218257b96e97bc5a5a390ef32b54f78c675e70f25c009a7d91753716826020"},
+        {"path": "docs/architecture/arrivia-system.svg", "sha256": "41aec2bb42be70c884d0be12a17ed816de8f5b1726b53b2e4e894c7cf0518075"},
+        {"path": "docs/architecture/arrivia-system.png", "sha256": "aae1d7df9caef07b86337ebeed6542b51267d95883bb0630d0db9d20854f98b6"},
+        {"path": "docs/evidence/assets/evidence-gallery.png", "sha256": "dc183927e3437121e4e23424b893e0293a88e539b5366f2c46fe1034c8fc7bf9"},
+        {"path": "docs/portfolio/arrivia-infographic-image2-original.png", "sha256": "1ddc2a9d90b5c9be7b2ff6e017f79357dbfef08259f96d4303a9c6919b4ad37f"},
+        {"path": "docs/portfolio/arrivia-infographic.png", "sha256": "0a44e38c959af2bd2932d7e8b6ed5464c6feae354c37abbb1e6f3f1c5618dd45"},
+        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": "e2e6a88ab84a9b1c95fe5d5ef1778ab0872bda0e9373cb700c0ab4200a878463"},
+        {"path": "walkthrough/snapshots/contact-sheet.jpg", "sha256": "88836ff46f3dba37ad11a87633d09a5b624f3d6f7c65d9442e8c52a42ede35f4"},
+        {"path": "walkthrough/music/quiet-systems.mp3", "sha256": "5230bef6dd4a62c6635b93b136fc50fa4d5efc3990068edb62518e651e23ea0b"}
+      ],
+      "tool_versions": {"reviewer": "fresh local Codex", "python": "3.12.13", "pytest": "9.1.1", "hyperframes": "0.7.60", "ffmpeg": "8.1.2"},
+      "claim_level": "E6",
+      "independent": true,
+      "notes": "Current portfolio authority. Runtime certification remains the original D5/E6 source and image; this event binds synchronized post-merge documentation and presentation artifacts.",
+      "supersedes": ["EVID-ARCH-EXACT", "EVID-PORTFOLIO", "EVID-WALKTHROUGH-QUIET-SYSTEMS"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-WALKTHROUGH-ROW-OVERLAP-DEFECT",
+      "requirement_ids": ["REQ-PORT-001"],
+      "status": "failed",
+      "recorded_at": "2026-07-17T17:55:00-04:00",
+      "candidate": {"git_sha": "1a24156e381bdad09de8c554448cab6a17b320ec", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "user-player-plus-local-frame-extraction", "description": "User visual report reproduced by extracting global frame 77 from the tracked walkthrough and source fault footage"},
+      "procedure": {
+        "preconditions": ["Tracked 160-second walkthrough at candidate 1a24156e", "Prior no-overlap assertion retained unchanged"],
+        "commands": ["ffmpeg extract final frame at 77 seconds", "ffmpeg extract partner-fault source frame at 27 seconds", "inspect recorder row-layout implementation"],
+        "cleanup": ["Temporary comparison frames outside repository removed or left untracked"]
+      },
+      "assertions": [
+        {"name": "terminal-row-legibility", "expected": "each command and response occupies non-overlapping physical rows", "observed": "white 502 response rows are painted through green multiline Python commands", "result": "failed"},
+        {"name": "failure-sequence-semantics", "expected": "three qualifying failures followed by one circuit-open request", "observed": "the four repeated requests are intentional and semantically correct", "result": "passed"},
+        {"name": "runtime-certification-isolation", "expected": "presentation defect does not alter reviewed runtime/image", "observed": "runtime source and immutable image remain unchanged", "result": "passed"}
+      ],
+      "artifacts": [
+        {"path": "docs/evidence/raw/final-certification/walkthrough-row-overlap-defect.md", "sha256": "3afa145e669cc24ae1cec856f806a96656faf159fc4abec92f932a08f0b56115"},
+        {"path": "docs/evidence/raw/final-certification/walkthrough-row-overlap-t77.png", "sha256": "d90edacd3bee1ceab3f08ef8f8d9f146098b28237cd79db454c3921549c9f665"}
+      ],
+      "tool_versions": {"ffmpeg": "8.1.2", "reviewer": "user report reproduced by Codex"},
+      "claim_level": "E5",
+      "independent": false,
+      "notes": "Contradicts only the prior portfolio no-overlap assertion. Production D5/E6 remains valid; a replacement visual event is required.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-PORTFOLIO-DEFINITIONS-MEDIA-REPAIR",
+      "requirement_ids": ["REQ-DOC-001", "REQ-PORT-001", "REQ-ORCH-001"],
+      "status": "passed",
+      "recorded_at": "2026-07-17T18:50:00-04:00",
+      "candidate": {"git_sha": "ca8a1ad9b81730adbaf4f5d74070a0f04f8763ad", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "three-track-exact-candidate-review", "description": "Independent exhaustive visual review, technical stream/audio verification, and fresh detached clean-context reproduction"},
+      "procedure": {
+        "preconditions": ["Exact clean candidate ca8a1ad", "Certified runtime/image identity frozen", "Historical contradiction retained unchanged"],
+        "commands": ["144-test suite, Ruff, compilation, authority/hash/link/protected-tree checks", "HyperFrames lint/check", "FFprobe/FFmpeg deterministic media verifier under normal and optimized Python", "five chronological 33-frame sheets plus required full-resolution boundaries and standalone visuals"],
+        "cleanup": ["Reviewers modified no candidate files", "Temporary clone and review outputs remained outside the shared worktree"]
+      },
+      "assertions": [
+        {"name": "canonical-certification-definitions", "expected": "D0-D5 and E0-E6 are complete, separate, project-local, bounded, and define no D6", "observed": "guide, reader surfaces, schemas, and standalone visuals agreed on D5 design and E6 proof within the single-replica v0 boundary", "result": "passed"},
+        {"name": "physical-row-and-flow-repair", "expected": "captured rows wrap without overlap and retain the intended failure/circuit/recovery and final-slot flows", "observed": "all 165 frames, required boundaries, frame 82, CLI, dependency, and final-slot views passed with no clipping or overlap", "result": "passed"},
+        {"name": "exact-media-contract", "expected": "zero-start exact 165-second H.264/AAC streams, 165 frames, stereo, and compliant closing fade", "observed": "165.000000-second streams; 165 decoded 1920x1080 frames at 1 fps; AAC 48 kHz stereo; -75.8 dB tail and 44.8 dB fade difference", "result": "passed"},
+        {"name": "fail-closed-reproducibility", "expected": "verifier and render contract remain deterministic and cannot be bypassed by optimized Python or mux shortening", "observed": "optimized verifier rejected an incorrect duration; final mux has no -t or -shortest; 144 tests and all focused gates passed", "result": "passed"},
+        {"name": "protected-runtime-identity", "expected": "repair changes no runtime, production interface, container, lock, SQLite schema, certified image, or soundtrack source", "observed": "fresh comparison against parent and main found no protected-tree changes; certified image digest is unchanged", "result": "passed"}
+      ],
+      "artifacts": [
+        {"path": "docs/evidence/raw/final-certification/definitions-media-repair-independent-review.md", "sha256": "2b9e5be010e3edd6d813a3200fbbb178e045f6ddd560e1bd1409b5646ab1d7fc"},
+        {"path": "docs/evidence/raw/final-certification/definitions-media-repair-validation.md", "sha256": "8018c0a57beab6b2613c661aa25562d87af69f59e8426bdb89bf80e510a7065f"},
+        {"path": "docs/certification/CERTIFICATION_LEVELS.md", "sha256": "247d85355acf186ff07e7cbf775c4c7483c200bca5604cda4265d4f9b59e924f"},
+        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": "148d6413696c145335f67d8f72352a3b42ee83a4a7e4c12095590b2c7908ca0c"},
+        {"path": "walkthrough/snapshots/contact-sheet.jpg", "sha256": "acc87f278b117c84abf9da66375d8f457513bceb7d85d84539f085baf18a39f6"},
+        {"path": "walkthrough/footage/cli-success.mp4", "sha256": "53ddb45934559724cc32dc199a1b3562bbeb0c86c71f739e2ff2edce985ffb68"},
+        {"path": "walkthrough/footage/partner-fault.mp4", "sha256": "5012c9860eb0eabf6388fb89205164536b71062b048fe6831f652b57244ffeaf"},
+        {"path": "walkthrough/footage/final-slot.mp4", "sha256": "0ce88566cfc38f5a65339afa3ec6b10cdad4907ac3a48b7239700e3fb7f57cfc"},
+        {"path": "walkthrough/render.ps1", "sha256": "0144cfc2d07df5dd087c17857c906bb6a30f5278244c0dec4035244519cc30a9"},
+        {"path": "walkthrough/verify_media.py", "sha256": "d22d9c7d50be5924ff1d657fa56222e6c6f8b6e76e4631fc65796093e4e60db8"},
+        {"path": "docs/architecture/arrivia-system.drawio", "sha256": "55d9f7fb3fcae50b6f8d563965ed21b42e5d078ebdd8c132bf638f5a1bde5f51"},
+        {"path": "docs/architecture/arrivia-system.svg", "sha256": "2143a2ab280b7c32d2c2ee09fd4de2f9504ed765f67b25a1ea20091217a37dea"},
+        {"path": "docs/architecture/arrivia-system.png", "sha256": "cf422666cba236c9c3bd48156594de6b410025ea6d0acb2de7e3df90d4333b70"},
+        {"path": "docs/portfolio/arrivia-infographic.png", "sha256": "44b4fb6e546da608d089205424dfe0e34332a0c9e713229d0119870bcfd26a99"},
+        {"path": "docs/evidence/assets/evidence-gallery.png", "sha256": "41f5d9fe76d7bcb9b8eb1a6a8da604558a3dcb978715ffbed586339bbd6650ff"}
+      ],
+      "tool_versions": {"reviewers": "three fresh Codex tracks", "python": "3.14", "pytest": "9.1.1", "hyperframes": "0.7.60", "ffmpeg": "8.1.2"},
+      "claim_level": "E6",
+      "independent": true,
+      "notes": "Current portfolio authority. The failed overlap event and contradicted 160-frame pass remain unchanged; runtime certification retains its original reviewed source and image.",
+      "supersedes": ["EVID-POSTMERGE-PORTFOLIO-REFRESH", "EVID-WALKTHROUGH-ROW-OVERLAP-DEFECT"]
     }
   ],
   "planned_event_ids": []

@@ -9,6 +9,8 @@ recorded_at: 2026-07-16T23:30:00-04:00
 
 The replacement candidate earned D5/E6 after a fresh clean-context reviewer passed every required check. Failed and superseded attempts remain in the append-only evidence index.
 
+Here `D5` is design depth and `E6` is evidence strength. The axes are independent and project-local, not external accreditation or a production-readiness guarantee. See the [complete D0–D5 and E0–E6 definitions](CERTIFICATION_LEVELS.md); no D6 level exists.
+
 | Check | Result | Notes |
 | --- | --- | --- |
 | Locked clean install | passed independently | Fresh Windows venv from `requirements-dev.lock` |
@@ -26,6 +28,9 @@ The replacement candidate earned D5/E6 after a fresh clean-context reviewer pass
 | Links / hashes / evidence freshness | passed independently | 15/15 README links; 0 missing and 0 mismatched declared artifact hashes |
 | Walkthrough render / visual parity | passed after user soundtrack selection | Every static scene is five seconds; all 160 encoded frames and scene cuts remain validated; user-supplied Suno track “Quiet Systems” is duration-fitted, credited, level-checked, and reproducible; see `EVID-WALKTHROUGH-QUIET-SYSTEMS` |
 | Gate 6 independent review | passed | no defects or blocked checks; `EVID-GATE6-PASS-F4C6D50` |
+| Post-certification PR #2 integration | passed | read-only Grok council + sole lead writer resolved five conflicts; 132 tests and no-index offline bootstrap passed; reviewed runtime/image unchanged; see `BF-20260716-026` and `ADR-009` |
+| Post-merge portfolio refresh | passed independently | candidate `86fd185d`; locked no-network Python 3.12 install, 139 tests, evidence/archive authority, links, diagrams, all 160 frames and every scene boundary passed; see `EVID-POSTMERGE-PORTFOLIO-REFRESH` |
+| Definitions and walkthrough repair | passed independently | exact candidate `ca8a1ad9`; three fresh tracks passed 144 tests, authority/hash/link checks, all 165 frames and required boundaries, exact H.264/AAC streams, fail-closed media verification, and protected-tree comparison; see `EVID-PORTFOLIO-DEFINITIONS-MEDIA-REPAIR` |
 
 ## Immutable identities
 
@@ -38,4 +43,4 @@ The superseded `3156cf8` review failure remains at `docs/evidence/raw/final-cert
 
 Latency figures are observations from a local healthy-mock run, not service-level objectives.
 
-The post-certification walkthrough corrections are portfolio-only. They do not alter the reviewed runtime source or image identity above.
+The post-certification integration and walkthrough corrections do not alter the reviewed runtime source or image identity above. The original Gate 6 row remains 131 tests because that is the historical review result; the merged-tree integration result is 132 tests, the historical portfolio-refresh result is 139 tests, and the definitions/media-repair result is 144 tests, recorded separately. No D6 tier exists: the earned level remains D5/E6.

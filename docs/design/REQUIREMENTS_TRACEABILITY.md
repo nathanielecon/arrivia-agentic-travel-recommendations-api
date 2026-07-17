@@ -59,7 +59,7 @@ With SQLite initialized to `used = cap - 1`, two independently spawned contender
 
 ### REQ-PORT-001 — exact and presentation architecture
 
-The authoritative multi-page draw.io source shall cover context, REST/MCP components, request flow, trust boundaries, delivery/promotion, and dependency failure/rollback/recovery. Exact SVG/PNG renders are hashed and parity-checked. Only then may Image2 generate a `2048x1152` presentation derivative from the exact PNG. Prompt/input/output/tool hashes and a parity review are recorded. A deterministic five-minute walkthrough follows the approved timeline and retains actual terminal footage. Presentation artifacts must not invent scale, uptime, compliance, autonomy, or metrics.
+The authoritative multi-page draw.io source shall cover context, REST/MCP components, request flow, trust boundaries, delivery/promotion, and dependency failure/rollback/recovery. Exact SVG/PNG renders are hashed and parity-checked. Only then may Image2 generate a `2048x1152` presentation derivative from the exact PNG. Prompt/input/output/tool hashes and a parity review are recorded. The current deterministic 165-second walkthrough opens with a five-second D5/E6 definition card, uses five-second non-video cards, retains the complete live terminal footage, and includes the user-supplied Quiet Systems track. Presentation artifacts must not invent scale, uptime, compliance, autonomy, or metrics.
 
 ### REQ-ORCH-001 — bounded worker orchestration
 

@@ -100,15 +100,25 @@ def test_frozen_interface_hashes_match_contract_files() -> None:
 def test_evidence_and_worker_schemas_are_valid_json_schemas() -> None:
     for relative in (
         "docs/evidence/evidence-event.schema.json",
+        "docs/evidence/evidence-index.schema.json",
         "docs/design/worker-task.schema.json",
     ):
         jsonschema.Draft202012Validator.check_schema(_json(ROOT / relative))
+
+
+def test_evidence_index_wrapper_and_events_validate() -> None:
+    index = _json(ROOT / "docs/evidence/index.json")
+    index_schema = _json(ROOT / "docs/evidence/evidence-index.schema.json")
+    event_schema = _json(ROOT / "docs/evidence/evidence-event.schema.json")
+    index_schema["properties"]["events"]["items"] = event_schema  # type: ignore[index]
+    jsonschema.validate(index, index_schema)
 
 
 def test_evidence_events_are_unique_valid_and_artifact_bound() -> None:
     index = _json(ROOT / "docs/evidence/index.json")
     schema = _json(ROOT / "docs/evidence/evidence-event.schema.json")
     events = index["events"]  # type: ignore[index]
+    archive = index["artifact_archive"]  # type: ignore[index]
     ids = [event["evidence_id"] for event in events]
     assert len(ids) == len(set(ids)), "evidence IDs must be unique"
 
@@ -120,7 +130,25 @@ def test_evidence_events_are_unique_valid_and_artifact_bound() -> None:
             path = ROOT / artifact["path"]
             assert path.is_file(), f"evidence artifact does not resolve: {path}"
             if artifact["sha256"] is not None:
-                assert _artifact_sha256(path) == artifact["sha256"]
+                digest = artifact["sha256"]
+                if _artifact_sha256(path) != digest:
+                    assert digest in archive, (
+                        "historical artifact bytes changed without a content-addressed archive: "
+                        f"{artifact['path']}"
+                    )
+                    archived_path = ROOT / archive[digest]
+                    assert archived_path.is_file(), (
+                        f"archived evidence artifact does not resolve: {archived_path}"
+                    )
+                    assert _artifact_sha256(archived_path) == digest
+
+
+def test_evidence_artifact_archive_is_content_addressed() -> None:
+    index = _json(ROOT / "docs/evidence/index.json")
+    for digest, relative in index["artifact_archive"].items():  # type: ignore[index]
+        path = ROOT / relative
+        assert path.is_file(), f"archived evidence artifact does not resolve: {path}"
+        assert _artifact_sha256(path) == digest
 
 
 def test_dependency_contract_hashes_are_current() -> None:
@@ -139,3 +167,87 @@ def test_architecture_authority_has_six_pages_and_claim_boundary() -> None:
     )
     assert "Claim boundary" in svg
     assert "single active replica" in svg
+    assert "read-only council" in drawio.lower()
+    assert "lead-only merge" in svg
+
+
+def test_project_uses_defined_d5_e6_terms_and_rejects_d6() -> None:
+    current_authorities = [
+        ROOT / "README.md",
+        DESIGN / "project-design.json",
+        ROOT / "docs" / "certification" / "FINAL_ATTESTATION.md",
+        ROOT / "docs" / "certification" / "CHECK_MATRIX.md",
+        ROOT / "docs" / "architecture" / "arrivia-system.svg",
+        ROOT / "docs" / "portfolio" / "README.md",
+        ROOT / "walkthrough" / "index.html",
+    ]
+    text = "\n".join(path.read_text(encoding="utf-8") for path in current_authorities)
+    assert "D5" in text and "E6" in text
+    assert "D6 Reimplementable" not in text
+    assert "D6 certified" not in text
+    assert '"earned_depth": "D5"' in text
+    assert '"evidence_level": "E6"' in text
+
+
+def test_traceability_matches_current_walkthrough_duration() -> None:
+    traceability = (DESIGN / "REQUIREMENTS_TRACEABILITY.md").read_text(encoding="utf-8")
+    assert "165-second walkthrough" in traceability
+    assert "five-minute walkthrough" not in traceability
+
+
+def test_certification_guide_defines_both_complete_axes() -> None:
+    guide = (
+        ROOT / "docs" / "certification" / "CERTIFICATION_LEVELS.md"
+    ).read_text(encoding="utf-8")
+    for level in ("D0", "D1", "D2", "D3", "D4", "D5"):
+        assert f"`{level}`" in guide
+    for level in ("E0", "E1", "E2", "E3", "E4", "E5", "E6"):
+        assert f"`{level}`" in guide
+    for statement in (
+        "two independent",
+        "not an external accreditation",
+        "no `D6` level",
+        "one active recommendation-serving replica",
+    ):
+        assert statement in guide
+
+
+def test_post_merge_orchestration_history_is_consistent() -> None:
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    attestation = (
+        ROOT / "docs" / "certification" / "FINAL_ATTESTATION.md"
+    ).read_text(encoding="utf-8")
+    break_fix = (ROOT / "BREAK_FIX_LOG.md").read_text(encoding="utf-8")
+    for required in (
+        "7c1fff06d5a16ccc62635421221b0c82812d46a8",
+        "89b8c2fa47f15229b32c9f6c6486dad5c5a0f675",
+        "132 tests",
+        "sole writer",
+    ):
+        assert required in attestation or required in break_fix
+    assert "read-only Grok council" in readme
+    assert "independent reimplementability" not in readme
+
+
+def test_current_architecture_hashes_are_documented() -> None:
+    architecture = ROOT / "docs" / "architecture"
+    readme = (architecture / "README.md").read_text(encoding="utf-8")
+    for name in ("arrivia-system.drawio", "arrivia-system.svg", "arrivia-system.png"):
+        assert _portable_sha256(architecture / name) in readme
+
+
+def test_current_portfolio_and_walkthrough_match_certified_claim() -> None:
+    portfolio = (ROOT / "docs" / "portfolio" / "README.md").read_text(encoding="utf-8")
+    prompt = (ROOT / "docs" / "portfolio" / "image2-prompt.txt").read_text(
+        encoding="utf-8"
+    )
+    walkthrough = (ROOT / "walkthrough" / "index.html").read_text(encoding="utf-8")
+    assert "no D5/E6 claim" not in portfolio
+    assert "no D5/E6 claim" not in prompt
+    assert "D5 DESIGN" in portfolio
+    assert "E6 EVIDENCE" in portfolio
+    assert 'data-duration="165"' in walkthrough
+    assert "D5 DESIGN" in walkthrough
+    assert "E6 EVIDENCE" in walkthrough
+    assert "read-only Grok council" in walkthrough
+    assert "132 tests" in walkthrough

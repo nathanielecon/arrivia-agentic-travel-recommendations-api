@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
   "candidate_sha": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c",
-  "candidate_state": "immutable replacement source; image sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4; independent D5/E6 Gate 6 passed at review package f4c6d504",
+  "candidate_state": "immutable reviewed runtime source; image sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4; independent D5/E6 Gate 6 passed at review package f4c6d504; PR #2 integration 7c1fff0 -> 89b8c2f used read-only council discovery and a sole lead writer",
   "generated_at": "2026-07-16T13:33:00-04:00",
   "owner": "P_authority / repository maintainer",
   "status": "accepted",
-  "last_verified": "2026-07-16",
+  "last_verified": "2026-07-17",
   "review_trigger": "Owned path, interface contract/hash, dependency, validator, integration order, or claim ceiling change",
   "ownership_rule": "Paths are exact files or recursive directory prefixes ending in /**; no path may match more than one partition",
   "partitions": [
@@ -17,7 +17,9 @@
         "docs/design/**",
         "docs/decisions/**",
         "docs/evidence/evidence-event.schema.json",
+        "docs/evidence/evidence-index.schema.json",
         "docs/evidence/index.json",
+        "docs/evidence/archive/**",
         "BREAK_FIX_LOG.md"
       ],
       "shared_interfaces_owned": [],
@@ -217,7 +219,7 @@
       ],
       "claim_ceiling": "E5",
       "integration_order": 3,
-      "status": "complete-local-evidence-independent-review-pending"
+      "status": "complete-postmerge-portfolio-refresh"
     },
     {
       "partition_id": "P_integration",

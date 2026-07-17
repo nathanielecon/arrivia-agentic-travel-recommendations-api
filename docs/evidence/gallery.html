@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=1600, initial-scale=1">
-  <title>Arrivia working-candidate evidence</title>
+  <title>Arrivia certified evidence</title>
   <style>
     *{box-sizing:border-box} body{margin:0;width:1600px;height:900px;background:#081321;color:#e8f4ff;font:28px/1.35 Arial,sans-serif;padding:56px}
     h1{font-size:54px;margin:0 0 8px;color:#fff} .sub{color:#9cb5c9;margin-bottom:34px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
@@ -11,13 +11,13 @@
   </style>
 </head>
 <body>
-  <h1>Arrivia hardening — evidence snapshot</h1>
-  <div class="sub">Rendered from tracked raw transcripts · 2026-07-16 · source tree still uncommitted</div>
+  <h1>Arrivia hardening — certified evidence snapshot</h1>
+  <div class="sub">Independent Gate 6 plus post-certification integration · 2026-07-17</div>
   <main class="grid">
-    <section class="card"><div class="tag">Runtime</div><div class="value">122 tests pass</div><div class="detail">Locked clean env · Ruff clean · compilation clean · 29 focused circuit/policy/telemetry/race checks pass</div></section>
+    <section class="card"><div class="tag">Independent Gate 6</div><div class="value">D5 design / E6 proof</div><div class="detail">Independently reimplementable package · independently reproduced by a clean-context reviewer</div></section>
     <section class="card"><div class="tag">Controlled failure</div><div class="value">502 → circuit open</div><div class="detail">Three WireMock failures; fourth response is <code>upstream_circuit_open</code>; half-open recovery returns 200</div></section>
     <section class="card"><div class="tag">Atomic budget</div><div class="value">grants [0,1]</div><div class="detail">Two spawned processes contend for one final SQLite slot; persisted use equals cap</div></section>
-    <section class="card"><div class="tag">Claim boundary</div><div class="value warn">D4 / not D5-E6</div><div class="detail">One active replica · same-machine SQLite · no independent clean-context reproduction yet</div></section>
+    <section class="card"><div class="tag">Post-certification integration</div><div class="value warn">132 tests pass</div><div class="detail">Read-only council · one lead merge writer · offline bootstrap passed · reviewed runtime/image unchanged</div></section>
   </main>
   <div class="foot">Authority: docs/evidence/index.json · exact architecture: docs/architecture/arrivia-system.drawio</div>
 </body>

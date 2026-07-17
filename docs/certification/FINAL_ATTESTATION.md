@@ -9,6 +9,8 @@ attested_at: 2026-07-17T02:05:00Z
 
 # Final D5/E6 attestation
 
+`D5` describes design depth and `E6` describes evidence strength; they are separate, project-local axes rather than external accreditation or a production-readiness guarantee. See the [complete D0–D5 and E0–E6 definitions](CERTIFICATION_LEVELS.md). This project defines no D6 level.
+
 A fresh local Codex reviewer, without conversation or repair context, independently reproduced review package `f4c6d5048e9ce655ae90887c28f03d4cc0927be2`. The runtime under review was source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` and immutable image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`.
 
 Every required Gate 6 check passed: locked installation, 131-test suite, Ruff, compilation, design/evidence authority, MCP stdio, cross-process final-slot invariant, exact image identity, deployment verifier, CLI journey, 100/100 benchmark, controlled dependency failure/circuit/recovery, evidence discovery, rollback proof lookup, visual parity, README links/claims, cleanup, and clean tracked state. The reviewer reported no defects or blocked checks.
@@ -23,4 +25,40 @@ User review later found annotation/terminal overlap that the original sparse con
 
 The user subsequently requested five-second static scenes and fitting music. Portfolio candidate `7b70720b6e05ddf706704766880864630b75b7a3` produces a 160-second cut with the full live recordings intact and a deterministic, original, sample-free ambient bed. All 160 frames, scene cuts, audio stream properties, levels, and artifact hashes passed. `EVID-WALKTHROUGH-PACED-MUSIC` supersedes the earlier walkthrough event without changing the certified runtime boundary.
 
-The user then supplied the selected Suno track “Quiet Systems.” Portfolio candidate `ab72dce80fb079ce976128b0b60a93c07a0510aa` retains the complete song with pitch-preserving duration fitting, credits its embedded artist metadata, and produces a level-checked 160-second H.264/AAC walkthrough. `EVID-WALKTHROUGH-QUIET-SYSTEMS` is the authoritative current portfolio event; the production runtime identity and boundary remain unchanged.
+The user then supplied the selected Suno track “Quiet Systems.” Portfolio candidate `ab72dce80fb079ce976128b0b60a93c07a0510aa` retains the complete song with pitch-preserving duration fitting, credits its embedded artist metadata, and produces a level-checked 160-second H.264/AAC walkthrough. `EVID-WALKTHROUGH-QUIET-SYSTEMS` remains the historical authority for that exact cut; the current post-merge refresh is not authoritative until its candidate-bound event passes fresh review. The production runtime identity and boundary remain unchanged.
+
+## Post-certification integration
+
+PR #2 later reconciled the certified completion branch with main's offline-install hardening. A read-only Grok council supplied conflict-side and validation discovery; one lead orchestrator remained the sole writer for all five conflict resolutions and the merge. Branch merge `7c1fff06d5a16ccc62635421221b0c82812d46a8` and GitHub merge `89b8c2fa47f15229b32c9f6c6486dad5c5a0f675` preserved the reviewed source/image identities and passed 132 tests, Ruff, compilation, design authority, link/hash checks, shell syntax, and a no-index Linux offline bootstrap. ADR-009 and `BF-20260716-026` are the durable authorities for that orchestration history.
+
+This integration is not a second Gate 6 and does not establish a “D6” level. The certified result remains `D5 Reimplementable / E6 Independently reproduced`; the 131-test Gate 6 result and the 132-test merged-tree result are intentionally distinct historical facts.
+
+## Final post-merge portfolio refresh
+
+A fresh no-write Codex reviewer independently reproduced exact candidate
+`86fd185d4f31bfea2eaa12e5e1f625909982d642`. The documented network-disabled locked Python 3.12
+install passed all 139 tests, Ruff, compilation, schemas, historical-event identity, archive hashes,
+links, and protected runtime/interface comparisons. The reviewer inspected the exact architecture,
+gallery, infographics, contact sheet, every one of the 160 video frames, all five boundary pairs, and
+the audio stream with no defect or blocked check. `EVID-POSTMERGE-PORTFOLIO-REFRESH` is the current
+portfolio authority and supersedes the older presentation events without rewriting them.
+
+The independently reviewed production identity remains source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`
+and image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`.
+The final level remains `D5 Reimplementable / E6 Independently reproduced`; no D6 tier exists.
+
+## Certification definitions and walkthrough repair
+
+The preserved `EVID-WALKTHROUGH-ROW-OVERLAP-DEFECT` later contradicted only the historical
+160-frame no-overlap assertion. Exact clean candidate
+`ca8a1ad9b81730adbaf4f5d74070a0f04f8763ad` adds the canonical definitions, repairs physical-row
+rendering and CLI wrapping, and produces the exact 165-second replacement. Three fresh independent
+tracks passed exhaustive frame and standalone-visual review, technical stream/audio verification,
+and clean-context reproduction with 144 tests and no protected runtime change.
+
+`EVID-PORTFOLIO-DEFINITIONS-MEDIA-REPAIR` is therefore the current portfolio authority. The
+independently reviewed production source remains `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`, the
+certified image digest remains
+`sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`, and the boundary remains
+one active recommendation-serving replica with same-machine SQLite locking. The earned result is
+still `D5 Reimplementable / E6 Independently reproduced`; this project defines no D6.

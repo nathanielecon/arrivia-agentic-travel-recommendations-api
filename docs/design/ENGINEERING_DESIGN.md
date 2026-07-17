@@ -14,6 +14,8 @@ The service helps an internal travel concierge obtain recommendations for a memb
 
 The design package earns `D5 Reimplementable` with `E6` independent reproduction. The certified v0 claim remains restricted to one active recommendation-serving replica. REST and MCP processes may coordinate budget state only through one same-machine SQLite file. No production authentication, public exposure, multi-replica consistency, availability, compliance, or guarantees beyond the reviewed v0 are claimed.
 
+`D5` measures design depth while `E6` measures evidence strength. These are separate, project-local axes, not external accreditation or a production-readiness guarantee. The [certification level guide](../certification/CERTIFICATION_LEVELS.md) defines the complete D0–D5 and E0–E6 ladders; no D6 level exists.
+
 Non-goals are upstream writes, generalized travel inventory/search, distributed coordination, account authorization, and silent policy fallback. Expected v0 load is evaluation/demo traffic bounded by `10,000` live session keys and the configured `1,800s` idle TTL; capacity or cost claims beyond that require a measured workload.
 
 ## Environments and system context
@@ -62,7 +64,7 @@ Latency is dominated by two upstream reads. The design intentionally performs no
 7. Capture candidate-bound evidence, exact architecture renders, and presentation derivatives.
 8. Give a fresh reviewer only the candidate and acceptance criteria. Earn `D5/E6` only if they reproduce without repair history.
 
-Integration merges that cross parallel tips (for example PR #2 offline-install vs certification history) may use lead-orchestrator subagent discovery under ADR-009; the lead serializes writes and must not rewrite reviewed candidate SHAs.
+Integration merges that cross parallel tips may use lead-orchestrator subagent discovery under ADR-009; the lead serializes writes and must not rewrite reviewed candidate SHAs. PR #2 exercised that path: a read-only Grok council inspected five conflicts, one lead process resolved and merged them, and the integrated tree passed 132 tests plus the no-index offline bootstrap while preserving the certified runtime source and image identity.
 
 Recovery distinguishes five actions: rollback changes code only; database restore replaces corrupt state; rebuild produces a new artifact and is never rollback; failover is unsupported in v0; forward-fix creates a new candidate and revalidates affected consumers.
 
