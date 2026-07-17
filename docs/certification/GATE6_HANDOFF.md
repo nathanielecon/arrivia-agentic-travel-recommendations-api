@@ -25,6 +25,8 @@ v0 supports one active recommendation-serving replica. REST and MCP may share se
 
 ## Bootstrap
 
+### Local Windows (PyPI available)
+
 ```powershell
 git checkout 446679405d41bfd91d6b273e269d35f50afed458
 Copy-Item .env.example .env -Force
@@ -36,6 +38,23 @@ python -m pip install --no-deps -e .
 $env:ARRIVIA_RECS_IMAGE = "arrivia-recs:gate6-4466794"
 docker compose --profile mocks up --build -d
 ```
+
+### Codex Cloud / Linux (PyPI proxy 403 — use committed wheels)
+
+Cloud agent-phase cannot reach PyPI (`HTTP 403`). Do **not** `pip install -r`
+from the index and do **not** add `pip download` to setup/maintenance. Use the
+vendored wheelhouse checked into the repo:
+
+```bash
+# Prefer tip that contains vendor/python-wheels/ (or cherry-pick that commit onto
+# a detached worktree of the candidate SHA). Pin Environment Python to 3.12.
+bash scripts/install-locked-offline.sh /tmp/g6v
+source /tmp/g6v/bin/activate
+# then run acceptance commands with this interpreter
+```
+
+Manual equivalent: `pip install --no-index --find-links=vendor/python-wheels -r requirements-build.lock -r requirements-dev.lock` then `pip install --no-deps -e .` (see [`vendor/python-wheels/README.md`](../../vendor/python-wheels/README.md)).
+
 
 ## Acceptance IDs
 
@@ -75,4 +94,5 @@ Resumed GPT-5.4 Gate 6 (worktree; tip checkout preserved):
 - Proof `task_e_6a5975185c9c832b8f84f247bb822803` READY: clean checkout of `446679405d41bfd91d6b273e269d35f50afed458` and `compileall` passed; `pip install -r requirements-dev.lock` failed (Cloud proxy/index 403); pytest/Ruff/MCP unavailable; Docker untested.
 - Verdict `task_e_6a597677b24c832b9ff579c5522c73be` READY: claim-boundary PASS; score **6/10**; **D5/E6 earned: NO**.
 
-Independent reproduction remains blocked on Cloud agent-phase package install. Do not reintroduce wheelhouse/`pip download` in setup/maintenance without an explicit new plan.
+Prior independent attempt failed on Cloud PyPI **403** (not candidate code). Unblock path: committed Linux wheels under `vendor/python-wheels/` + `scripts/install-locked-offline.sh` (`--no-index`). Still do **not** add network `pip download` to setup/maintenance.
+

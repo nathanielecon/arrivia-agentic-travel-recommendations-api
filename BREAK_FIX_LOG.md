@@ -194,4 +194,17 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Containment: Do not reintroduce wheelhouse/`pip download` in setup/maintenance. Keep primary checkout on tip; use a detached worktree for the candidate SHA (in-place `git switch --detach` previously killed tasks).
 - Repair: SIGPIPE fix on arrivia `21b57c0`. Gate 6 resume: warm READY; worktree proof `task_e_6a5975185c9c832b8f84f247bb822803` READY (checkout+compileall pass; locked install fail); verdict `task_e_6a597677b24c832b9ff579c5522c73be` READY score 6/10, `D5/E6 earned: NO`.
 - Verification: Independent GPT-5.4 review produced evidence; D5/E6 not earned because locked install/tests/Ruff/MCP/runtime were not reproduced in CloudWarm.
-- Owner/status: P_integration / platform resume verified; clean-install Gate 6 still blocked.
+- Owner/status: P_integration / platform resume verified; clean-install Gate 6 still blocked on PyPI 403 (see BF-015).
+
+### BF-20260716-015 — Commit Linux wheelhouse for Cloud offline install (no setup pip download)
+
+- Time: 2026-07-16T20:35:00-04:00
+- Candidate: `446679405d41bfd91d6b273e269d35f50afed458`; tip tooling adds `vendor/python-wheels/` + `scripts/install-locked-offline.sh`.
+- Detection: Gate 6 proof READY but `pip install -r requirements-dev.lock` failed with proxy/index **403** (`annotated-doc`, `setuptools`); pytest/Ruff absent. Setup-phase `pip download` previously also 403’d.
+- Impact: Independent Cloud locked install was policy-blocked, not a candidate defect.
+- Cause: Codex Cloud proxy denies PyPI for agent (and setup) phases.
+- Containment: Still **no** network `pip download` in `.codex/cloud-setup.sh` / `.codex/cloud-maintenance.sh`.
+- Repair: Vendor Linux CPython 3.12 wheels into `vendor/python-wheels/` (generated via local Docker with working PyPI). Cloud/task-time install: `bash scripts/install-locked-offline.sh` → `pip --no-index --find-links=vendor/python-wheels`. Pin Environment Python 3.12.
+- Verification: Docker offline install proved (`pytest` import OK). Cloud GPT-5.4 smoke after push.
+- Owner/status: P_integration / in progress.
+
