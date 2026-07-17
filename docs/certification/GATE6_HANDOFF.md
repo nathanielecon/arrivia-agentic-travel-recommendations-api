@@ -50,6 +50,28 @@ docker compose --profile mocks up -d
 
 Inject a partner-config fault through the local WireMock admin endpoint, confirm three `upstream_error` responses followed by `upstream_circuit_open`, disable the fault, wait for the open interval, and confirm recovery. Do not alter source or evidence while reviewing.
 
+### Codex Cloud / Linux (PyPI proxy 403 — use committed wheels)
+
+Cloud agent-phase cannot reach PyPI (`HTTP 403`). Do **not** `pip install -r`
+from the index and do **not** add `pip download` to setup/maintenance. Use the
+vendored wheelhouse checked into the repo and the hardened offline installer:
+
+```bash
+# Pin Environment Python to 3.12. Never pip-upgrade from PyPI.
+bash scripts/install-locked-offline.sh /tmp/g6v
+source /tmp/g6v/bin/activate
+# then run acceptance commands with this interpreter
+```
+
+The installer sets `PIP_NO_INDEX=1`, installs from `vendor/python-wheels` only, and uses
+`--no-build-isolation` for the editable package install. See
+[`vendor/python-wheels/README.md`](../../vendor/python-wheels/README.md).
+
+Cloud offline-install proof (integration history; does not change the reviewed runtime
+candidate above): GPT-5.4 task `task_e_6a597b38c7a0832b9a273e859f5574e7` READY —
+`offline_install_ok`, **122 tests collected**
+(`docs/evidence/raw/cloud-offline-install-smoke.md`).
+
 ## Evidence lookup
 
 - Append-only index: `docs/evidence/index.json`

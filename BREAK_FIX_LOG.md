@@ -205,8 +205,8 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Cause: Codex Cloud proxy denies PyPI for agent (and setup) phases.
 - Containment: Still **no** network `pip download` in `.codex/cloud-setup.sh` / `.codex/cloud-maintenance.sh`.
 - Repair: Vendor Linux CPython 3.12 wheels into `vendor/python-wheels/` (generated via local Docker with working PyPI). Cloud/task-time install: `bash scripts/install-locked-offline.sh` → `pip --no-index --find-links=vendor/python-wheels`. Pin Environment Python 3.12.
-- Verification: Docker offline install proved (`pytest` import OK). Cloud GPT-5.4 smoke after push.
-- Owner/status: P_integration / in progress.
+- Verification: Docker offline OK under blocked proxy; Cloud GPT-5.4 task `task_e_6a597b38c7a0832b9a273e859f5574e7` READY — `offline_install_ok`, 122 tests collected (`docs/evidence/raw/cloud-offline-install-smoke.md`).
+- Owner/status: P_integration / unblocked for Cloud locked install.
 
 ### BF-20260716-016 — Cold upstream pools made the first benchmark run nondeterministic
 
@@ -324,4 +324,16 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Repair: Resolve and export exact FFmpeg/FFprobe executable paths, retain Windows executable discovery on `PATH`, and check `$LASTEXITCODE` after every HyperFrames and FFmpeg invocation.
 - Verification: A clean rerun passed lint/check/snapshots, rendered all 160 frames, generated the original music bed, muxed H.264/AAC output, removed the intermediate file, and exited zero. The soundtrack was then normalized from an inaudible first-pass average to a restrained background level.
 - Owner/status: P_portfolio / repaired and verified.
+
+### BF-20260716-026 — Merge main offline-install hardening into completion without rewriting certification history
+
+- Time: 2026-07-17T03:40:00-04:00.
+- Candidate: reviewed runtime source remains `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`; image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`. Merge integrates `origin/main` `99a8d47bc687a46e5043062edd5f39a1e789ec09` into `codex/project-completion` `5a1578e3dc563f41da49e4d4b40c0eb3c9359728`.
+- Detection: GitHub PR #2 was `DIRTY`/`CONFLICTING` on five paths after main landed the verified Cloud offline-install unblock while the completion branch continued certification/walkthrough work with a weaker installer draft.
+- Impact: Without a merge commit, D5/E6 evidence could not land on `main`; rewriting history would invalidate immutable candidate/evidence SHAs.
+- Cause: Parallel tips both added `vendor/python-wheels/`, `scripts/install-locked-offline.sh`, and BF-015/Gate 6 offline notes; main hardened install (`PIP_NO_INDEX`, no pip self-upgrade, `--no-build-isolation`) and recorded Cloud proof, while the PR retained incomplete BF-015 verification text plus BF-016–BF-025.
+- Containment: Preserve all BF-001–BF-025 entries and the reviewed D5/E6 candidate/image identities; do not rebase, squash, or rerender walkthrough media.
+- Repair: Combine `.gitattributes` (PR canonical-LF evidence rules + `*.sh text eol=lf` + MP3/M4A binary); take main’s hardened installer and vendor README; keep PR Gate 6 handoff candidate/claim/pass text and add main’s Cloud offline bootstrap + proof; replace BF-015 verification with main’s verified Cloud result; merge with `--no-ff`.
+- Verification: No conflict markers; no duplicate BF IDs; media SHA-256 unchanged vs pre-merge tip; full pytest/Ruff/compileall; design-authority/schema/interface/partition/link/artifact-hash checks; `bash -n` on the offline installer; fresh Linux/Python 3.12 offline install + import smoke with index access disabled.
+- Owner/status: P_integration / verified — 132 pytest passed; Ruff/compileall/design-authority green; Docker `--network none` offline install + import smoke OK; media SHA-256 unchanged.
 

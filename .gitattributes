@@ -9,10 +9,15 @@ docs/certification/*.md text eol=lf
 walkthrough/*.html text eol=lf
 .codex/*.md text eol=lf
 
+# Shell scripts stay LF for Linux/CloudWarm offline installers.
+*.sh text eol=lf
+
 # Binary proof artifacts must never be newline-normalized.
 *.png binary
 *.jpg binary
 *.jpeg binary
 *.mp4 binary
+*.mp3 binary
+*.m4a binary
 *.sqlite3 binary
 *.zip binary
