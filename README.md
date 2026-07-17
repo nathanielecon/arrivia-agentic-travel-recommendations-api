@@ -37,7 +37,7 @@ Goals, constraints, and delivery expectations come from the program brief in `Pr
 | Known policy fields retain schema and meaning | Unsafe policy bypass or evaluator drift | Strict schema, unknown-property rejection, explicit alias conflict handling | Versioned compatibility window before semantic changes | Product/platform | schema and policy tests | implemented |
 | One active replica is sufficient for v0 | Multiple independent SQLite files could over-grant a cap | Explicit single-replica claim and rollout guardrail | Shared transactional budget store before horizontal scaling | Service owner | topology review and rollout YAML | accepted v0 |
 | `.data` remains on one durable volume and all writers share one filesystem-locking domain | Counts can be lost or SQLite locking can fail across Windows/Docker Linux | Bind mount, WAL mode, stop-before-host-access rule, DB/WAL/SHM snapshot | Shared transactional store before cross-host/kernel writers | Operations | verifier, integrity check, BF-20260716-007 | implemented with topology restriction |
-| Session cardinality stays within 10,000 live keys and 1,800s TTL | Disk/lookup pressure and premature eviction | Configured TTL and bounded least-recently-touched pruning | Load test with representative session distribution | Service owner | budget tests and future benchmark | assumed; unmeasured |
+| Session cardinality stays within 10,000 live keys and 1,800s TTL | Disk/lookup pressure and premature eviction | Configured TTL and bounded least-recently-touched pruning | Load test with representative session distribution | Service owner | budget tests and healthy-mock benchmark | harness implemented; representative capacity unmeasured |
 | Metrics endpoint and evidence artifacts remain available only to operators/reviewers | Operational metadata leaks or proof becomes unavailable | `METRICS_ENABLED`, no public route auth claim, tracked append-only index | Network policy and durable artifact store in target environment | Operations | metrics gating and link checks | local only |
 
 ## Fastest Reviewer Path
@@ -88,7 +88,16 @@ Expected reviewer checks for the sample response:
 arrivia-recs-demo --member-id m1 --session-id review-session-1
 ```
 
-5. If you want to inspect the mock fixtures directly, see:
+5. Record a healthy-mock measurement without asserting a latency SLO:
+
+```powershell
+python scripts/healthy_mock_benchmark.py --requests 100 --concurrency 10
+```
+
+The report validates every response and records throughput plus p50/p95/max latency. See the
+[benchmark contract](docs/operations/BENCHMARK.md) for its exact assertions and claim boundary.
+
+6. If you want to inspect the mock fixtures directly, see:
 
 - `mocks/member-service/mappings/member-m1.json`
 - `mocks/partner-config-service/mappings/partner-p1-policy.json`
