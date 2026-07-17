@@ -1,6 +1,6 @@
 ---
 owner: P_integration / repository maintainer
-status: blocked-after-independent-attempts
+status: blocked-after-independent-resume
 candidate: 446679405d41bfd91d6b273e269d35f50afed458
 image_digest: sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720
 last_verified: 2026-07-16
@@ -69,6 +69,10 @@ Evidence lookup: `docs/evidence/index.json`
 
 ## Independent attempt outcome
 
-The arrivia Environment `6a594effc15c8191a0b7fd4af300dda1` previously warmed successfully with GPT-5.4 (`task_e_6a59589ef838832b84bdd5f12a19cb65`). A first independent proof on the superseded candidate reached a clean checkout but exposed the unmarked Windows-only `pywin32` pin. After the lock portability repair, Gate 6 tasks terminated `ERROR` with no agent output.
+CloudWarm cache-resume was unblocked by removing `terraform|head` / `aws|head` under `pipefail` in `.codex/cloud-maintenance.sh` (arrivia tip `21b57c0`). Consecutive Force-warms READY on ENV `6a594effc15c8191a0b7fd4af300dda1`.
 
-A local bottleneck then diagnosed a compound failure: (1) in-repo Environment setup/maintenance had hard-failed on wheelhouse `pip download` under `set -e` (removed); (2) Codex CloudWarm platform ERROR persisted across arrivia warm/Gate 6 retries and a ContinuityOps control probe. Final Gate 6 attempt `task_e_6a596b804c1c832ba1c6ce70b0584eac` still ERROR. Independent reproduction is blocked, not passed; D5/E6 is not earned.
+Resumed GPT-5.4 Gate 6 (worktree; tip checkout preserved):
+- Proof `task_e_6a5975185c9c832b8f84f247bb822803` READY: clean checkout of `446679405d41bfd91d6b273e269d35f50afed458` and `compileall` passed; `pip install -r requirements-dev.lock` failed (Cloud proxy/index 403); pytest/Ruff/MCP unavailable; Docker untested.
+- Verdict `task_e_6a597677b24c832b9ff579c5522c73be` READY: claim-boundary PASS; score **6/10**; **D5/E6 earned: NO**.
+
+Independent reproduction remains blocked on Cloud agent-phase package install. Do not reintroduce wheelhouse/`pip download` in setup/maintenance without an explicit new plan.

@@ -182,4 +182,16 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Containment: Stopped blind Gate 6 retries. Removed wheelhouse downloads from [`.codex/cloud-setup.sh`](.codex/cloud-setup.sh) / [`.codex/cloud-maintenance.sh`](.codex/cloud-maintenance.sh).
 - Repair: In-repo setup hardened; platform ERROR is outside repo control and requires Codex Cloud recovery or Environment re-wire by the account owner.
 - Verification: Post-removal force warm `task_e_6a596b495bcc832b878e320d79e03e39` and Gate 6 `task_e_6a596b804c1c832ba1c6ce70b0584eac` still ERROR. D5/E6 not earned.
-- Owner/status: P_integration / diagnosed-blocked.
+- Owner/status: P_integration / superseded by BF-014 (true root cause: maintenance SIGPIPE).
+
+### BF-20260716-014 — CloudWarm maintenance SIGPIPE; Gate 6 resume still blocked on pip egress
+
+- Time: 2026-07-16T20:15:00-04:00
+- Candidate: `446679405d41bfd91d6b273e269d35f50afed458`; tip `21b57c0` (SIGPIPE fix).
+- Detection: Account owner proved consecutive Force-warms READY after removing `terraform|head` / `aws|head` under `pipefail` in `.codex/cloud-maintenance.sh`.
+- Impact: Empty Cloud ERROR before agent output is resolved; Gate 6 can run and produce transcripts again.
+- Cause: Maintenance SIGPIPE aborted cache-resume tasks. Separately, agent-phase `pip install -r requirements-dev.lock` still hits Cloud proxy/index 403.
+- Containment: Do not reintroduce wheelhouse/`pip download` in setup/maintenance. Keep primary checkout on tip; use a detached worktree for the candidate SHA (in-place `git switch --detach` previously killed tasks).
+- Repair: SIGPIPE fix on arrivia `21b57c0`. Gate 6 resume: warm READY; worktree proof `task_e_6a5975185c9c832b8f84f247bb822803` READY (checkout+compileall pass; locked install fail); verdict `task_e_6a597677b24c832b9ff579c5522c73be` READY score 6/10, `D5/E6 earned: NO`.
+- Verification: Independent GPT-5.4 review produced evidence; D5/E6 not earned because locked install/tests/Ruff/MCP/runtime were not reproduced in CloudWarm.
+- Owner/status: P_integration / platform resume verified; clean-install Gate 6 still blocked.

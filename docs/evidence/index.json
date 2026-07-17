@@ -15,7 +15,7 @@
     "evidence_level": "E4",
     "d5_earned": false,
     "e6_earned": false,
-    "reason": "Local C5 candidate-bound evidence remains; local bottleneck diagnosed Codex CloudWarm platform ERROR across arrivia and ContinuityOps after one prior warm READY; Gate 6 independent reproduction not demonstrated"
+    "reason": "Local C5 evidence remains; CloudWarm resume works after SIGPIPE fix, but independent Gate 6 locked install failed on Cloud proxy/index 403 (score 6/10; D5/E6 not earned)"
   },
   "events": [
     {
@@ -985,11 +985,11 @@
       "artifacts": [
         {
           "path": "docs/certification/CHECK_MATRIX.md",
-          "sha256": "b9c0f6c99638256e2f8132538ee17be2a06a7b10c09e038fbb9e779c13fb190a"
+          "sha256": "79b79cd0b0ce4691041b53b92220cd78f1a1d61f373a9d6926b0304990ac8a08"
         },
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "95053da93701bdc4ef8aeec28652f3c8bd614967dede6ccc0a7cdcc6a0ff74fb"
+          "sha256": "2acc2e1c0d8d44cbee6a6659d1d1fd212d555293800effb595a4477f671ce064"
         }
       ],
       "tool_versions": {
@@ -1232,7 +1232,7 @@
       "requirement_ids": [
         "REQ-ORCH-001"
       ],
-      "status": "blocked",
+      "status": "superseded",
       "recorded_at": "2026-07-16T19:35:00-04:00",
       "candidate": {
         "git_sha": "446679405d41bfd91d6b273e269d35f50afed458",
@@ -1300,15 +1300,15 @@
       "artifacts": [
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "95053da93701bdc4ef8aeec28652f3c8bd614967dede6ccc0a7cdcc6a0ff74fb"
+          "sha256": null
         },
         {
           "path": "docs/certification/CHECK_MATRIX.md",
-          "sha256": "b9c0f6c99638256e2f8132538ee17be2a06a7b10c09e038fbb9e779c13fb190a"
+          "sha256": null
         },
         {
           "path": "BREAK_FIX_LOG.md",
-          "sha256": "d905ab1e33f39bae892e5cdc257c62fef1f933e9711754feb4e085a04a33cfdd"
+          "sha256": null
         }
       ],
       "tool_versions": {
@@ -1317,9 +1317,108 @@
       },
       "claim_level": "E4",
       "independent": true,
-      "notes": "Local bottleneck completed. In-repo setup abort fixed by removing wheelhouse downloads. Remaining Gate 6 blocker is Codex CloudWarm platform ERROR (cross-repo). D5/E6 not earned. Gate score below 9.5.",
+      "notes": "Local bottleneck completed. In-repo setup abort fixed by removing wheelhouse downloads. Remaining Gate 6 blocker is Codex CloudWarm platform ERROR (cross-repo). D5/E6 not earned. Gate score below 9.5. Superseded by EVID-CLEAN-REVIEW-RESUME after SIGPIPE fix and resumed GPT-5.4 Gate 6.",
       "supersedes": [
         "EVID-CLEAN-REVIEW-GPT54"
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-CLEAN-REVIEW-RESUME",
+      "requirement_ids": [
+        "REQ-ORCH-001"
+      ],
+      "status": "blocked",
+      "recorded_at": "2026-07-16T20:20:00-04:00",
+      "candidate": {
+        "git_sha": "446679405d41bfd91d6b273e269d35f50afed458",
+        "working_tree_clean": true,
+        "image_digest": "sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720"
+      },
+      "environment": {
+        "id": "codex-cloudwarm:6a594effc15c8191a0b7fd4af300dda1",
+        "description": "GPT-5.4 CloudWarm after maintenance SIGPIPE fix on tip 21b57c0"
+      },
+      "procedure": {
+        "preconditions": [
+          "Force warm READY",
+          "Candidate reviewed via detached worktree (primary tip preserved)",
+          "No wheelhouse/pip download in setup/maintenance",
+          "No Cursor Cloud Agents"
+        ],
+        "commands": [
+          "pwsh -File scripts/Invoke-CodexCloudWarm.ps1 -Force",
+          "codex cloud exec --env 6a594effc15c8191a0b7fd4af300dda1 -c model=\"gpt-5.4\" <worktree locked-suite>",
+          "codex cloud exec --env 6a594effc15c8191a0b7fd4af300dda1 -c model=\"gpt-5.4\" <verdict>"
+        ],
+        "cleanup": []
+      },
+      "assertions": [
+        {
+          "name": "warm-ready",
+          "expected": "Force warm READY",
+          "observed": "task_e_6a59721fc98c832bb803b3421f23266c READY",
+          "result": "passed"
+        },
+        {
+          "name": "candidate-worktree-checkout",
+          "expected": "clean checkout of 446679405d41bfd91d6b273e269d35f50afed458",
+          "observed": "task_e_6a5975185c9c832b8f84f247bb822803 clean HEAD match",
+          "result": "passed"
+        },
+        {
+          "name": "locked-clean-install",
+          "expected": "pip install -r requirements-dev.lock succeeds in fresh venv",
+          "observed": "proxy/index 403; annotated-doc and setuptools unresolved",
+          "result": "failed"
+        },
+        {
+          "name": "compileall",
+          "expected": "exit 0",
+          "observed": "exit 0",
+          "result": "passed"
+        },
+        {
+          "name": "pytest-ruff-mcp",
+          "expected": "suite and static checks pass",
+          "observed": "blocked; pytest/ruff not installed",
+          "result": "blocked"
+        },
+        {
+          "name": "independent-verdict",
+          "expected": "D5/E6 earned with score >= 9.5",
+          "observed": "task_e_6a597677b24c832b9ff579c5522c73be score 6/10; D5/E6 earned: NO",
+          "result": "failed"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/certification/GATE6_HANDOFF.md",
+          "sha256": "2acc2e1c0d8d44cbee6a6659d1d1fd212d555293800effb595a4477f671ce064"
+        },
+        {
+          "path": "docs/certification/CHECK_MATRIX.md",
+          "sha256": "79b79cd0b0ce4691041b53b92220cd78f1a1d61f373a9d6926b0304990ac8a08"
+        },
+        {
+          "path": "docs/evidence/raw/gate6-task_e_6a5975185c9c832b8f84f247bb822803-report.md",
+          "sha256": "66f8708f7f3712ea56339b3dc6db3c49a09a02391aead2890549e47ced9ce5a4"
+        },
+        {
+          "path": "docs/evidence/raw/gate6-verdict-task_e_6a597677b24c832b9ff579c5522c73be.md",
+          "sha256": "eaee838947c9e27c1a7dc73d870e901891eabdc78e6d82d446f6bbe9ea8c28e0"
+        }
+      ],
+      "tool_versions": {
+        "codex-cli": "0.144.5",
+        "model": "gpt-5.4",
+        "cloud-python": "3.12.13"
+      },
+      "claim_level": "E4",
+      "independent": true,
+      "notes": "CloudWarm resume succeeded after SIGPIPE fix. Independent Gate 6 produced a real transcript but failed locked install due Cloud pip proxy/index 403. Score 6/10. D5/E6 not earned. No wheelhouse reintroduced.",
+      "supersedes": [
+        "EVID-CLEAN-REVIEW-BOTTLENECK"
       ]
     }
   ],
