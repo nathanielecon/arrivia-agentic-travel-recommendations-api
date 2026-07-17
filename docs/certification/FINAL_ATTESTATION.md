@@ -9,6 +9,8 @@ attested_at: 2026-07-17T02:05:00Z
 
 # Final D5/E6 attestation
 
+> **Current portfolio authority:** `EVID-PORTFOLIO-DEFINITIONS-MEDIA-REPAIR` (exact candidate `ca8a1ad9`, 165-second walkthrough). Earlier 160-second portfolio events below are historical/superseded presentation history; they are retained, not erased.
+
 `D5` describes design depth and `E6` describes evidence strength; they are separate, project-local axes rather than external accreditation or a production-readiness guarantee. See the [complete D0–D5 and E0–E6 definitions](CERTIFICATION_LEVELS.md). This project defines no D6 level.
 
 A fresh local Codex reviewer, without conversation or repair context, independently reproduced review package `f4c6d5048e9ce655ae90887c28f03d4cc0927be2`. The runtime under review was source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` and immutable image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`.
@@ -33,15 +35,17 @@ PR #2 later reconciled the certified completion branch with main's offline-insta
 
 This integration is not a second Gate 6 and does not establish a “D6” level. The certified result remains `D5 Reimplementable / E6 Independently reproduced`; the 131-test Gate 6 result and the 132-test merged-tree result are intentionally distinct historical facts.
 
-## Final post-merge portfolio refresh
+## Final post-merge portfolio refresh (historical / superseded)
+
+> Superseded for current portfolio authority by `EVID-PORTFOLIO-DEFINITIONS-MEDIA-REPAIR` (165s). Retained as presentation history; the later frame-77 overlap defect contradicted only this event’s no-overlap assertion.
 
 A fresh no-write Codex reviewer independently reproduced exact candidate
 `86fd185d4f31bfea2eaa12e5e1f625909982d642`. The documented network-disabled locked Python 3.12
 install passed all 139 tests, Ruff, compilation, schemas, historical-event identity, archive hashes,
 links, and protected runtime/interface comparisons. The reviewer inspected the exact architecture,
 gallery, infographics, contact sheet, every one of the 160 video frames, all five boundary pairs, and
-the audio stream with no defect or blocked check. `EVID-POSTMERGE-PORTFOLIO-REFRESH` is the current
-portfolio authority and supersedes the older presentation events without rewriting them.
+the audio stream with no defect or blocked check. At the time, `EVID-POSTMERGE-PORTFOLIO-REFRESH`
+was recorded as portfolio authority and superseded older presentation events without rewriting them.
 
 The independently reviewed production identity remains source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`
 and image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`.

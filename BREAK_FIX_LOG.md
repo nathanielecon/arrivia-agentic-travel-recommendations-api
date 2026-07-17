@@ -417,3 +417,13 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: Unit row-layout tests, HyperFrames lint/check, deterministic media verifier, two read-only media reviewers, then a clean-context exact-candidate review.
 - Owner/status: P_portfolio and P_integration / defect preserved; repair in progress.
 
+### BF-20260717-034 — Published 165s walkthrough to user-attachments for README inline playback
+
+- Time: 2026-07-17T14:20:00-04:00.
+- Detection: README still carried the BF-027 callout that the Code-tab inline player awaited a refreshed `user-attachments` upload for the 165s cut.
+- Impact: Recruiters could not play the current paced walkthrough inline on the repository front page.
+- Cause: The 165s Quiet Systems cut existed as tracked/release/Pages media but had not been re-uploaded to the GitHub comment attachment CDN.
+- Repair: Upload `walkthrough/arrivia-walkthrough.mp4` (6116812 bytes) via the authenticated GitHub assets flow; place the bare URL on its own README line under `## Watch the 165s evidence walkthrough`; keep Pages homepage, composition player, tracked MP4, release download, and contact sheet as secondary links; remove the stale BF-027 refresh callout.
+- Verification: Attachment URL `https://github.com/user-attachments/assets/12506ad5-d1dc-4fe0-b44d-a015aa5a2981` redirects to `video/mp4` S3 content; `python -m pytest tests/test_readme_guidance.py tests/test_docs_contracts.py tests/test_design_authority.py -q` → 28 passed.
+- Owner/status: P_portfolio / verified.
+

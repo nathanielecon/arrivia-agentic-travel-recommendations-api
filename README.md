@@ -1,24 +1,32 @@
 # arrivia Agentic Travel Recommendations API
 
-Internal service for AI-driven, partner-aware travel recommendations that power an "AI Concierge" experience inside partner booking flows. The service combines member context with read-only partner rules and returns recommendations with an audit block so multi-tenant policy decisions stay traceable.
+Internal service for AI-driven, partner-aware travel recommendations that power an "AI Concierge" experience inside partner booking flows. It combines member context with read-only partner rules and returns recommendations with an audit block so multi-tenant policy decisions stay traceable.
 
 ![Arrivia architecture-first portfolio infographic showing REST and MCP parity, guarded upstreams, strict policy, SQLite budget state, telemetry, and the v0 claim boundary](docs/portfolio/arrivia-infographic.png)
 
-### Evidence walkthrough (Quiet Systems)
+## Watch the 165s evidence walkthrough
 
-[![Contact sheet for the current 165-second D5/E6 walkthrough](walkthrough/snapshots/contact-sheet.jpg)](walkthrough/arrivia-walkthrough.mp4)
+Current paced D5/E6 proof with Quiet Systems soundtrack (165 seconds).
 
-[Current tracked MP4](walkthrough/arrivia-walkthrough.mp4) · [Contact sheet](walkthrough/snapshots/contact-sheet.jpg) · [GitHub Pages player (updates from main after merge)](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/walkthrough/view.html) · [Historical Quiet Systems release](https://github.com/nathanielecon/arrivia-agentic-travel-recommendations-api/releases/download/walkthrough-video/arrivia-walkthrough.mp4)
+https://github.com/user-attachments/assets/12506ad5-d1dc-4fe0-b44d-a015aa5a2981
 
-**Current certification: D5 Reimplementable / E6 independently reproduced.** A fresh clean-context reviewer passed every Gate 6 check against source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` and image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4` ([final attestation](docs/certification/FINAL_ATTESTATION.md) · [certification matrix](docs/certification/CHECK_MATRIX.md)).
+[![Contact sheet — open the playable 165s walkthrough on the GitHub Pages homepage](walkthrough/snapshots/contact-sheet.jpg)](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/)
 
-> D5 describes the design package: it is complete enough for independent reimplementation. E6 describes the proof: a separate clean-context reviewer reproduced the reviewed result. These labels apply only within the stated single-replica v0 boundary.
+**[Play on the GitHub Pages homepage](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/)** · [composition player](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/walkthrough/view.html) · [tracked MP4](walkthrough/arrivia-walkthrough.mp4) · [release download (165s)](https://github.com/nathanielecon/arrivia-agentic-travel-recommendations-api/releases/download/walkthrough-video/arrivia-walkthrough.mp4) · [contact sheet](walkthrough/snapshots/contact-sheet.jpg)
 
-[Complete D0–D5 and E0–E6 definitions](docs/certification/CERTIFICATION_LEVELS.md). The two axes are project-local and independent, not external accreditation or a production-readiness guarantee; no D6 level exists.
+## Certification snapshot
 
-PR #2 then integrated the certified branch with main through a read-only Grok council and one lead merge writer. Five conflicts were resolved without rewriting certification history or changing the reviewed runtime/image; the merged result passed 132 tests plus the offline bootstrap proof ([ADR-009](docs/decisions/ADR_LOG.md) · [BF-026](BREAK_FIX_LOG.md)). This post-certification integration does not create a new “D6” tier: the project remains **D5/E6**.
+**D5 Reimplementable / E6 independently reproduced** within the single-replica v0 boundary. No D6 level exists.
 
-The historical 160-second portfolio refresh was independently reproduced at `86fd185d4f31bfea2eaa12e5e1f625909982d642`, but its no-overlap assertion was later contradicted by the preserved frame-77 defect ([refresh evidence](docs/evidence/raw/final-certification/postmerge-review-86fd185-passed.md) · [visual-defect evidence](docs/evidence/raw/final-certification/walkthrough-row-overlap-defect.md)). Exact candidate `ca8a1ad9b81730adbaf4f5d74070a0f04f8763ad` repairs the recorder rather than rewriting that history and passed fresh exhaustive visual, technical media, and clean-context review ([replacement review](docs/evidence/raw/final-certification/definitions-media-repair-independent-review.md)).
+| | |
+| --- | --- |
+| Source | `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` |
+| Image | `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4` |
+| Portfolio authority | `EVID-PORTFOLIO-DEFINITIONS-MEDIA-REPAIR` · candidate `ca8a1ad9` (165s) |
+
+D5 = design package complete enough for independent reimplementation. E6 = a separate clean-context reviewer reproduced the reviewed result. Project-local axes only—not external accreditation or a production-readiness guarantee.
+
+[CERTIFICATION_LEVELS](docs/certification/CERTIFICATION_LEVELS.md) · [FINAL_ATTESTATION](docs/certification/FINAL_ATTESTATION.md) · [CHECK_MATRIX](docs/certification/CHECK_MATRIX.md)
 
 Verified in the current working candidate:
 
@@ -28,9 +36,15 @@ Verified in the current working candidate:
 - JSON completion logs contain the policy audit while member/session identifiers remain hashed; `/metrics` exposes the frozen operational signals ([observability contract](docs/operations/OBSERVABILITY.md)).
 - Immutable image rollback preserves `.data` and distinguishes code rollback from database restore ([runbook](docs/operations/ROLLBACK_RUNBOOK.md)).
 
+### Portfolio history
+
+- PR #2: read-only Grok council + one lead merge writer; five conflicts; 132 tests + offline bootstrap; runtime/image unchanged ([ADR-009](docs/decisions/ADR_LOG.md) · [BF-026](BREAK_FIX_LOG.md)). Still **D5/E6**—not a D6 tier.
+- Historical 160s refresh at `86fd185d` passed review, then a preserved frame-77 overlap defect contradicted its no-overlap assertion ([refresh](docs/evidence/raw/final-certification/postmerge-review-86fd185-passed.md) · [defect](docs/evidence/raw/final-certification/walkthrough-row-overlap-defect.md)).
+- Current 165s repair at `ca8a1ad9` fixes the recorder without rewriting that history ([replacement review](docs/evidence/raw/final-certification/definitions-media-repair-independent-review.md)).
+
 **Exact claim boundary:** v0 supports one active recommendation-serving replica. REST and MCP may share session-cap state only through the same SQLite file in one filesystem-locking domain (both bare-metal processes, or both inside the container). A Windows host MCP process must not concurrently open the Docker Desktop Linux bind-mounted database; run MCP inside the API container for that topology. The project does not claim production authentication, safe public-internet exposure, multi-replica consistency, uptime, compliance, autonomous policy creation, or guarantees beyond the independently reproduced v0 boundary.
 
-Architecture authority and evidence: [six-page draw.io source](docs/architecture/arrivia-system.drawio) · [exact SVG](docs/architecture/arrivia-system.svg) · [Image2 provenance and parity review](docs/portfolio/README.md) · [evidence index](docs/evidence/index.json) · [requirements matrix](docs/design/REQUIREMENTS_TRACEABILITY.md) · [paced evidence walkthrough](walkthrough/README.md) · [GitHub Pages player](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/walkthrough/view.html)
+Architecture authority and evidence: [six-page draw.io source](docs/architecture/arrivia-system.drawio) · [exact SVG](docs/architecture/arrivia-system.svg) · [Image2 provenance and parity review](docs/portfolio/README.md) · [evidence index](docs/evidence/index.json) · [requirements matrix](docs/design/REQUIREMENTS_TRACEABILITY.md) · [paced evidence walkthrough](walkthrough/README.md) · [GitHub Pages homepage](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/)
 
 Goals, constraints, and delivery expectations come from the program brief in `Prompt.md` (maintained outside this repository).
 
