@@ -15,7 +15,7 @@ The editable [draw.io source](arrivia-system.drawio) is the topology authority. 
 | Artifact | SHA-256 |
 | --- | --- |
 | `arrivia-system.drawio` | `00fc484ce8441b207247a0502c43b7b64eb58d6d7b6502519e6fa8e458588692` |
-| `arrivia-system.svg` | `69b96624da2688a9f5c1ba8d8741158cfd39a8c344ff253e3998047a3f5318b6` |
+| `arrivia-system.svg` | `974989548adb9feef548c2eb5757720d8e3b13cb598d883f76c61d90a3900058` |
 | `arrivia-system.png` | `af37b7624e2e33bd50d45d92fec7e7d7b75e08bfd9a1f48015304a8c202e6064` |
 
 ## Claim boundary

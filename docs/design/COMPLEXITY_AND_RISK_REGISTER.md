@@ -49,5 +49,5 @@ Because concurrency scores `4`, `IFACE-BUDGET-001`, its failure model, cross-pro
 | RISK-009 | Presentation invents unsupported claims | M | H | parity/claim validator failure | exact diagram authority and evidence ceiling | reject/regenerate derivative; keep exact render visible | P_portfolio | L |
 | RISK-010 | Dirty README content is overwritten | M | H | portfolio work starts from wrong base | record existing modification and assign sole owner | stop, diff against baseline/user content, reconcile manually | P_portfolio | L |
 | RISK-011 | Single-replica v0 is scaled | M | Critical | replicas > 1 or non-shared SQLite | compose/deployment guard and docs | remove extra replicas; do not claim cap correctness | P_operations | L |
-| RISK-012 | D5/E6 claimed prematurely | M | H | homepage exceeds evidence index | claim checker; explicit D4/E4 baseline | remove claim and retain failed review event | P_integration | L |
+| RISK-012 | D5/E6 claimed prematurely | M | H | homepage exceeds evidence index | claim checker; independent Gate 6 event required | remove claim and retain failed review event | P_integration | L |
 

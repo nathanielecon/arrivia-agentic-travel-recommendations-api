@@ -14,8 +14,8 @@
     "repository": "local workspace C:/Users/natha/Downloads/arrivia-agentic-travel-recs",
     "owner": "repository maintainer",
     "target_depth": "D5",
-    "earned_depth": "D4",
-    "evidence_level": "E4",
+    "earned_depth": "D5",
+    "evidence_level": "E6",
     "claim_boundary": "Single active API replica; REST and MCP may share same-machine SQLite state; upstream services are read-only; no production authentication, horizontal-scale, uptime, compliance, or independent-reimplementation claim"
   },
   "outcomes": [
@@ -81,9 +81,9 @@
       { "id": "DG-DEC", "status": "pass", "authority": "docs/decisions/ADR_LOG.md" }
     ],
     "limitations": [
-      "The accepted D4 gate is a design-completeness claim, not implementation or runtime evidence",
-      "E4 is the highest evidence currently recorded; D5/E6 require an independent clean-context reviewer",
-      "The exact immutable source SHA and image digest are rebound in a later evidence-only attestation commit"
+      "The D4 design gate remains the frozen implementation prerequisite; D5 is earned by the completed implementation plus independent reproduction",
+      "Production authentication, public exposure, multi-replica consistency, uptime, compliance, and autonomous policy creation remain non-goals",
+      "The final attestation names the reviewed source, image digest, and clean-context review package"
     ]
   }
 }

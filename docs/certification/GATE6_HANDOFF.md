@@ -1,6 +1,6 @@
 ---
 owner: P_integration / repository maintainer
-status: ready-for-independent-review
+status: independently reviewed and passed
 candidate: f5e9dc4df174b1844741efbfb07cb8bdbca3e34c
 image_digest: sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4
 last_verified: 2026-07-16
@@ -21,7 +21,7 @@ This is the complete reviewer input. It intentionally contains no repair history
 
 ## Claim boundary
 
-v0 supports one active recommendation-serving replica. REST and MCP may share session-cap state only through the same SQLite file in one filesystem-locking domain. A Windows host MCP process must not concurrently open the Docker Desktop Linux bind-mounted database. The project does not claim production authentication, safe public-internet exposure, multi-replica consistency, uptime, compliance, autonomous policy creation, or independent reimplementability until this Gate 6 review passes.
+v0 supports one active recommendation-serving replica. REST and MCP may share session-cap state only through the same SQLite file in one filesystem-locking domain. A Windows host MCP process must not concurrently open the Docker Desktop Linux bind-mounted database. The project does not claim production authentication, safe public-internet exposure, multi-replica consistency, uptime, compliance, autonomous policy creation, or guarantees beyond the independently reproduced v0 boundary.
 
 ## Acceptance IDs
 

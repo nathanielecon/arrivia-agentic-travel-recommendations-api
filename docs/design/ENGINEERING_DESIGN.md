@@ -12,7 +12,7 @@ review_trigger: Requirement, interface, dependency, topology, trust-boundary, st
 
 The service helps an internal travel concierge obtain recommendations for a member while enforcing read-only partner policy. Human reviewers, application clients, and MCP-capable agents are the immediate users. A successful request returns recommendations and a policy audit; an unsafe or unavailable dependency produces an explicit error rather than invented policy.
 
-The target is `D5 Reimplementable`; the design package currently earns `D4 Operable` with `E4` candidate-bound local evidence. The v0 claim is restricted to one active recommendation-serving replica. REST and MCP processes may coordinate budget state only through one same-machine SQLite file. No production authentication, public exposure, multi-replica consistency, availability, compliance, or independent-reimplementation claim is made until Gate 6 passes.
+The design package earns `D5 Reimplementable` with `E6` independent reproduction. The certified v0 claim remains restricted to one active recommendation-serving replica. REST and MCP processes may coordinate budget state only through one same-machine SQLite file. No production authentication, public exposure, multi-replica consistency, availability, compliance, or guarantees beyond the reviewed v0 are claimed.
 
 Non-goals are upstream writes, generalized travel inventory/search, distributed coordination, account authorization, and silent policy fallback. Expected v0 load is evaluation/demo traffic bounded by `10,000` live session keys and the configured `1,800s` idle TTL; capacity or cost claims beyond that require a measured workload.
 

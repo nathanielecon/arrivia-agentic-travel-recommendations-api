@@ -12,16 +12,16 @@ review_trigger: Requirement statement, acceptance, partition, test, evidence, en
 
 | Requirement | Design / decision | Partition | Acceptance test IDs | Environment | Evidence IDs | Ceiling | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `REQ-REL-001` | Engineering design reliability; ADR-001/002 | `P_reliability` | `TEST-CB-UNIT`, `TEST-UPSTREAM-REST`, `TEST-UPSTREAM-MCP`, `TEST-HALFOPEN-RACE` | local-python, local-compose | `EVID-REPLACEMENT-CIRCUIT-F5E9`, `EVID-REPLACEMENT-INTEGRATION-F5E9` | E4 | verified on replacement candidate |
-| `REQ-POL-001` | `IFACE-POLICY-001`; ADR-003 | `P_reliability` | `TEST-POLICY-SCHEMA`, `TEST-POLICY-CONTRACT` | local-python, local-compose | `EVID-REPLACEMENT-INTEGRATION-F5E9` | E4 | verified on replacement candidate |
-| `REQ-OBS-001` | `IFACE-OPS-001`; ADR-005 | `P_operations` | `TEST-LOG-SCHEMA`, `TEST-METRICS`, `TEST-ALERT-RULES` | local-python, local-compose | `EVID-REPLACEMENT-INTEGRATION-F5E9` | E4 | verified on replacement candidate |
-| `REQ-OPS-001` | Delivery/recovery; ADR-004 | `P_operations` | `TEST-DEPLOY-VERIFY`, `TEST-ROLLBACK-STATE` | local-compose | `EVID-REPLACEMENT-ROLLBACK-F5E9`, `EVID-REPLACEMENT-INTEGRATION-F5E9` | E5 | verified locally; replacement Gate 6 pending |
-| `REQ-DOC-001` | Charter, interfaces, risk register; ADR-008 | `P_portfolio` | `TEST-DOC-CONTRACT`, `TEST-B2-CONTRACT` | local-python | `EVID-REPLACEMENT-INTEGRATION-F5E9` | E3 | verified on replacement candidate |
-| `REQ-EVID-001` | Evidence protocol | `P_portfolio` | `TEST-LIVE-CLI` | local-compose | `EVID-REPLACEMENT-INTEGRATION-F5E9`, `EVID-WALKTHROUGH-FINAL` | E4 | verified on replacement candidate |
-| `REQ-EVID-002` | Failure behavior | `P_portfolio` | `TEST-LIVE-502` | local-compose | `EVID-REPLACEMENT-CIRCUIT-F5E9`, `EVID-WALKTHROUGH-FINAL` | E4 | verified on replacement candidate |
-| `REQ-EVID-003` | `IFACE-BUDGET-001` | `P_reliability` | `TEST-BUDGET-CROSSPROCESS` | local-python | `EVID-BUDGET-RACE`, `EVID-REPLACEMENT-INTEGRATION-F5E9` | E4 | verified on replacement candidate |
-| `REQ-PORT-001` | Architecture/presentation; ADR-006/007 | `P_portfolio` | `TEST-DIAGRAM-PARITY`, `TEST-PORTFOLIO-CLAIMS`, `TEST-WALKTHROUGH` | local-compose | `EVID-ARCH-EXACT`, `EVID-WALKTHROUGH-FINAL` | E5 | verified locally; independent lookup pending |
-| `REQ-ORCH-001` | Worker task contract | `P_authority`, `P_integration` | `TEST-TASK-SCHEMA`, `TEST-PARTITION-OWNERSHIP`, `TEST-INTERFACE-HASH` | local-python | `EVID-REPLACEMENT-INTEGRATION-F5E9` | E3 | verified on replacement candidate |
+| `REQ-REL-001` | Engineering design reliability; ADR-001/002 | `P_reliability` | `TEST-CB-UNIT`, `TEST-UPSTREAM-REST`, `TEST-UPSTREAM-MCP`, `TEST-HALFOPEN-RACE` | local-python, local-compose | `EVID-REPLACEMENT-CIRCUIT-F5E9`, `EVID-GATE6-PASS-F4C6D50` | E6 | independently reproduced |
+| `REQ-POL-001` | `IFACE-POLICY-001`; ADR-003 | `P_reliability` | `TEST-POLICY-SCHEMA`, `TEST-POLICY-CONTRACT` | local-python, local-compose | `EVID-REPLACEMENT-INTEGRATION-F5E9`, `EVID-GATE6-PASS-F4C6D50` | E6 | independently reproduced |
+| `REQ-OBS-001` | `IFACE-OPS-001`; ADR-005 | `P_operations` | `TEST-LOG-SCHEMA`, `TEST-METRICS`, `TEST-ALERT-RULES` | local-python, local-compose | `EVID-REPLACEMENT-INTEGRATION-F5E9`, `EVID-GATE6-PASS-F4C6D50` | E6 | independently reproduced |
+| `REQ-OPS-001` | Delivery/recovery; ADR-004 | `P_operations` | `TEST-DEPLOY-VERIFY`, `TEST-ROLLBACK-STATE` | local-compose | `EVID-REPLACEMENT-ROLLBACK-F5E9`, `EVID-GATE6-PASS-F4C6D50` | E6 | independently reproduced |
+| `REQ-DOC-001` | Charter, interfaces, risk register; ADR-008 | `P_portfolio` | `TEST-DOC-CONTRACT`, `TEST-B2-CONTRACT` | local-python | `EVID-REPLACEMENT-INTEGRATION-F5E9`, `EVID-GATE6-PASS-F4C6D50` | E6 | independently reproduced |
+| `REQ-EVID-001` | Evidence protocol | `P_portfolio` | `TEST-LIVE-CLI` | local-compose | `EVID-REPLACEMENT-INTEGRATION-F5E9`, `EVID-GATE6-PASS-F4C6D50` | E6 | independently reproduced |
+| `REQ-EVID-002` | Failure behavior | `P_portfolio` | `TEST-LIVE-502` | local-compose | `EVID-REPLACEMENT-CIRCUIT-F5E9`, `EVID-GATE6-PASS-F4C6D50` | E6 | independently reproduced |
+| `REQ-EVID-003` | `IFACE-BUDGET-001` | `P_reliability` | `TEST-BUDGET-CROSSPROCESS` | local-python | `EVID-BUDGET-RACE`, `EVID-GATE6-PASS-F4C6D50` | E6 | independently reproduced |
+| `REQ-PORT-001` | Architecture/presentation; ADR-006/007 | `P_portfolio` | `TEST-DIAGRAM-PARITY`, `TEST-PORTFOLIO-CLAIMS`, `TEST-WALKTHROUGH` | local-compose | `EVID-WALKTHROUGH-FINAL`, `EVID-GATE6-PASS-F4C6D50` | E6 | independently reproduced |
+| `REQ-ORCH-001` | Worker task contract | `P_authority`, `P_integration` | `TEST-TASK-SCHEMA`, `TEST-PARTITION-OWNERSHIP`, `TEST-INTERFACE-HASH` | local-python | `EVID-REPLACEMENT-INTEGRATION-F5E9`, `EVID-GATE6-PASS-F4C6D50` | E6 | independently reproduced |
 
 ## Requirement definitions and acceptance
 

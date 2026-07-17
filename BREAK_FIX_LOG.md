@@ -292,3 +292,15 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: Full suite in the author worktree, full suite in a separate clean clone, new candidate/image identity, rebound local evidence, and a second repair-history-free Gate 6 review.
 - Owner/status: P_authority / repair implemented; replacement candidate pending.
 
+### BF-20260716-023 — Final attestation initially promoted the D4 prerequisite gate
+
+- Time: 2026-07-16T22:10:00-04:00.
+- Candidate: reviewed source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`; attestation working tree after independent Gate 6 passed.
+- Detection: The first post-review full suite returned 130 passed and one project-design schema failure because `design_gate.level` was changed from its frozen `D4` constant to `D5`.
+- Impact: The first attestation draft could not be committed; reviewed source/image and the independent Gate 6 result were unaffected.
+- Cause: Project earned depth and the prerequisite design-gate level were conflated during final documentation promotion.
+- Containment: Retain the failed attestation validation; do not alter the reviewed source or image.
+- Repair: Keep the frozen design gate at D4, set project `earned_depth` to D5 and `evidence_level` to E6, and explain that completed implementation plus independent reproduction earns D5.
+- Verification: Final full suite, schema validation, Ruff, compilation, evidence hashes, and clean diff checks must pass before the attestation commit.
+- Owner/status: P_integration / repaired; final validation pending.
+

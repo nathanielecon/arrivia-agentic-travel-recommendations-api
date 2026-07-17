@@ -1,6 +1,6 @@
 ---
 owner: P_portfolio / repository maintainer
-status: immutable-candidate E4 evidence; independent review pending
+status: D5/E6 independently reproduced evidence
 candidate: f5e9dc4df174b1844741efbfb07cb8bdbca3e34c
 last_verified: 2026-07-16
 review_trigger: Candidate SHA/image, assertion, artifact, command, or public claim change
@@ -24,4 +24,4 @@ is stable across Windows and Linux checkouts. Binary artifacts are always hashed
 | Walkthrough and artifact parity | [portfolio validation](raw/final-certification/portfolio-validation.md) | strict 300-second render and visual inspection passed |
 | Earlier failures and superseded proof | [failed Gate 6 review](raw/final-certification/gate6-review-07bbc91-failed.md) | retained; not counted as replacement proof |
 
-The immutable replacement Compose image is `arrivia-recs@sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`, built from source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`. The repository-level public ceiling remains D4/E4 until replacement Gate 6 passes.
+The immutable replacement Compose image is `arrivia-recs@sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`, built from source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`. Fresh review package `f4c6d5048e9ce655ae90887c28f03d4cc0927be2` independently passed Gate 6, earning D5/E6 within the stated v0 boundary.

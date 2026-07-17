@@ -38,5 +38,5 @@
   <rect x="765" y="720" width="255" height="65" rx="14" class="proof"/><text x="892" y="748" class="n1">Requirement → test</text><text x="892" y="772" class="n2">candidate-bound evidence</text>
   <rect x="1100" y="720" width="350" height="65" rx="14" class="proof"/><text x="1275" y="748" class="n1">README + evidence gallery</text><text x="1275" y="772" class="n2">Image2 never changes topology</text>
   <path d="M350 752 H430" class="amber"/><path d="M685 752 H765" class="line"/><path d="M1020 752 H1100" class="line"/>
-  <text x="800" y="865" class="foot">Claim boundary: D4/E4 until independent Gate 6 passes; single active replica; no horizontal-scale or production-authentication claim.</text>
+  <text x="800" y="865" class="foot">Claim boundary: D5/E6 independently reproduced v0; single active replica; no horizontal-scale or production-authentication claim.</text>
 </svg>

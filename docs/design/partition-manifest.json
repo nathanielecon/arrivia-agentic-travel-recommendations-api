@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "candidate_sha": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c",
-  "candidate_state": "immutable replacement source; image sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4; local D4/E4 passed; replacement Gate 6 pending",
+  "candidate_state": "immutable replacement source; image sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4; independent D5/E6 Gate 6 passed at review package f4c6d504",
   "generated_at": "2026-07-16T13:33:00-04:00",
   "owner": "P_authority / repository maintainer",
   "status": "accepted",
@@ -260,7 +260,7 @@
       ],
       "claim_ceiling": "E6",
       "integration_order": 4,
-      "status": "integration-in-progress-independent-review-pending"
+      "status": "complete-independent-review-passed"
     }
   ],
   "shared_interfaces": [

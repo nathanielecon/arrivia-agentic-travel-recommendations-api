@@ -11,11 +11,11 @@
   },
   "append_only": true,
   "current_claim": {
-    "design_depth": "D4",
-    "evidence_level": "E4",
-    "d5_earned": false,
-    "e6_earned": false,
-    "reason": "Replacement candidate passes local and separate-clean-checkout gates; independent replacement Gate 6 review is pending"
+    "design_depth": "D5",
+    "evidence_level": "E6",
+    "d5_earned": true,
+    "e6_earned": true,
+    "reason": "Fresh local Codex review at f4c6d504 passed every required clean-install, static, runtime, failure/recovery, evidence, rollback, visual, and cleanup check"
   },
   "events": [
     {
@@ -1604,6 +1604,28 @@
       "artifacts": [{"path": "docs/evidence/raw/final-certification/replacement-f5e9dc4-validation.md", "sha256": "d4a4013c2986de009cc49c55d0507c7d87a272831988a492f679815e9a0cdacd"}, {"path": "docs/evidence/raw/final-certification/replacement-f5e9dc4-benchmark.json", "sha256": "e152243bf1c434359a5df9c0eb9a62dcf4a8427444ff90bc9edbf33a324f8078"}, {"path": "docs/evidence/raw/final-certification/replacement-f5e9dc4-rollback.md", "sha256": "8a8ea0263c7552bcb2977801f96bf690387742db531e58a4772839772ae7c10e"}],
       "tool_versions": {"python": "3.14.3", "pytest": "9.1.1", "docker": "Docker Desktop Linux"},
       "claim_level": "E4", "independent": false, "notes": "Replacement local certification does not erase or override the failed independent event.", "supersedes": ["EVID-GATE6-FAIL-07BBC91", "EVID-POL-STRICT", "EVID-OBS-LOG", "EVID-OBS-METRICS"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-GATE6-PASS-F4C6D50",
+      "requirement_ids": ["REQ-REL-001", "REQ-POL-001", "REQ-OBS-001", "REQ-OPS-001", "REQ-DOC-001", "REQ-EVID-001", "REQ-EVID-002", "REQ-EVID-003", "REQ-PORT-001", "REQ-ORCH-001"],
+      "status": "passed",
+      "recorded_at": "2026-07-17T02:05:00Z",
+      "candidate": {"git_sha": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "fresh-local-codex-f4c6d50", "description": "Separate exact GitHub clone at review package f4c6d504 with no conversation context"},
+      "procedure": {"preconditions": ["Reviewer received only exact identities, boundary, commands, acceptance IDs, and evidence lookup"], "commands": ["locked clean install; pytest; Ruff; compileall", "MCP stdio and cross-process final-slot", "image identity; verifier; CLI; benchmark", "controlled partner fault/circuit/recovery", "evidence, rollback, visual, link, claim, cleanup, and clean-state checks"], "cleanup": ["WireMock fault mapping count zero", "Health and readiness HTTP 200", "Tracked review checkout clean"]},
+      "assertions": [
+        {"name": "clean-static-suite", "expected": "all locked/static/design tests pass", "observed": "131 pytest passed; Ruff, compileall, 9 design-authority, 2 MCP, and final-slot passed", "result": "passed"},
+        {"name": "runtime-and-recovery", "expected": "exact image passes success, failure, recovery, and benchmark journeys", "observed": "verifier 5/5; CLI pass; benchmark 100/100; upstream_error x3, circuit open, cleanup, recovery 200", "result": "passed"},
+        {"name": "evidence-and-claim-discovery", "expected": "proof resolves without hidden context and stays within boundary", "observed": "0 missing/mismatched declared hashes; 15/15 README links; rollback and visual proof matched", "result": "passed"},
+        {"name": "d5-e6-verdict", "expected": "no required defects or blockers", "observed": "PASS; no defects or blocked required checks; eligible within stated boundary", "result": "passed"}
+      ],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/gate6-review-f4c6d50-passed.md", "sha256": "8e044604b7769d1927def12b3008bdf6883e4883be67af6708f2b3896909dc5b"}, {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": "b6468c009ac616580be3608533df47735ddf3e4fb8c09779ff3fbdec6ecd0034"}],
+      "tool_versions": {"python": "3.14.3", "pytest": "9.1.1", "reviewer": "fresh local Codex", "docker": "Docker Desktop Linux"},
+      "claim_level": "E6",
+      "independent": true,
+      "notes": "D5/E6 is earned only for the reviewed single-replica, same-locking-domain v0 boundary.",
+      "supersedes": ["EVID-REPLACEMENT-INTEGRATION-F5E9"]
     }
   ],
   "planned_event_ids": []
