@@ -24,7 +24,7 @@ The replacement candidate earned D5/E6 after a fresh clean-context reviewer pass
 | Failure / circuit / recovery | passed independently | `upstream_error` ×3, `upstream_circuit_open`, cleanup, then HTTP 200 |
 | Distinct-image rollback | passed locally | SQLite cap remained enforced across B→A→B; no restore used |
 | Links / hashes / evidence freshness | passed independently | 15/15 README links; 0 missing and 0 mismatched declared artifact hashes |
-| Walkthrough render / visual parity | passed after user-directed pacing/music update | Every static scene is five seconds; all 160 encoded frames and scene cuts passed; original sample-free AAC music is level-checked and reproducible; see `EVID-WALKTHROUGH-PACED-MUSIC` |
+| Walkthrough render / visual parity | passed after user soundtrack selection | Every static scene is five seconds; all 160 encoded frames and scene cuts remain validated; user-supplied Suno track “Quiet Systems” is duration-fitted, credited, level-checked, and reproducible; see `EVID-WALKTHROUGH-QUIET-SYSTEMS` |
 | Gate 6 independent review | passed | no defects or blocked checks; `EVID-GATE6-PASS-F4C6D50` |
 
 ## Immutable identities

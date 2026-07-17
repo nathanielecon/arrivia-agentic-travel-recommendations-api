@@ -37,7 +37,7 @@ def _sha256(paths: list[str]) -> str:
 
 def _portable_sha256(path: Path) -> str:
     payload = path.read_bytes()
-    if path.suffix.lower() not in {".png", ".jpg", ".jpeg", ".mp4", ".m4a", ".sqlite3", ".zip"}:
+    if path.suffix.lower() not in {".png", ".jpg", ".jpeg", ".mp4", ".m4a", ".mp3", ".sqlite3", ".zip"}:
         payload = payload.replace(b"\r\n", b"\n")
     return hashlib.sha256(payload).hexdigest()
 

@@ -1683,9 +1683,9 @@
       ],
       "artifacts": [
         {"path": "docs/evidence/raw/final-certification/walkthrough-paced-music.md", "sha256": "396b3ef63a7e0f7d4fa84be66bb1fd21024d7a0bfd6ebd063f1ae5ab098a6b41"},
-        {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": "b846da7ab7bab94ce1e3b142e8aad8d681c604587318022dfd130129dbb27202"},
-        {"path": "docs/certification/CHECK_MATRIX.md", "sha256": "656d72117b8d6387960cfd0119e3ef2db04a311fe68e3817291fa490d1cd6812"},
-        {"path": "docs/evidence/README.md", "sha256": "38a248194357a6aafdfa81f276cb3541634e1c08a78721f4d32c37de2077ee5d"},
+        {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": null},
+        {"path": "docs/certification/CHECK_MATRIX.md", "sha256": null},
+        {"path": "docs/evidence/README.md", "sha256": null},
         {"path": "walkthrough/index.html", "sha256": "2d02b8cc332053601a9dbad0fc31f3ee67d39ce5e845f44849dc562fa79f94e6"},
         {"path": "walkthrough/render.ps1", "sha256": null},
         {"path": "walkthrough/README.md", "sha256": null},
@@ -1698,6 +1698,41 @@
       "independent": false,
       "notes": "Historical user-directed pacing proof using the first procedural bed. Superseded when the user supplied the selected Suno track Quiet Systems; replaced mutable render and documentation hashes are nulled. Production D5/E6 runtime source and image identity are unchanged.",
       "supersedes": ["EVID-WALKTHROUGH-OVERLAP-REPAIR"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-WALKTHROUGH-QUIET-SYSTEMS",
+      "requirement_ids": ["REQ-PORT-001"],
+      "status": "passed",
+      "recorded_at": "2026-07-17T03:18:00Z",
+      "candidate": {"git_sha": "ab72dce80fb079ce976128b0b60a93c07a0510aa", "working_tree_clean": true, "image_digest": null},
+      "environment": {"id": "local-hyperframes-quiet-systems", "description": "HyperFrames 0.7.60 and FFmpeg 8.1.2 with user-supplied Suno soundtrack duration fitting, normalization, mux, and stream validation"},
+      "procedure": {
+        "preconditions": ["Paced 160-frame visual composition already validated", "User supplied Quiet Systems.mp3 as the selected track", "Runtime source and image remain unchanged"],
+        "commands": ["pwsh -File walkthrough/render.ps1", "ffprobe source and final stream/duration inspection", "ffmpeg volumedetect", "design-authority artifact validation"],
+        "cleanup": ["Temporary video-only MP4 and prepared AAC bed removed by the checked renderer"]
+      },
+      "assertions": [
+        {"name": "selected-track-provenance", "expected": "user-supplied source retained unchanged with available metadata", "observed": "Quiet Systems MP3 hash-bound; title, artist irresistiblewebapps8080, and Suno creation comment retained", "result": "passed"},
+        {"name": "complete-duration-fit", "expected": "144.719979-second song fills 160 seconds without pitch shift, obvious loop, or long silence", "observed": "atempo 0.9045 plus one-second safety pad; complete track retained with endpoint fades", "result": "passed"},
+        {"name": "background-safe-level", "expected": "audible stereo bed with headroom and no clipping", "observed": "48 kHz AAC stereo; mean -25.2 dB, peak -9.7 dB", "result": "passed"},
+        {"name": "final-media-contract", "expected": "160 H.264 frames and one AAC stream at exactly 160 seconds", "observed": "passed; visual source and regenerated hero snapshots unchanged", "result": "passed"}
+      ],
+      "artifacts": [
+        {"path": "docs/evidence/raw/final-certification/walkthrough-quiet-systems.md", "sha256": "ae802d6a258d9e24342ed530caad4031a8c236776d136d72ccde0be234d96ef2"},
+        {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": "793e9bba78679925c080364a7e2185f0780a1753926fd95ad842b32d0817531f"},
+        {"path": "docs/certification/CHECK_MATRIX.md", "sha256": "3bea44bcf8e3ad549ed44a92522a9ea06251216574b3e99e7804442b19f32b12"},
+        {"path": "docs/evidence/README.md", "sha256": "8e2e41d2cd66bb58102da75d25d65783d498d8fd8f3e716ef0b31f23e3a85b0b"},
+        {"path": "walkthrough/music/quiet-systems.mp3", "sha256": "5230bef6dd4a62c6635b93b136fc50fa4d5efc3990068edb62518e651e23ea0b"},
+        {"path": "walkthrough/render.ps1", "sha256": "5475cb88449dc27daaa537d157d46c688eb5ab0ef54aa76d7c7db5b18ed12d60"},
+        {"path": "walkthrough/README.md", "sha256": "52e52a7412cfef664f9d1fe7500acd7ecb8775405f9526e0511db92a733fe268"},
+        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": "6079b7f11c574f4f41dd337dd2629762f5b0bab433701063fa0f8a8aa1092ddb"}
+      ],
+      "tool_versions": {"hyperframes": "0.7.60", "ffmpeg": "8.1.2", "powershell": "7"},
+      "claim_level": "E4",
+      "independent": false,
+      "notes": "User-selected portfolio soundtrack. No license or ownership claim beyond user-supplied provenance is inferred. Production D5/E6 runtime identity is unchanged.",
+      "supersedes": ["EVID-WALKTHROUGH-PACED-MUSIC"]
     }
   ],
   "planned_event_ids": []
