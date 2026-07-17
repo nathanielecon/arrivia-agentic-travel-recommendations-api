@@ -72,7 +72,7 @@
       }
     },
     "tool_versions": { "type": "object", "additionalProperties": { "type": "string" } },
-    "claim_level": { "pattern": "^E[0-6]$" },
+    "claim_level": { "description": "Project-local evidence strength on the E0-E6 axis defined in docs/certification/CERTIFICATION_LEVELS.md; independent of design depth and not external accreditation.", "pattern": "^E[0-6]$" },
     "independent": { "type": "boolean" },
     "notes": { "type": "string" },
     "supersedes": { "type": "array", "uniqueItems": true, "items": { "pattern": "^EVID-[A-Z0-9-]+$" } }

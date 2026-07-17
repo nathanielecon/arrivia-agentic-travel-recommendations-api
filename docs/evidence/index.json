@@ -19,6 +19,9 @@
     "reason": "Runtime Gate 6 passed at f4c6d504; fresh no-write review at 86fd185d then passed the synchronized post-merge evidence, architecture, documentation, offline-install, and 160-frame portfolio refresh"
   },
   "artifact_archive": {
+    "1d1fdfb8cbbb2415d5c6a7c3a95d6569919ebbc500b7b5faeca2fe843b7c4024": "docs/evidence/archive/1d1fdfb8cbbb2415d5c6a7c3a95d6569919ebbc500b7b5faeca2fe843b7c4024-cli-success.mp4",
+    "18dd1e78e9be3425641ff7ee60e9bc216546a28110e254e935444e882dfb6afc": "docs/evidence/archive/18dd1e78e9be3425641ff7ee60e9bc216546a28110e254e935444e882dfb6afc-final-slot.mp4",
+    "5b8308efef179a5a890505822f0ad7fdddbe74c4d0d289390d3ee3ffe3086fb0": "docs/evidence/archive/5b8308efef179a5a890505822f0ad7fdddbe74c4d0d289390d3ee3ffe3086fb0-partner-fault.mp4",
     "00fc484ce8441b207247a0502c43b7b64eb58d6d7b6502519e6fa8e458588692": "docs/evidence/archive/00fc484ce8441b207247a0502c43b7b64eb58d6d7b6502519e6fa8e458588692-arrivia-system.drawio",
     "2d02b8cc332053601a9dbad0fc31f3ee67d39ce5e845f44849dc562fa79f94e6": "docs/evidence/archive/2d02b8cc332053601a9dbad0fc31f3ee67d39ce5e845f44849dc562fa79f94e6-walkthrough-index.html",
     "3bea44bcf8e3ad549ed44a92522a9ea06251216574b3e99e7804442b19f32b12": "docs/evidence/archive/3bea44bcf8e3ad549ed44a92522a9ea06251216574b3e99e7804442b19f32b12-check-matrix.md",

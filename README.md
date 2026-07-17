@@ -6,15 +6,19 @@ Internal service for AI-driven, partner-aware travel recommendations that power 
 
 ### Evidence walkthrough (Quiet Systems)
 
-[![Contact sheet for the current 160-second D5/E6 walkthrough](walkthrough/snapshots/contact-sheet.jpg)](walkthrough/arrivia-walkthrough.mp4)
+[![Contact sheet for the current 165-second D5/E6 walkthrough](walkthrough/snapshots/contact-sheet.jpg)](walkthrough/arrivia-walkthrough.mp4)
 
 [Current tracked MP4](walkthrough/arrivia-walkthrough.mp4) · [Contact sheet](walkthrough/snapshots/contact-sheet.jpg) · [GitHub Pages player (updates from main after merge)](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/walkthrough/view.html) · [Historical Quiet Systems release](https://github.com/nathanielecon/arrivia-agentic-travel-recommendations-api/releases/download/walkthrough-video/arrivia-walkthrough.mp4)
 
 **Current certification: D5 Reimplementable / E6 independently reproduced.** A fresh clean-context reviewer passed every Gate 6 check against source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` and image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4` ([final attestation](docs/certification/FINAL_ATTESTATION.md) · [certification matrix](docs/certification/CHECK_MATRIX.md)).
 
+> D5 describes the design package: it is complete enough for independent reimplementation. E6 describes the proof: a separate clean-context reviewer reproduced the reviewed result. These labels apply only within the stated single-replica v0 boundary.
+
+[Complete D0–D5 and E0–E6 definitions](docs/certification/CERTIFICATION_LEVELS.md). The two axes are project-local and independent, not external accreditation or a production-readiness guarantee; no D6 level exists.
+
 PR #2 then integrated the certified branch with main through a read-only Grok council and one lead merge writer. Five conflicts were resolved without rewriting certification history or changing the reviewed runtime/image; the merged result passed 132 tests plus the offline bootstrap proof ([ADR-009](docs/decisions/ADR_LOG.md) · [BF-026](BREAK_FIX_LOG.md)). This post-certification integration does not create a new “D6” tier: the project remains **D5/E6**.
 
-The synchronized portfolio refresh was independently reproduced at `86fd185d4f31bfea2eaa12e5e1f625909982d642`: 139 tests passed in a network-disabled locked Python 3.12 checkout, and all 160 walkthrough frames plus every scene boundary passed visual review ([refresh evidence](docs/evidence/raw/final-certification/postmerge-review-86fd185-passed.md)).
+The historical 160-second portfolio refresh was independently reproduced at `86fd185d4f31bfea2eaa12e5e1f625909982d642`, but its no-overlap assertion was later contradicted by the preserved frame-77 defect ([refresh evidence](docs/evidence/raw/final-certification/postmerge-review-86fd185-passed.md) · [visual-defect evidence](docs/evidence/raw/final-certification/walkthrough-row-overlap-defect.md)). The current 165-second replacement repairs the recorder rather than rewriting that history.
 
 Verified in the current working candidate:
 

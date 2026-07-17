@@ -191,8 +191,25 @@ def test_project_uses_defined_d5_e6_terms_and_rejects_d6() -> None:
 
 def test_traceability_matches_current_walkthrough_duration() -> None:
     traceability = (DESIGN / "REQUIREMENTS_TRACEABILITY.md").read_text(encoding="utf-8")
-    assert "160-second walkthrough" in traceability
+    assert "165-second walkthrough" in traceability
     assert "five-minute walkthrough" not in traceability
+
+
+def test_certification_guide_defines_both_complete_axes() -> None:
+    guide = (
+        ROOT / "docs" / "certification" / "CERTIFICATION_LEVELS.md"
+    ).read_text(encoding="utf-8")
+    for level in ("D0", "D1", "D2", "D3", "D4", "D5"):
+        assert f"`{level}`" in guide
+    for level in ("E0", "E1", "E2", "E3", "E4", "E5", "E6"):
+        assert f"`{level}`" in guide
+    for statement in (
+        "two independent",
+        "not an external accreditation",
+        "no `D6` level",
+        "one active recommendation-serving replica",
+    ):
+        assert statement in guide
 
 
 def test_post_merge_orchestration_history_is_consistent() -> None:
@@ -227,7 +244,10 @@ def test_current_portfolio_and_walkthrough_match_certified_claim() -> None:
     walkthrough = (ROOT / "walkthrough" / "index.html").read_text(encoding="utf-8")
     assert "no D5/E6 claim" not in portfolio
     assert "no D5/E6 claim" not in prompt
-    assert "D5/E6 independently reproduced v0" in portfolio
-    assert 'data-duration="160"' in walkthrough
+    assert "D5 DESIGN" in portfolio
+    assert "E6 EVIDENCE" in portfolio
+    assert 'data-duration="165"' in walkthrough
+    assert "D5 DESIGN" in walkthrough
+    assert "E6 EVIDENCE" in walkthrough
     assert "read-only Grok council" in walkthrough
     assert "132 tests" in walkthrough

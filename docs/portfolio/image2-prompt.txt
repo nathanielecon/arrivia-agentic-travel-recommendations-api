@@ -1,5 +1,5 @@
-Use case: precise-object-edit
-Asset type: GitHub README architecture-first portfolio infographic
-Input images: Image 1 is the prior infographic edit target; Image 2 is the updated exact architecture authority and factual reference.
-Primary request: edit only the bottom amber claim-boundary band in Image 1. Replace its obsolete text with this exact text: “D5/E6 independently reproduced v0 · one active replica · same-machine SQLite”.
-Constraints: preserve every other composition, topology, card, typography, color, and label as closely as possible. Keep the verified flow, component names, accomplishment cards, title, subtitle, and “Draw.io topology is authoritative” label. The band must be fully legible, centered, and fit on one line. Do not add D6. Do not add cloud services, queues, caches, replicas, Kubernetes, authentication, SLAs, uptime, compliance, autonomous agents, percentages, performance numbers, or a watermark.
+Use case: text-localization
+Asset type: existing 2048×1152 portfolio infographic
+Input image: the prior infographic is the edit target.
+Primary request: change only the text inside the bottom amber dashed claim-boundary band. Replace the current text with exactly: “D5 DESIGN · independently reimplementable     E6 EVIDENCE · independently reproduced”.
+Constraints: preserve the lock icon and every other composition, topology, card, typography, color, and label as closely as possible. Keep the verified flow, component names, accomplishment cards, title, subtitle, and “Draw.io topology is authoritative” label. The band must be fully legible, centered, and fit on one line. Do not add D6. Do not add cloud services, queues, caches, replicas, Kubernetes, authentication, SLAs, uptime, compliance, autonomous agents, percentages, performance numbers, or a watermark.

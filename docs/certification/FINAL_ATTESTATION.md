@@ -9,6 +9,8 @@ attested_at: 2026-07-17T02:05:00Z
 
 # Final D5/E6 attestation
 
+`D5` describes design depth and `E6` describes evidence strength; they are separate, project-local axes rather than external accreditation or a production-readiness guarantee. See the [complete D0–D5 and E0–E6 definitions](CERTIFICATION_LEVELS.md). This project defines no D6 level.
+
 A fresh local Codex reviewer, without conversation or repair context, independently reproduced review package `f4c6d5048e9ce655ae90887c28f03d4cc0927be2`. The runtime under review was source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` and immutable image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`.
 
 Every required Gate 6 check passed: locked installation, 131-test suite, Ruff, compilation, design/evidence authority, MCP stdio, cross-process final-slot invariant, exact image identity, deployment verifier, CLI journey, 100/100 benchmark, controlled dependency failure/circuit/recovery, evidence discovery, rollback proof lookup, visual parity, README links/claims, cleanup, and clean tracked state. The reviewer reported no defects or blocked checks.

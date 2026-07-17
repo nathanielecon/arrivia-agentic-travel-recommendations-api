@@ -14,10 +14,12 @@ The editable [draw.io source](arrivia-system.drawio) is the topology authority. 
 
 | Artifact | SHA-256 |
 | --- | --- |
-| `arrivia-system.drawio` | `bd218257b96e97bc5a5a390ef32b54f78c675e70f25c009a7d91753716826020` |
-| `arrivia-system.svg` | `41aec2bb42be70c884d0be12a17ed816de8f5b1726b53b2e4e894c7cf0518075` |
-| `arrivia-system.png` | `aae1d7df9caef07b86337ebeed6542b51267d95883bb0630d0db9d20854f98b6` |
+| `arrivia-system.drawio` | `55d9f7fb3fcae50b6f8d563965ed21b42e5d078ebdd8c132bf638f5a1bde5f51` |
+| `arrivia-system.svg` | `2143a2ab280b7c32d2c2ee09fd4de2f9504ed765f67b25a1ea20091217a37dea` |
+| `arrivia-system.png` | `cf422666cba236c9c3bd48156594de6b410025ea6d0acb2de7e3df90d4333b70` |
 
 ## Claim boundary
 
 The diagram describes the independently reproduced D5/E6 v0: one active recommendation-serving replica, same-machine SQLite session-cap coordination, read-only upstream policy, and no claim of production authentication, horizontal-scale consistency, or measured production availability. D5/E6 is the highest defined project level; the delivery lane does not create a D6 tier.
+
+Certification key: `D5 Reimplementable` describes the design package; `E6 Independently reproduced` describes its evidence. They are separate, project-local axes, not external accreditation or a production-readiness guarantee. See the [complete D0–D5 and E0–E6 definitions](../certification/CERTIFICATION_LEVELS.md).

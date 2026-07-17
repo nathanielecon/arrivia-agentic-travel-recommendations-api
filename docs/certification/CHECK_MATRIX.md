@@ -9,6 +9,8 @@ recorded_at: 2026-07-16T23:30:00-04:00
 
 The replacement candidate earned D5/E6 after a fresh clean-context reviewer passed every required check. Failed and superseded attempts remain in the append-only evidence index.
 
+Here `D5` is design depth and `E6` is evidence strength. The axes are independent and project-local, not external accreditation or a production-readiness guarantee. See the [complete D0–D5 and E0–E6 definitions](CERTIFICATION_LEVELS.md); no D6 level exists.
+
 | Check | Result | Notes |
 | --- | --- | --- |
 | Locked clean install | passed independently | Fresh Windows venv from `requirements-dev.lock` |

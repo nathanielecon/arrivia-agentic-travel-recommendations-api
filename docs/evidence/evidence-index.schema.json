@@ -40,6 +40,7 @@
     },
     "append_only": { "const": true },
     "current_claim": {
+      "description": "Current project-local design-depth and evidence-strength claims. The independent D0-D5 and E0-E6 axes are defined in docs/certification/CERTIFICATION_LEVELS.md and are not external accreditation or a production-readiness guarantee.",
       "type": "object",
       "additionalProperties": false,
       "required": ["design_depth", "evidence_level", "d5_earned", "e6_earned", "reason"],

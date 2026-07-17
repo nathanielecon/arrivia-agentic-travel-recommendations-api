@@ -14,6 +14,8 @@ The service helps an internal travel concierge obtain recommendations for a memb
 
 The design package earns `D5 Reimplementable` with `E6` independent reproduction. The certified v0 claim remains restricted to one active recommendation-serving replica. REST and MCP processes may coordinate budget state only through one same-machine SQLite file. No production authentication, public exposure, multi-replica consistency, availability, compliance, or guarantees beyond the reviewed v0 are claimed.
 
+`D5` measures design depth while `E6` measures evidence strength. These are separate, project-local axes, not external accreditation or a production-readiness guarantee. The [certification level guide](../certification/CERTIFICATION_LEVELS.md) defines the complete D0–D5 and E0–E6 ladders; no D6 level exists.
+
 Non-goals are upstream writes, generalized travel inventory/search, distributed coordination, account authorization, and silent policy fallback. Expected v0 load is evaluation/demo traffic bounded by `10,000` live session keys and the configured `1,800s` idle TTL; capacity or cost claims beyond that require a measured workload.
 
 ## Environments and system context

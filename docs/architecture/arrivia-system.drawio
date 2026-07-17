@@ -10,7 +10,8 @@
         <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#65E0D0;strokeWidth=3;endArrow=block;" edge="1" parent="1" source="caller" target="service"><mxGeometry relative="1" as="geometry"/></mxCell>
         <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#F3B943;strokeWidth=3;endArrow=block;" edge="1" parent="1" source="service" target="member"><mxGeometry relative="1" as="geometry"/></mxCell>
         <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#F3B943;strokeWidth=3;endArrow=block;" edge="1" parent="1" source="service" target="partner"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="f" value="Claim boundary: local/demo evidence; no horizontal-scale or production-authentication claim." style="text;html=1;strokeColor=none;fillColor=none;fontSize=15;fontColor=#A9C9D6;align=center;" vertex="1" parent="1"><mxGeometry x="250" y="690" width="900" height="40" as="geometry"/></mxCell>
+        <mxCell id="legend" value="D5 design = independently reimplementable  •  E6 proof = independently reproduced" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#102A3A;strokeColor=#36A4B8;fontColor=#65E0D0;fontSize=15;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="300" y="600" width="800" height="48" as="geometry"/></mxCell>
+        <mxCell id="f" value="Claim boundary: single active replica (v0); local/demo evidence; no horizontal-scale or production-authentication claim." style="text;html=1;strokeColor=none;fillColor=none;fontSize=15;fontColor=#A9C9D6;align=center;" vertex="1" parent="1"><mxGeometry x="200" y="690" width="1000" height="40" as="geometry"/></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
