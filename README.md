@@ -4,6 +4,10 @@ Internal service for AI-driven, partner-aware travel recommendations that power 
 
 ![Arrivia architecture-first portfolio infographic showing REST and MCP parity, guarded upstreams, strict policy, SQLite budget state, telemetry, and the v0 claim boundary](docs/portfolio/arrivia-infographic.png)
 
+**Evidence walkthrough (Quiet Systems):** [watch on GitHub Pages](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/walkthrough/view.html) · [MP4 in repo](walkthrough/arrivia-walkthrough.mp4)
+
+https://github.com/nathanielecon/arrivia-agentic-travel-recommendations-api/raw/main/walkthrough/arrivia-walkthrough.mp4
+
 **Current certification: D5 Reimplementable / E6 independently reproduced.** A fresh clean-context reviewer passed every Gate 6 check against source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` and image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4` ([final attestation](docs/certification/FINAL_ATTESTATION.md) · [certification matrix](docs/certification/CHECK_MATRIX.md)).
 
 Verified in the current working candidate:
@@ -16,7 +20,7 @@ Verified in the current working candidate:
 
 **Exact claim boundary:** v0 supports one active recommendation-serving replica. REST and MCP may share session-cap state only through the same SQLite file in one filesystem-locking domain (both bare-metal processes, or both inside the container). A Windows host MCP process must not concurrently open the Docker Desktop Linux bind-mounted database; run MCP inside the API container for that topology. The project does not claim production authentication, safe public-internet exposure, multi-replica consistency, uptime, compliance, autonomous policy creation, or independent reimplementability.
 
-Architecture authority and evidence: [six-page draw.io source](docs/architecture/arrivia-system.drawio) · [exact SVG](docs/architecture/arrivia-system.svg) · [Image2 provenance and parity review](docs/portfolio/README.md) · [evidence index](docs/evidence/index.json) · [requirements matrix](docs/design/REQUIREMENTS_TRACEABILITY.md) · [paced evidence walkthrough](walkthrough/README.md)
+Architecture authority and evidence: [six-page draw.io source](docs/architecture/arrivia-system.drawio) · [exact SVG](docs/architecture/arrivia-system.svg) · [Image2 provenance and parity review](docs/portfolio/README.md) · [evidence index](docs/evidence/index.json) · [requirements matrix](docs/design/REQUIREMENTS_TRACEABILITY.md) · [paced evidence walkthrough](walkthrough/README.md) · [GitHub Pages player](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/walkthrough/view.html)
 
 Goals, constraints, and delivery expectations come from the program brief in `Prompt.md` (maintained outside this repository).
 
