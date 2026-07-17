@@ -1687,16 +1687,16 @@
         {"path": "docs/certification/CHECK_MATRIX.md", "sha256": "656d72117b8d6387960cfd0119e3ef2db04a311fe68e3817291fa490d1cd6812"},
         {"path": "docs/evidence/README.md", "sha256": "38a248194357a6aafdfa81f276cb3541634e1c08a78721f4d32c37de2077ee5d"},
         {"path": "walkthrough/index.html", "sha256": "2d02b8cc332053601a9dbad0fc31f3ee67d39ce5e845f44849dc562fa79f94e6"},
-        {"path": "walkthrough/render.ps1", "sha256": "443be5438e94908856867d654f632154c655338f0ea3156c46182e588ecc4e50"},
-        {"path": "walkthrough/README.md", "sha256": "f827013799b3691da696370f17ee8cfe1dd1cfa1db290084767f56ae5220d5de"},
-        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": "6371c1e6159b6e2bc795fdf629530a10752b888b1338a0685f6db11316e14ae8"},
+        {"path": "walkthrough/render.ps1", "sha256": null},
+        {"path": "walkthrough/README.md", "sha256": null},
+        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": null},
         {"path": "walkthrough/music/ambient-bed.m4a", "sha256": "0e7b53de901e4aba8c09fbf607425fbf65df5dd72c25f0d837c0334857674ffd"},
         {"path": "walkthrough/snapshots/contact-sheet.jpg", "sha256": "50d5a2c2702651f403368e307054036db85e64da15aa7ce973db033b7320dc0e"}
       ],
       "tool_versions": {"hyperframes": "0.7.60", "ffmpeg": "8.1.2", "powershell": "7"},
       "claim_level": "E4",
       "independent": false,
-      "notes": "User-directed portfolio replacement. Production D5/E6 runtime source and image identity are unchanged.",
+      "notes": "Historical user-directed pacing proof using the first procedural bed. Superseded when the user supplied the selected Suno track Quiet Systems; replaced mutable render and documentation hashes are nulled. Production D5/E6 runtime source and image identity are unchanged.",
       "supersedes": ["EVID-WALKTHROUGH-OVERLAP-REPAIR"]
     }
   ],
