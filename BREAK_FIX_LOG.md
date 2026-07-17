@@ -205,6 +205,6 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Cause: Codex Cloud proxy denies PyPI for agent (and setup) phases.
 - Containment: Still **no** network `pip download` in `.codex/cloud-setup.sh` / `.codex/cloud-maintenance.sh`.
 - Repair: Vendor Linux CPython 3.12 wheels into `vendor/python-wheels/` (generated via local Docker with working PyPI). Cloud/task-time install: `bash scripts/install-locked-offline.sh` → `pip --no-index --find-links=vendor/python-wheels`. Pin Environment Python 3.12.
-- Verification: Docker offline install proved (`pytest` import OK). Cloud GPT-5.4 smoke after push.
-- Owner/status: P_integration / in progress.
+- Verification: Docker offline OK under blocked proxy; Cloud GPT-5.4 task `task_e_6a597b38c7a0832b9a273e859f5574e7` READY — `offline_install_ok`, 122 tests collected (`docs/evidence/raw/cloud-offline-install-smoke.md`).
+- Owner/status: P_integration / unblocked for Cloud locked install.
 

@@ -1,47 +1,38 @@
-# Cloud offline locked install smoke evidence
+# Cloud Offline Locked Install Smoke
 
-- UTC timestamp: 2026-07-17T00:42:51Z
-- Git HEAD: `0e9147e75d36a5e8c9a952493c69ac54bbd71e43`
+- UTC time: 2026-07-17T00:46:42Z
+- HEAD: `790fb42d1db5bee13ac2c65cde613bbd58979e3d`
 - Python version: `Python 3.12.13`
+- Wheelhouse: `vendor/python-wheels`
+- Offline installer: `scripts/install-locked-offline.sh`
+- Verdict: **PASS** — `offline_install_ok`; `122 tests collected`. pytest/ruff/fastapi/mcp importable (use `ruff --version`, not `ruff.__version__`).
 
-## Command 1
+## Command outputs
 
-```bash
-bash scripts/install-locked-offline.sh /tmp/offprove
+### 1. HEAD and wheel count
+
+```console
+$ git rev-parse HEAD
+790fb42d1db5bee13ac2c65cde613bbd58979e3d
+$ ls vendor/python-wheels/*.whl | wc -l
+47
 ```
 
-Exit code: `1`
+### 2. Locked offline install
 
-```text
-WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /simple/pip/
-WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /simple/pip/
-WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /simple/pip/
-WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /simple/pip/
-WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /simple/pip/
-  error: subprocess-exited-with-error
-  
-  × pip subprocess to install build dependencies did not run successfully.
-  │ exit code: 1
-  ╰─> [7 lines of output]
-      WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /simple/setuptools/
-      WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /simple/setuptools/
-      WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /simple/setuptools/
-      WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /simple/setuptools/
-      WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 403 Forbidden'))': /simple/setuptools/
-      ERROR: Could not find a version that satisfies the requirement setuptools>=69 (from versions: none)
-      ERROR: No matching distribution found for setuptools>=69
-      [end of output]
-  
-  note: This error originates from a subprocess, and is likely not a problem with pip.
-error: subprocess-exited-with-error
-
-× pip subprocess to install build dependencies did not run successfully.
-│ exit code: 1
-╰─> See above for output.
-
-note: This error originates from a subprocess, and is likely not a problem with pip.
+```console
+$ bash scripts/install-locked-offline.sh /tmp/offprove
+offline_install_ok 9.1.1 83.0.0
+VENV=/tmp/offprove
 ```
 
-## Requested follow-up commands
+### 3. Pytest collection
 
-The locked offline install failed, so `/tmp/offprove/bin/python` was not available for the requested follow-up smoke commands. No success output was captured or inferred.
+```console
+$ /tmp/offprove/bin/python -m pytest -q --collect-only | tail -n 3
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+122 tests collected in 1.66s
+```
+
+Cloud task: `task_e_6a597b38c7a0832b9a273e859f5574e7` (GPT-5.4).
