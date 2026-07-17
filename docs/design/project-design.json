@@ -5,7 +5,7 @@
     "owner": "P_authority / repository maintainer",
     "status": "accepted",
     "baseline_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
-    "candidate_ref": "3156cf8869563b9683f5c3ff67b4104d95dc1b40",
+    "candidate_ref": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c",
     "last_verified": "2026-07-16",
     "review_trigger": "Any requirement, public interface, dependency, partition ownership, evidence claim, or deployment-boundary change"
   },

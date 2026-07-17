@@ -1,7 +1,7 @@
 ---
 owner: P_authority / repository maintainer
 status: accepted
-candidate: 3156cf8869563b9683f5c3ff67b4104d95dc1b40
+candidate: f5e9dc4df174b1844741efbfb07cb8bdbca3e34c
 last_verified: 2026-07-16
 review_trigger: Any public payload, error, setting, metric, log event, policy field, or session-budget invariant change
 ---

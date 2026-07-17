@@ -1,7 +1,7 @@
 ---
 owner: P_operations / repository maintainer
 status: implemented and candidate-bound locally; independent review pending
-candidate: 3156cf8869563b9683f5c3ff67b4104d95dc1b40
+candidate: f5e9dc4df174b1844741efbfb07cb8bdbca3e34c
 last_verified: 2026-07-16
 review_trigger: Log schema, metric, label, alert threshold, or deployment-boundary change
 ---

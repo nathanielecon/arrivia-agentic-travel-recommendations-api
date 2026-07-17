@@ -1,0 +1,21 @@
+{
+  "assertions": {
+    "all_http_and_schema_checks_passed": true,
+    "cruise_excluded": true,
+    "policy_audit_present": true
+  },
+  "candidate_sha": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c",
+  "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4",
+  "requests": 100,
+  "concurrency": 10,
+  "warmup_requests": 10,
+  "warmup_failed": 0,
+  "succeeded": 100,
+  "failed": 0,
+  "duration_seconds": 1.754822,
+  "throughput_requests_per_second": 56.986,
+  "latency_ms": {"p50": 165.333, "p95": 203.98, "max": 229.432},
+  "latency_claim": "measurement_only_no_slo",
+  "result": "pass",
+  "run_id": "f5e9dc4"
+}

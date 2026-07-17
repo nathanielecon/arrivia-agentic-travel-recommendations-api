@@ -1,8 +1,8 @@
 ---
 owner: P_integration / repository maintainer
 status: ready-for-independent-review
-candidate: 3156cf8869563b9683f5c3ff67b4104d95dc1b40
-image_digest: sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee
+candidate: f5e9dc4df174b1844741efbfb07cb8bdbca3e34c
+image_digest: sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4
 last_verified: 2026-07-16
 ---
 
@@ -14,9 +14,9 @@ This is the complete reviewer input. It intentionally contains no repair history
 
 | Field | Value |
 | --- | --- |
-| Git SHA (source reviewed and used for the image) | `3156cf8869563b9683f5c3ff67b4104d95dc1b40` |
+| Git SHA (source reviewed and used for the image) | `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` |
 | Evidence binding checkout | Exact pushed `codex/project-completion` tip supplied with the reviewer assignment |
-| Image | `arrivia-recs:gate6-3156cf8` / digest `sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee` |
+| Image | `arrivia-recs:gate6-f5e9dc4` / digest `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4` |
 | Previous verified rollback image | `arrivia-recs:c1-verified` / `sha256:e5f093d29f0d3fdb54677f3e634604a2cef5914a5423af2a112b0260b49d3d08` |
 
 ## Claim boundary
@@ -40,7 +40,7 @@ python -m venv .venv
 .\.venv\Scripts\python -m pytest -q
 .\.venv\Scripts\python -m ruff check .
 .\.venv\Scripts\python -m compileall -q src tests scripts
-$env:ARRIVIA_RECS_IMAGE = "arrivia-recs:gate6-3156cf8"
+$env:ARRIVIA_RECS_IMAGE = "arrivia-recs:gate6-f5e9dc4"
 docker compose --profile mocks up -d
 .\.venv\Scripts\python scripts/deployment_verifier.py --base-url http://127.0.0.1:8080
 .\.venv\Scripts\python -m arrivia_recs.cli --member-id m1 --session-id gate6-cli --base-url http://127.0.0.1:8080

@@ -4,7 +4,7 @@
 | --- | --- |
 | Owner | `P_portfolio` / repository maintainer |
 | Status | Accepted exact architecture for the hardening candidate |
-| Certified source candidate | `3156cf8869563b9683f5c3ff67b4104d95dc1b40` |
+| Certified source candidate | `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` |
 | Last verified | 2026-07-16 |
 | Review trigger | Component, interface, trust boundary, deployment, failure, or claim-boundary change |
 

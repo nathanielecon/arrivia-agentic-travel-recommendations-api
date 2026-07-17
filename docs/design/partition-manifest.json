@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "candidate_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40",
-  "candidate_state": "immutable completion source; image sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee; local D4/E4 passed; independent Gate 6 pending",
+  "candidate_sha": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c",
+  "candidate_state": "immutable replacement source; image sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4; local D4/E4 passed; replacement Gate 6 pending",
   "generated_at": "2026-07-16T13:33:00-04:00",
   "owner": "P_authority / repository maintainer",
   "status": "accepted",
@@ -336,7 +336,7 @@
         "docs/design/INTERFACE_CATALOG.md",
         "src/arrivia_recs/config.py"
       ],
-      "contract_hash": "7ac31ef0ff0f5459ebb5a9d52b8703737e82fda20188a504bb52c7a8354c3fdf",
+      "contract_hash": "3d9ec67c7cfdbc99a655b46ad9a32a350e9dc75819acb943dce68bf8c7a1c4a4",
       "compatibility_policy": "Existing setting, metric, log, and error names remain stable; label additions require cardinality review",
       "invalidation_rule": "Any change revalidates operations tests, docs, dashboards, evidence, and reliability consumer configuration"
     }

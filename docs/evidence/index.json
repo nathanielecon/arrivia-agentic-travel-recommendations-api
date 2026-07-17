@@ -5,7 +5,7 @@
     "owner": "P_authority / repository maintainer",
     "status": "accepted",
     "baseline_sha": "17cc00d7cf06a04028a1ff3aabdd552875cf5d0a",
-    "candidate_ref": "3156cf8869563b9683f5c3ff67b4104d95dc1b40",
+    "candidate_ref": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c",
     "last_verified": "2026-07-16",
     "review_trigger": "Candidate, artifact, environment, result, assertion, requirement, or public claim change"
   },
@@ -15,7 +15,7 @@
     "evidence_level": "E4",
     "d5_earned": false,
     "e6_earned": false,
-    "reason": "Independent review of 07bbc916 failed frozen interface hash reproduction; D5/E6 remains unearned while a replacement candidate is prepared"
+    "reason": "Replacement candidate passes local and separate-clean-checkout gates; independent replacement Gate 6 review is pending"
   },
   "events": [
     {
@@ -1551,6 +1551,59 @@
       "independent": true,
       "notes": "Runtime checks passed, but certification is conjunctive. D5/E6 remains unearned.",
       "supersedes": ["EVID-INTEGRATION-FINAL", "EVID-DOC-CONTRACT"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-REPLACEMENT-CIRCUIT-F5E9",
+      "requirement_ids": ["REQ-REL-001", "REQ-EVID-002"],
+      "status": "passed", "recorded_at": "2026-07-17T01:39:00Z",
+      "candidate": {"git_sha": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "local-compose-replacement", "description": "Isolated Docker stack using replacement image and controlled WireMock upstreams"},
+      "procedure": {"preconditions": ["Replacement verifier passed"], "commands": ["enable fault; four unique-session calls; disable; wait 31 seconds; recover"], "cleanup": ["Fault disabled"]},
+      "assertions": [{"name": "replacement-circuit-recovery", "expected": "upstream_error x3, circuit open, then HTTP 200", "observed": "exact sequence passed", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/replacement-f5e9dc4-validation.md", "sha256": "d4a4013c2986de009cc49c55d0507c7d87a272831988a492f679815e9a0cdacd"}],
+      "tool_versions": {"docker": "Docker Desktop Linux"}, "claim_level": "E4", "independent": false, "supersedes": ["EVID-REL-CIRCUIT"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-REPLACEMENT-BENCHMARK-F5E9",
+      "requirement_ids": ["REQ-REL-001", "REQ-EVID-001"],
+      "status": "passed", "recorded_at": "2026-07-17T01:38:00Z",
+      "candidate": {"git_sha": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "local-compose-replacement", "description": "Healthy replacement image with controlled mocks"},
+      "procedure": {"preconditions": ["10 warmups pass"], "commands": ["healthy_mock_benchmark.py --requests 100 --concurrency 10 --warmup 10 --run-id f5e9dc4"], "cleanup": []},
+      "assertions": [{"name": "replacement-benchmark", "expected": "100/100 valid audited non-cruise responses", "observed": "100 succeeded, 0 failed; p95 203.98 ms measurement only", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/replacement-f5e9dc4-benchmark.json", "sha256": "e152243bf1c434359a5df9c0eb9a62dcf4a8427444ff90bc9edbf33a324f8078"}],
+      "tool_versions": {"python": "3.14 host"}, "claim_level": "E4", "independent": false, "notes": "No latency SLO is claimed.", "supersedes": ["EVID-BENCHMARK-FINAL"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-REPLACEMENT-ROLLBACK-F5E9",
+      "requirement_ids": ["REQ-OPS-001"],
+      "status": "passed", "recorded_at": "2026-07-17T01:40:00Z",
+      "candidate": {"git_sha": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "local-compose-replacement", "description": "Distinct immutable images sharing one Docker Linux SQLite volume"},
+      "procedure": {"preconditions": ["Replacement session capped"], "commands": ["stop B; snapshot; start A and verify; start B and verify"], "cleanup": ["No database restore"]},
+      "assertions": [{"name": "replacement-state-preservation", "expected": "session stays capped across B-to-A-to-B and both verifiers pass", "observed": "zero recommendations on both images; both verifiers passed", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/replacement-f5e9dc4-rollback.md", "sha256": "8a8ea0263c7552bcb2977801f96bf690387742db531e58a4772839772ae7c10e"}],
+      "tool_versions": {"docker": "Docker Desktop Linux"}, "claim_level": "E4", "independent": false, "supersedes": ["EVID-ROLLBACK-FINAL"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-REPLACEMENT-INTEGRATION-F5E9",
+      "requirement_ids": ["REQ-REL-001", "REQ-POL-001", "REQ-OBS-001", "REQ-OPS-001", "REQ-DOC-001", "REQ-EVID-001", "REQ-EVID-002", "REQ-EVID-003", "REQ-PORT-001", "REQ-ORCH-001"],
+      "status": "passed", "recorded_at": "2026-07-17T01:44:00Z",
+      "candidate": {"git_sha": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "separate-clean-worktree-f5e9dc4", "description": "Detached clean checkout with new locked venv plus isolated replacement Docker image"},
+      "procedure": {"preconditions": ["Failed 07bbc review retained", "Replacement source and image immutable"], "commands": ["locked install; pytest; Ruff; compileall", "verifier and CLI", "MCP and multiprocessing", "fault/recovery", "benchmark", "rollback", "evidence and portfolio hash validation"], "cleanup": ["Fault disabled; replacement API healthy"]},
+      "assertions": [
+        {"name": "portable-interface-and-dependency-hashes", "expected": "clean checkout reproduces all hashes", "observed": "131 tests passed including CRLF/LF regression and design authority", "result": "passed"},
+        {"name": "strict-policy-logs-metrics-docs", "expected": "contracts and emitted runtime behavior pass", "observed": "full suite, verifier, CLI, evidence schemas, and hash checks passed", "result": "passed"},
+        {"name": "replacement-local-gates", "expected": "all local acceptance checks pass while D5/E6 remains withheld", "observed": "passed; independent replacement Gate 6 still required", "result": "passed"}
+      ],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/replacement-f5e9dc4-validation.md", "sha256": "d4a4013c2986de009cc49c55d0507c7d87a272831988a492f679815e9a0cdacd"}, {"path": "docs/evidence/raw/final-certification/replacement-f5e9dc4-benchmark.json", "sha256": "e152243bf1c434359a5df9c0eb9a62dcf4a8427444ff90bc9edbf33a324f8078"}, {"path": "docs/evidence/raw/final-certification/replacement-f5e9dc4-rollback.md", "sha256": "8a8ea0263c7552bcb2977801f96bf690387742db531e58a4772839772ae7c10e"}],
+      "tool_versions": {"python": "3.14.3", "pytest": "9.1.1", "docker": "Docker Desktop Linux"},
+      "claim_level": "E4", "independent": false, "notes": "Replacement local certification does not erase or override the failed independent event.", "supersedes": ["EVID-GATE6-FAIL-07BBC91", "EVID-POL-STRICT", "EVID-OBS-LOG", "EVID-OBS-METRICS"]
     }
   ],
   "planned_event_ids": []
