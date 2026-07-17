@@ -20,11 +20,9 @@ docker run --rm -v "$PWD":/w -w /w python:3.12-slim bash -lc '
 ## Fresh Cloud / Linux install (offline)
 
 ```bash
-python3.12 -m venv /tmp/g6v
-/tmp/g6v/bin/python -m pip install -q --upgrade pip
-/tmp/g6v/bin/python -m pip install -q --no-index --find-links=vendor/python-wheels \
-  -r requirements-build.lock -r requirements-dev.lock
-/tmp/g6v/bin/python -m pip install -q --no-deps -e .
+# Pin Codex Environment Python to 3.12. Never pip-upgrade from PyPI.
+bash scripts/install-locked-offline.sh /tmp/g6v
+# Script sets PIP_NO_INDEX=1 and uses --no-build-isolation for editable install.
 ```
 
 Pin the Codex Environment runtime to **Python 3.12** (matches these wheels).
