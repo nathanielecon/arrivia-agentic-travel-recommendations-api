@@ -383,3 +383,15 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: Full suite, Ruff, compilation, schema/ownership/hash checks, an exact diff proving no historical event edits, then a new immutable candidate and fresh clean-context review.
 - Owner/status: P_authority and P_integration / repair in progress; replacement candidate pending.
 
+### BF-20260717-031 — MCP smoke child escaped the locked offline interpreter
+
+- Time: 2026-07-17T16:10:00-04:00.
+- Candidate: `35d2ab60aa101d93124c31060cc9730db26fe3c6` in a separate clean detached checkout and fresh network-disabled Python 3.12 containers.
+- Detection: The clean reviewer passed 139 local tests, Ruff, compilation, evidence history, schemas, hashes, claims, and media checks, but the full locked offline container suite reproducibly returned 137 passed and two MCP stdio failures.
+- Impact: Candidate `35d2ab6` failed independent review. The production runtime and already-earned D5/E6 result are unchanged; the post-merge refresh remains planned.
+- Cause: Both MCP tests passed a replacement environment without `PATH` to `StdioServerParameters(command="python", ...)`. Linux selected the container's system Python for the child instead of the virtual-environment Python, so the child could not import installed dependencies even though the wheelhouse contained and installed `httpx==0.28.1`.
+- Containment: Preserve the reviewer report and candidate SHA; keep PR #3 draft; do not append the refresh event.
+- Repair: Spawn the MCP child with absolute `sys.executable`, binding it to the interpreter running the locked test suite while retaining the deliberately bounded child environment.
+- Verification: Full local suite, Ruff, compilation, and two fresh no-network Python 3.12 container runs; then freeze a replacement candidate and repeat clean-context review.
+- Owner/status: P_integration / repair implemented; replacement candidate pending.
+

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import sys
 import threading
 from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -86,7 +87,7 @@ async def test_mcp_stdio_server_supports_external_client_smoke(tmp_path: Path) -
 
     with _serve_json(member_routes) as member_url, _serve_json(partner_routes) as partner_url:
         server = StdioServerParameters(
-            command="python",
+            command=sys.executable,
             args=["-m", "arrivia_recs.mcp.server"],
             cwd=str(ROOT),
             env={
@@ -164,7 +165,7 @@ async def test_rest_and_mcp_share_same_machine_session_budget(tmp_path: Path) ->
         assert len(response.json()["recommendations"]) == 1
 
         server = StdioServerParameters(
-            command="python",
+            command=sys.executable,
             args=["-m", "arrivia_recs.mcp.server"],
             cwd=str(ROOT),
             env={
