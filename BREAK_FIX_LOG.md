@@ -304,3 +304,14 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: Final full suite, schema validation, Ruff, compilation, evidence hashes, and clean diff checks must pass before the attestation commit.
 - Owner/status: P_integration / repaired; final validation pending.
 
+### BF-20260716-024 — Walkthrough annotations obscured live terminal text
+
+- Time: 2026-07-16T22:25:00-04:00.
+- Detection: User review identified text-on-text overlap in the completed walkthrough; a 10-second-interval, 30-frame contact sheet confirmed the annotation layer obscured terminal output throughout all three evidence scenes.
+- Impact: The published walkthrough was not presentation-ready despite passing duration, render, hash, and sparse contact-sheet checks. Its prior visual certification is superseded.
+- Cause: Terminal footage filled the entire canvas on track 0 while a full-canvas annotation overlay occupied track 1. Automated layout checks treated each layer as valid but did not test cross-track semantic occlusion.
+- Containment: Withdraw the “video complete” claim and preserve the overlapping render as failed/superseded evidence.
+- Repair: Place annotations in a dedicated left pane and the live terminal in a bordered 16:9 panel on the right; reduce evidence-scene typography and wrap source labels within the annotation pane.
+- Verification: HyperFrames lint/check and representative snapshots passed; the final render is exactly 300 seconds and 300 encoded frames. A fresh subagent independently inspected all 300 frames plus full-resolution pairs at every scene cut and found no overlap, bleed, clipping, illegible annotations, obscured terminal footage, blank frames, or inconsistent layout.
+- Owner/status: P_portfolio / repaired and independently visually verified.
+

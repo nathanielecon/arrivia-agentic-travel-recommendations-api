@@ -814,15 +814,15 @@
       "artifacts": [
         {
           "path": "walkthrough/index.html",
-          "sha256": "c5e2226f589aad6e29653a83702491a65e5dfccefa41688008665135b5d6543d"
+          "sha256": null
         },
         {
           "path": "walkthrough/arrivia-walkthrough.mp4",
-          "sha256": "a28a4c930fbfb20f306563a13f3aaae9cc25cb7cf08b1e15e2332ec8747fe3d8"
+          "sha256": null
         },
         {
           "path": "walkthrough/snapshots/contact-sheet.jpg",
-          "sha256": "3756171d2883e94db0e58c5a40b2c7d8b801f1d4a635d566c676336a767668f9"
+          "sha256": null
         },
         {
           "path": "walkthrough/footage/cli-success.mp4",
@@ -844,7 +844,7 @@
       },
       "claim_level": "E3",
       "independent": false,
-      "notes": "Live command sessions captured then composed under HyperFrames annotations. Dirty-tree bound until immutable candidate rebind.",
+      "notes": "Historical live-footage composition superseded after user review found annotation/terminal overlap. Mutable composition artifact digests are nulled; retained raw footage hashes remain authoritative for this event.",
       "supersedes": [
         "EVID-WALKTHROUGH"
       ]
@@ -1516,8 +1516,8 @@
       "environment": {"id": "local-hyperframes-final", "description": "Deterministic HyperFrames render over live candidate terminal footage"},
       "procedure": {"preconditions": ["Candidate footage captured"], "commands": ["hyperframes check", "hyperframes snapshot", "hyperframes render --strict"], "cleanup": []},
       "assertions": [{"name": "walkthrough-parity", "expected": "300-second render preserves exact evidence and claim boundary", "observed": "render and visual contact-sheet inspection passed; one non-blocking density warning retained", "result": "passed"}],
-      "artifacts": [{"path": "docs/evidence/raw/final-certification/portfolio-validation.md", "sha256": "d4276557966c3215c7d3bced0df0a3a6263be474a0b1255502ac4fc8bd9a3d33"}, {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": "a28a4c930fbfb20f306563a13f3aaae9cc25cb7cf08b1e15e2332ec8747fe3d8"}],
-      "tool_versions": {"hyperframes": "0.7.60", "ffmpeg": "8.1.2"}, "claim_level": "E4", "independent": false, "supersedes": ["EVID-WALKTHROUGH-FOOTAGE"]
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/portfolio-validation.md", "sha256": "d4276557966c3215c7d3bced0df0a3a6263be474a0b1255502ac4fc8bd9a3d33"}, {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": null}],
+      "tool_versions": {"hyperframes": "0.7.60", "ffmpeg": "8.1.2"}, "claim_level": "E4", "independent": false, "notes": "Historical sparse visual review was superseded after user review found annotation/terminal overlap. The replaced MP4 digest is nulled; the failed visual claim is retained in BF-20260716-024.", "supersedes": ["EVID-WALKTHROUGH-FOOTAGE"]
     },
     {
       "schema_version": "1.0",

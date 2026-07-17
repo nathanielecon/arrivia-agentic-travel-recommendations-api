@@ -33,4 +33,4 @@ npx hyperframes snapshot walkthrough --at 0,25,70,115,170,260
 npx hyperframes render walkthrough -o walkthrough/arrivia-walkthrough.mp4 --fps 1 --quality draft --workers 4 --strict --crf 30
 ```
 
-The checked-in source, footage, and hero frames are primary. HyperFrames requires Node 22+ and FFmpeg; those are rendering-only dependencies and do not enter the production container.
+The three live-evidence scenes use a split layout: annotations remain in a dedicated left pane and the terminal recording stays unobstructed on the right. The checked-in source, footage, and hero frames are primary. HyperFrames requires Node 22+ and FFmpeg; those are rendering-only dependencies and do not enter the production container.
