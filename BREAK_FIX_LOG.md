@@ -405,3 +405,15 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Follow-through: Retain the preliminary failure transcript and this correction. Keep the already-committed `sys.executable` change as test-harness defense-in-depth, freeze its own candidate, and require an exact-candidate fresh review before appending the refresh event.
 - Owner/status: P_integration / corrected; no runtime defect; replacement candidate review pending.
 
+### BF-20260717-033 — Exhaustive walkthrough review missed baked-in terminal-row overlap
+
+- Time: 2026-07-17T17:55:00-04:00.
+- Candidate: `1a24156e381bdad09de8c554448cab6a17b320ec`; tracked walkthrough SHA-256 `e2e6a88ab84a9b1c95fe5d5ef1778ab0872bda0e9373cb700c0ab4200a878463`.
+- Detection: User inspection at global timestamp 1:17 found white `502` response text painted through green Python command text in the dependency-failure terminal panel. Extraction at 77 seconds reproduced the defect in both the final mux and source footage.
+- Impact: The `EVID-POSTMERGE-PORTFOLIO-REFRESH` no-overlap assertion is contradicted and retained historically. Runtime D5/E6, API behavior, image identity, and the intentional three-failure-plus-circuit-open sequence are unaffected.
+- Cause: `record_live_sessions.py` stored a command containing embedded newlines as one logical item. Pillow rendered several physical rows, while the outer loop advanced the cursor by only one line height. CLI command displays were also not width-wrapped and could clip horizontally.
+- Containment: Return PR #3 to draft; archive every currently bound mutable presentation artifact before replacement; append this failed visual event rather than editing prior evidence.
+- Repair: Normalize commands and outputs into newline-free, width-bounded physical rows; use a concise checked request probe; regenerate all footage; add a five-second D5/E6 definition card; render an exactly duration-matched, fully faded soundtrack; verify every final frame through contact sheets and targeted full-resolution boundaries.
+- Verification: Unit row-layout tests, HyperFrames lint/check, deterministic media verifier, two read-only media reviewers, then a clean-context exact-candidate review.
+- Owner/status: P_portfolio and P_integration / defect preserved; repair in progress.
+

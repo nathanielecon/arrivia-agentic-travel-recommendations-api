@@ -30,7 +30,15 @@
     "6079b7f11c574f4f41dd337dd2629762f5b0bab433701063fa0f8a8aa1092ddb": "docs/evidence/archive/6079b7f11c574f4f41dd337dd2629762f5b0bab433701063fa0f8a8aa1092ddb-arrivia-walkthrough.mp4",
     "793e9bba78679925c080364a7e2185f0780a1753926fd95ad842b32d0817531f": "docs/evidence/archive/793e9bba78679925c080364a7e2185f0780a1753926fd95ad842b32d0817531f-final-attestation.md",
     "8e2e41d2cd66bb58102da75d25d65783d498d8fd8f3e716ef0b31f23e3a85b0b": "docs/evidence/archive/8e2e41d2cd66bb58102da75d25d65783d498d8fd8f3e716ef0b31f23e3a85b0b-evidence-readme.md",
+    "0a44e38c959af2bd2932d7e8b6ed5464c6feae354c37abbb1e6f3f1c5618dd45": "docs/evidence/archive/0a44e38c959af2bd2932d7e8b6ed5464c6feae354c37abbb1e6f3f1c5618dd45-arrivia-infographic.png",
+    "1ddc2a9d90b5c9be7b2ff6e017f79357dbfef08259f96d4303a9c6919b4ad37f": "docs/evidence/archive/1ddc2a9d90b5c9be7b2ff6e017f79357dbfef08259f96d4303a9c6919b4ad37f-arrivia-infographic-image2-original.png",
+    "41aec2bb42be70c884d0be12a17ed816de8f5b1726b53b2e4e894c7cf0518075": "docs/evidence/archive/41aec2bb42be70c884d0be12a17ed816de8f5b1726b53b2e4e894c7cf0518075-arrivia-system.svg",
+    "88836ff46f3dba37ad11a87633d09a5b624f3d6f7c65d9442e8c52a42ede35f4": "docs/evidence/archive/88836ff46f3dba37ad11a87633d09a5b624f3d6f7c65d9442e8c52a42ede35f4-contact-sheet.jpg",
+    "aae1d7df9caef07b86337ebeed6542b51267d95883bb0630d0db9d20854f98b6": "docs/evidence/archive/aae1d7df9caef07b86337ebeed6542b51267d95883bb0630d0db9d20854f98b6-arrivia-system.png",
     "af37b7624e2e33bd50d45d92fec7e7d7b75e08bfd9a1f48015304a8c202e6064": "docs/evidence/archive/af37b7624e2e33bd50d45d92fec7e7d7b75e08bfd9a1f48015304a8c202e6064-arrivia-system.png",
+    "bd218257b96e97bc5a5a390ef32b54f78c675e70f25c009a7d91753716826020": "docs/evidence/archive/bd218257b96e97bc5a5a390ef32b54f78c675e70f25c009a7d91753716826020-arrivia-system.drawio",
+    "dc183927e3437121e4e23424b893e0293a88e539b5366f2c46fe1034c8fc7bf9": "docs/evidence/archive/dc183927e3437121e4e23424b893e0293a88e539b5366f2c46fe1034c8fc7bf9-evidence-gallery.png",
+    "e2e6a88ab84a9b1c95fe5d5ef1778ab0872bda0e9373cb700c0ab4200a878463": "docs/evidence/archive/e2e6a88ab84a9b1c95fe5d5ef1778ab0872bda0e9373cb700c0ab4200a878463-arrivia-walkthrough.mp4",
     "fe65030d1776aaf5f62072e922c85266644e23910956dcd1b2f3c60d0f0b3b99": "docs/evidence/archive/fe65030d1776aaf5f62072e922c85266644e23910956dcd1b2f3c60d0f0b3b99-arrivia-infographic-image2-original.png"
   },
   "events": [
@@ -1828,7 +1836,35 @@
       "independent": true,
       "notes": "Current portfolio authority. Runtime certification remains the original D5/E6 source and image; this event binds synchronized post-merge documentation and presentation artifacts.",
       "supersedes": ["EVID-ARCH-EXACT", "EVID-PORTFOLIO", "EVID-WALKTHROUGH-QUIET-SYSTEMS"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-WALKTHROUGH-ROW-OVERLAP-DEFECT",
+      "requirement_ids": ["REQ-PORT-001"],
+      "status": "failed",
+      "recorded_at": "2026-07-17T17:55:00-04:00",
+      "candidate": {"git_sha": "1a24156e381bdad09de8c554448cab6a17b320ec", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "user-player-plus-local-frame-extraction", "description": "User visual report reproduced by extracting global frame 77 from the tracked walkthrough and source fault footage"},
+      "procedure": {
+        "preconditions": ["Tracked 160-second walkthrough at candidate 1a24156e", "Prior no-overlap assertion retained unchanged"],
+        "commands": ["ffmpeg extract final frame at 77 seconds", "ffmpeg extract partner-fault source frame at 27 seconds", "inspect recorder row-layout implementation"],
+        "cleanup": ["Temporary comparison frames outside repository removed or left untracked"]
+      },
+      "assertions": [
+        {"name": "terminal-row-legibility", "expected": "each command and response occupies non-overlapping physical rows", "observed": "white 502 response rows are painted through green multiline Python commands", "result": "failed"},
+        {"name": "failure-sequence-semantics", "expected": "three qualifying failures followed by one circuit-open request", "observed": "the four repeated requests are intentional and semantically correct", "result": "passed"},
+        {"name": "runtime-certification-isolation", "expected": "presentation defect does not alter reviewed runtime/image", "observed": "runtime source and immutable image remain unchanged", "result": "passed"}
+      ],
+      "artifacts": [
+        {"path": "docs/evidence/raw/final-certification/walkthrough-row-overlap-defect.md", "sha256": "3afa145e669cc24ae1cec856f806a96656faf159fc4abec92f932a08f0b56115"},
+        {"path": "docs/evidence/raw/final-certification/walkthrough-row-overlap-t77.png", "sha256": "d90edacd3bee1ceab3f08ef8f8d9f146098b28237cd79db454c3921549c9f665"}
+      ],
+      "tool_versions": {"ffmpeg": "8.1.2", "reviewer": "user report reproduced by Codex"},
+      "claim_level": "E5",
+      "independent": false,
+      "notes": "Contradicts only the prior portfolio no-overlap assertion. Production D5/E6 remains valid; a replacement visual event is required.",
+      "supersedes": []
     }
   ],
-  "planned_event_ids": []
+  "planned_event_ids": ["EVID-PORTFOLIO-DEFINITIONS-MEDIA-REPAIR"]
 }
