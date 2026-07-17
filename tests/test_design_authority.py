@@ -139,3 +139,61 @@ def test_architecture_authority_has_six_pages_and_claim_boundary() -> None:
     )
     assert "Claim boundary" in svg
     assert "single active replica" in svg
+    assert "read-only council" in drawio.lower()
+    assert "lead-only merge" in svg
+
+
+def test_project_uses_defined_d5_e6_terms_and_rejects_d6() -> None:
+    current_authorities = [
+        ROOT / "README.md",
+        DESIGN / "project-design.json",
+        ROOT / "docs" / "certification" / "FINAL_ATTESTATION.md",
+        ROOT / "docs" / "certification" / "CHECK_MATRIX.md",
+        ROOT / "docs" / "architecture" / "arrivia-system.svg",
+        ROOT / "docs" / "portfolio" / "README.md",
+        ROOT / "walkthrough" / "index.html",
+    ]
+    text = "\n".join(path.read_text(encoding="utf-8") for path in current_authorities)
+    assert "D5" in text and "E6" in text
+    assert "D6 Reimplementable" not in text
+    assert "D6 certified" not in text
+    assert '"earned_depth": "D5"' in text
+    assert '"evidence_level": "E6"' in text
+
+
+def test_post_merge_orchestration_history_is_consistent() -> None:
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    attestation = (
+        ROOT / "docs" / "certification" / "FINAL_ATTESTATION.md"
+    ).read_text(encoding="utf-8")
+    break_fix = (ROOT / "BREAK_FIX_LOG.md").read_text(encoding="utf-8")
+    for required in (
+        "7c1fff06d5a16ccc62635421221b0c82812d46a8",
+        "89b8c2fa47f15229b32c9f6c6486dad5c5a0f675",
+        "132 tests",
+        "sole writer",
+    ):
+        assert required in attestation or required in break_fix
+    assert "read-only Grok council" in readme
+    assert "independent reimplementability" not in readme
+
+
+def test_current_architecture_hashes_are_documented() -> None:
+    architecture = ROOT / "docs" / "architecture"
+    readme = (architecture / "README.md").read_text(encoding="utf-8")
+    for name in ("arrivia-system.drawio", "arrivia-system.svg", "arrivia-system.png"):
+        assert _portable_sha256(architecture / name) in readme
+
+
+def test_current_portfolio_and_walkthrough_match_certified_claim() -> None:
+    portfolio = (ROOT / "docs" / "portfolio" / "README.md").read_text(encoding="utf-8")
+    prompt = (ROOT / "docs" / "portfolio" / "image2-prompt.txt").read_text(
+        encoding="utf-8"
+    )
+    walkthrough = (ROOT / "walkthrough" / "index.html").read_text(encoding="utf-8")
+    assert "no D5/E6 claim" not in portfolio
+    assert "no D5/E6 claim" not in prompt
+    assert "D5/E6 independently reproduced v0" in portfolio
+    assert 'data-duration="160"' in walkthrough
+    assert "read-only Grok council" in walkthrough
+    assert "132 tests" in walkthrough

@@ -26,6 +26,7 @@ The replacement candidate earned D5/E6 after a fresh clean-context reviewer pass
 | Links / hashes / evidence freshness | passed independently | 15/15 README links; 0 missing and 0 mismatched declared artifact hashes |
 | Walkthrough render / visual parity | passed after user soundtrack selection | Every static scene is five seconds; all 160 encoded frames and scene cuts remain validated; user-supplied Suno track “Quiet Systems” is duration-fitted, credited, level-checked, and reproducible; see `EVID-WALKTHROUGH-QUIET-SYSTEMS` |
 | Gate 6 independent review | passed | no defects or blocked checks; `EVID-GATE6-PASS-F4C6D50` |
+| Post-certification PR #2 integration | passed | read-only Grok council + sole lead writer resolved five conflicts; 132 tests and no-index offline bootstrap passed; reviewed runtime/image unchanged; see `BF-20260716-026` and `ADR-009` |
 
 ## Immutable identities
 
@@ -38,4 +39,4 @@ The superseded `3156cf8` review failure remains at `docs/evidence/raw/final-cert
 
 Latency figures are observations from a local healthy-mock run, not service-level objectives.
 
-The post-certification walkthrough corrections are portfolio-only. They do not alter the reviewed runtime source or image identity above.
+The post-certification integration and walkthrough corrections do not alter the reviewed runtime source or image identity above. The original Gate 6 row remains 131 tests because that is the historical review result; the merged-tree integration result is 132 tests and is recorded separately. No D6 tier exists: the earned level remains D5/E6.

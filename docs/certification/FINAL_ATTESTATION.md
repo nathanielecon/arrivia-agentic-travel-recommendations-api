@@ -24,3 +24,9 @@ User review later found annotation/terminal overlap that the original sparse con
 The user subsequently requested five-second static scenes and fitting music. Portfolio candidate `7b70720b6e05ddf706704766880864630b75b7a3` produces a 160-second cut with the full live recordings intact and a deterministic, original, sample-free ambient bed. All 160 frames, scene cuts, audio stream properties, levels, and artifact hashes passed. `EVID-WALKTHROUGH-PACED-MUSIC` supersedes the earlier walkthrough event without changing the certified runtime boundary.
 
 The user then supplied the selected Suno track “Quiet Systems.” Portfolio candidate `ab72dce80fb079ce976128b0b60a93c07a0510aa` retains the complete song with pitch-preserving duration fitting, credits its embedded artist metadata, and produces a level-checked 160-second H.264/AAC walkthrough. `EVID-WALKTHROUGH-QUIET-SYSTEMS` is the authoritative current portfolio event; the production runtime identity and boundary remain unchanged.
+
+## Post-certification integration
+
+PR #2 later reconciled the certified completion branch with main's offline-install hardening. A read-only Grok council supplied conflict-side and validation discovery; one lead orchestrator remained the sole writer for all five conflict resolutions and the merge. Branch merge `7c1fff06d5a16ccc62635421221b0c82812d46a8` and GitHub merge `89b8c2fa47f15229b32c9f6c6486dad5c5a0f675` preserved the reviewed source/image identities and passed 132 tests, Ruff, compilation, design authority, link/hash checks, shell syntax, and a no-index Linux offline bootstrap. ADR-009 and `BF-20260716-026` are the durable authorities for that orchestration history.
+
+This integration is not a second Gate 6 and does not establish a “D6” level. The certified result remains `D5 Reimplementable / E6 Independently reproduced`; the 131-test Gate 6 result and the 132-test merged-tree result are intentionally distinct historical facts.

@@ -1,18 +1,5 @@
-Create a polished architecture-first portfolio infographic for a GitHub README, requested canvas
-2048×1152 (16:9 landscape), using the supplied approved architecture PNG as Image 1 and preserving
-its topology and factual relationships. Style: crisp editorial systems-design poster, dark navy
-background, accessible high-contrast white text, restrained teal and amber accents, generous
-whitespace, readable at README width. Title: “Arrivia Agentic Travel Recommendations”. Subtitle:
-“Partner-aware recommendations with explicit policy enforcement and recovery”. The center must
-clearly show the verified flow only: REST POST /v1/recommendations and MCP
-get_travel_recommendations → one shared RecommendationService → read-only Member Service and strict
-read-only Partner Config, plus same-machine SQLite session budget. Show guarded upstreams with
-strict timeouts, per-dependency circuit breakers, no retry, and fail-closed policy. Add four small
-verified accomplishment cards using only these exact facts: “REST + MCP parity”; “Unknown policy
-rules fail closed”; “Final-slot grants [0,1]”; “JSON logs + Prometheus metrics”. Include an
-unmistakable bottom claim-boundary band with exact text: “v0: one active replica · same-machine
-SQLite · no D5/E6 claim”. Add a small label: “Draw.io topology is authoritative”. Do not add cloud
-services, queues, caches, databases other than SQLite, replicas, Kubernetes, user authentication,
-SLAs, uptime, compliance, autonomous agents, inventory systems, percentages, performance numbers,
-or any other components or claims. Do not use brand logos. Ensure every label is spelled correctly
-and legible. Presentation derivative only; architecture fidelity is more important than decoration.
+Use case: precise-object-edit
+Asset type: GitHub README architecture-first portfolio infographic
+Input images: Image 1 is the prior infographic edit target; Image 2 is the updated exact architecture authority and factual reference.
+Primary request: edit only the bottom amber claim-boundary band in Image 1. Replace its obsolete text with this exact text: “D5/E6 independently reproduced v0 · one active replica · same-machine SQLite”.
+Constraints: preserve every other composition, topology, card, typography, color, and label as closely as possible. Keep the verified flow, component names, accomplishment cards, title, subtitle, and “Draw.io topology is authoritative” label. The band must be fully legible, centered, and fit on one line. Do not add D6. Do not add cloud services, queues, caches, replicas, Kubernetes, authentication, SLAs, uptime, compliance, autonomous agents, percentages, performance numbers, or a watermark.

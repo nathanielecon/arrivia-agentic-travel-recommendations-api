@@ -6,7 +6,7 @@
     "status": "accepted",
     "baseline_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
     "candidate_ref": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c",
-    "last_verified": "2026-07-16",
+    "last_verified": "2026-07-17",
     "review_trigger": "Any requirement, public interface, dependency, partition ownership, evidence claim, or deployment-boundary change"
   },
   "project": {
@@ -16,7 +16,7 @@
     "target_depth": "D5",
     "earned_depth": "D5",
     "evidence_level": "E6",
-    "claim_boundary": "Single active API replica; REST and MCP may share same-machine SQLite state; upstream services are read-only; no production authentication, horizontal-scale, uptime, compliance, or independent-reimplementation claim"
+    "claim_boundary": "D5/E6 independently reproduced for one active API replica; REST and MCP may share same-machine SQLite state; upstream services are read-only; no production authentication, horizontal-scale, uptime, compliance, or guarantee beyond the reviewed v0"
   },
   "outcomes": [
     "Return partner-aware travel recommendations through REST and MCP with equivalent policy enforcement",

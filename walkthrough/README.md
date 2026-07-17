@@ -15,7 +15,7 @@ review_trigger: Candidate, timing, evidence transcript, claim, HyperFrames, brow
 - `0:50–1:35`: controlled partner-config `502` and circuit recovery (`footage/partner-fault.mp4`).
 - `1:35–2:30`: final-slot cross-process SQLite proof (`footage/final-slot.mp4`).
 - `2:30–2:35`: mandatory AI pushback: never claim an unengineered distributed guarantee.
-- `2:35–2:40`: metrics, rollback distinction, and evidence lookup.
+- `2:35–2:40`: council-assisted, lead-only PR integration; 132-test/offline-bootstrap validation; unchanged runtime/image; D5/E6 boundary.
 
 Live terminal captures are produced by `walkthrough/record_live_sessions.py` against a running stack,
 then composed under HyperFrames annotations on track 1. Alternate isolated certification ports are
@@ -26,10 +26,12 @@ HyperFrames also requires both `ffmpeg` and `ffprobe` on `PATH`; on Windows, kee
 Validate with HyperFrames `0.7.60`:
 
 ```powershell
-$env:PATH = "$(Resolve-Path .tools/ffmpeg);$env:PATH"
+$ffmpegBin = Resolve-Path .tools/ffmpeg/ffmpeg-8.1.2-essentials_build/bin
+$env:FFMPEG_PATH = Join-Path $ffmpegBin ffmpeg.exe
+$env:PATH = "$ffmpegBin;C:\Windows\System32;$env:PATH"
 npx hyperframes lint walkthrough
 npx hyperframes check walkthrough
 pwsh -File walkthrough/render.ps1
 ```
 
-The render script uses the checked-in user-supplied Suno track `music/quiet-systems.mp3` (title: “Quiet Systems”; credited artist metadata: `irresistiblewebapps8080`). It preserves the full song by applying pitch-preserving duration fitting from 144.72 to 160 seconds, then adds endpoint fades and normalizes it beneath the evidence. The three live-evidence scenes use a split layout: annotations remain in a dedicated left pane and the terminal recording stays unobstructed on the right. The checked-in source, footage, music, and hero frames are primary. HyperFrames requires Node 22+ and FFmpeg; those are rendering-only dependencies and do not enter the production container.
+The render script uses the checked-in user-supplied Suno track `music/quiet-systems.mp3` (title: “Quiet Systems”; credited artist metadata: `irresistiblewebapps8080`). It preserves the full song by applying pitch-preserving duration fitting from 144.72 to 160 seconds, then adds endpoint fades and normalizes it beneath the evidence. The three live-evidence scenes use a split layout: annotations remain in a dedicated left pane and the terminal recording stays unobstructed on the right. The final five-second card records the post-certification orchestration path without implying that subagents wrote or self-certified the merge. The checked-in source, footage, music, and hero frames are primary. HyperFrames requires Node 22+ and FFmpeg; those are rendering-only dependencies and do not enter the production container.

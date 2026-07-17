@@ -62,7 +62,7 @@ Latency is dominated by two upstream reads. The design intentionally performs no
 7. Capture candidate-bound evidence, exact architecture renders, and presentation derivatives.
 8. Give a fresh reviewer only the candidate and acceptance criteria. Earn `D5/E6` only if they reproduce without repair history.
 
-Integration merges that cross parallel tips (for example PR #2 offline-install vs certification history) may use lead-orchestrator subagent discovery under ADR-009; the lead serializes writes and must not rewrite reviewed candidate SHAs.
+Integration merges that cross parallel tips may use lead-orchestrator subagent discovery under ADR-009; the lead serializes writes and must not rewrite reviewed candidate SHAs. PR #2 exercised that path: a read-only Grok council inspected five conflicts, one lead process resolved and merged them, and the integrated tree passed 132 tests plus the no-index offline bootstrap while preserving the certified runtime source and image identity.
 
 Recovery distinguishes five actions: rollback changes code only; database restore replaces corrupt state; rebuild produces a new artifact and is never rollback; failover is unsupported in v0; forward-fix creates a new candidate and revalidates affected consumers.
 

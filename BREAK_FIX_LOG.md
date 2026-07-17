@@ -347,3 +347,15 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: Rendered README HTML contains an inline video player for `https://github.com/user-attachments/assets/c6e92ce5-6680-4235-95f0-3d68bd518fc9`; design/docs contracts and README guidance tests pass.
 - Owner/status: P_portfolio / verified.
 
+### BF-20260717-028 — Post-merge portfolio retained pre-certification claims
+
+- Time: 2026-07-17T12:30:00-04:00.
+- Candidate: post-merge portfolio working tree; independently reviewed runtime remains `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` and image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`.
+- Detection: The repository claimed D5/E6 while README simultaneously disclaimed independent reimplementability; the infographic and evidence gallery still said no D5/E6/D4; the architecture hash table was stale; and no current visual or evidence event described the council-assisted PR #2 integration.
+- Impact: Runtime certification remained valid, but the public portfolio was semantically inconsistent and the inline user-attachment pointed to a superseded cut.
+- Cause: Certification, merge integration, Pages publication, and later walkthrough fixes landed in separate commits without one final claim-parity pass over every mutable derivative.
+- Containment: Preserve the historical 131-test Gate 6 and 132-test merge facts separately. Remove the stale inline attachment until a refreshed upload is published; do not rewrite runtime/image identities or introduce a D6 tier.
+- Repair: Correct current claims; add the read-only council/lead-only writer lane to draw.io delivery authority; rerender exact PNG/SVG, evidence gallery, Image2 derivative, and the 160-second walkthrough; add current hash/claim/orchestration validators.
+- Verification: 136 pytest passed; Ruff and compilation passed; HyperFrames lint/check passed with one retained density warning; 160/160 frames, four 40-frame sheets, eight full-resolution scene samples, audio levels, duration, codecs, and artifact dimensions passed visual/technical review.
+- Owner/status: P_portfolio and P_integration / repaired locally; candidate-bound evidence and fresh review pending.
+

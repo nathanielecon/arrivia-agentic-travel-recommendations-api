@@ -33,7 +33,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "HyperFrames lint failed." }
     & npx --yes hyperframes@0.7.60 check walkthrough
     if ($LASTEXITCODE -ne 0) { throw "HyperFrames check failed." }
-    & npx --yes hyperframes@0.7.60 snapshot walkthrough --at 0,5,50,95,150,155
+    & npx --yes hyperframes@0.7.60 snapshot walkthrough --at 0,5,50,95,150,155,159
     if ($LASTEXITCODE -ne 0) { throw "HyperFrames snapshot failed." }
     & npx --yes hyperframes@0.7.60 render walkthrough -o $videoOnly --fps 1 --quality draft --workers 4 --strict --crf 30
     if ($LASTEXITCODE -ne 0) { throw "HyperFrames render failed." }
