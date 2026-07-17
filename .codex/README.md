@@ -15,5 +15,11 @@ pwsh -File scripts/Register-CodexCloudEnvironment.ps1 `
 ```
 
 6. Before Cloud work: `pwsh -File scripts/Invoke-CodexCloudWarm.ps1 -Repo nathanielecon/arrivia-agentic-travel-recommendations-api`
+7. Pin **Python 3.12** in the Environment UI (matches committed `vendor/python-wheels/`).
+
+**PyPI:** Cloud proxy returns **403** for index downloads. Do **not** add `pip download` / network wheelhouse fetches to setup or maintenance. Fresh Cloud installs must use:
+
+`bash scripts/install-locked-offline.sh /tmp/g6v`  
+(`pip --no-index --find-links=vendor/python-wheels`).
 
 This Environment is **per-repository**. Do not reuse `aws-landing-zone-lab` / `dailydigits` env ids for this repo.
