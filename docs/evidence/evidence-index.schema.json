@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arrivia.example.invalid/schemas/evidence-index-1.0.json",
+  "title": "Append-only evidence index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "index_metadata",
+    "append_only",
+    "current_claim",
+    "events",
+    "planned_event_ids"
+  ],
+  "properties": {
+    "$schema": { "const": "./evidence-index.schema.json" },
+    "schema_version": { "const": "1.0" },
+    "index_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "status",
+        "baseline_sha",
+        "candidate_ref",
+        "last_verified",
+        "review_trigger"
+      ],
+      "properties": {
+        "owner": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "minLength": 1 },
+        "baseline_sha": { "pattern": "^[0-9a-f]{40}$" },
+        "candidate_ref": { "pattern": "^[0-9a-f]{40}$" },
+        "portfolio_candidate_ref": { "pattern": "^[0-9a-f]{40}$" },
+        "last_verified": { "format": "date" },
+        "review_trigger": { "type": "string", "minLength": 1 }
+      }
+    },
+    "append_only": { "const": true },
+    "current_claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["design_depth", "evidence_level", "d5_earned", "e6_earned", "reason"],
+      "properties": {
+        "design_depth": { "const": "D5" },
+        "evidence_level": { "const": "E6" },
+        "d5_earned": { "const": true },
+        "e6_earned": { "const": true },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": { "$ref": "https://arrivia.example.invalid/schemas/evidence-event-1.0.json" }
+    },
+    "planned_event_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "pattern": "^EVID-[A-Z0-9-]+$" }
+    }
+  }
+}

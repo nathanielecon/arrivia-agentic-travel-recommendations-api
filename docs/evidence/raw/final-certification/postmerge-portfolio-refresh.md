@@ -37,7 +37,8 @@ create a D6 tier.
 
 ## Commands and assertions
 
-- `python -m pytest -q`: 136 passed; third-party FastAPI deprecation warnings retained.
+- `python -m pytest -q`: 137 passed; third-party FastAPI deprecation warnings retained. The suite
+  now validates the evidence-index envelope as well as every embedded event.
 - `python -m ruff check .`: passed.
 - `python -m compileall -q src tests scripts`: passed.
 - HyperFrames 0.7.60 lint/check: zero errors; 26/26 contrast checks passed; one existing

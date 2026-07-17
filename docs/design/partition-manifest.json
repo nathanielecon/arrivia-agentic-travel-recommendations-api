@@ -17,6 +17,7 @@
         "docs/design/**",
         "docs/decisions/**",
         "docs/evidence/evidence-event.schema.json",
+        "docs/evidence/evidence-index.schema.json",
         "docs/evidence/index.json",
         "BREAK_FIX_LOG.md"
       ],

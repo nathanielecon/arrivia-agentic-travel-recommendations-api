@@ -359,3 +359,15 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: 136 pytest passed; Ruff and compilation passed; HyperFrames lint/check passed with one retained density warning; 160/160 frames, four 40-frame sheets, eight full-resolution scene samples, audio levels, duration, codecs, and artifact dimensions passed visual/technical review.
 - Owner/status: P_portfolio and P_integration / repaired locally; candidate-bound evidence and fresh review pending.
 
+### BF-20260717-029 — Fresh review exposed a false evidence-index schema declaration
+
+- Time: 2026-07-17T14:35:00-04:00.
+- Candidate: `3cb02be1da257d5cb4d31de412be2c151878ec68` in a separate clean detached checkout.
+- Detection: A fresh no-write Codex reviewer validated the advertised `$schema` for `docs/evidence/index.json` and found that it pointed to the per-event schema, which cannot validate the index envelope. Existing tests validated only the 37 `events[]` entries.
+- Impact: Candidate `3cb02be1` failed independent review despite 136 passing tests and otherwise clean repository, hash, link, and visual checks. No final refresh event or ready PR may be claimed from it.
+- Cause: The append-only index reused `evidence-event.schema.json` as a documentation pointer without defining an envelope schema; the validator mirrored that assumption.
+- Containment: Preserve the failed review report and candidate SHA. Keep PR #3 draft and do not bind the candidate as passing evidence.
+- Repair: Add `evidence-index.schema.json`, point the index to it, register the new authority path in partition ownership, validate the full wrapper plus embedded events, and retain individual event validation.
+- Verification: 137 tests, Ruff, and compilation pass locally after repair. A new immutable candidate and fresh clean-context review are required.
+- Owner/status: P_authority and P_integration / repaired locally; replacement candidate pending.
+

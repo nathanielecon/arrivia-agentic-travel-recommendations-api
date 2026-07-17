@@ -100,9 +100,18 @@ def test_frozen_interface_hashes_match_contract_files() -> None:
 def test_evidence_and_worker_schemas_are_valid_json_schemas() -> None:
     for relative in (
         "docs/evidence/evidence-event.schema.json",
+        "docs/evidence/evidence-index.schema.json",
         "docs/design/worker-task.schema.json",
     ):
         jsonschema.Draft202012Validator.check_schema(_json(ROOT / relative))
+
+
+def test_evidence_index_wrapper_and_events_validate() -> None:
+    index = _json(ROOT / "docs/evidence/index.json")
+    index_schema = _json(ROOT / "docs/evidence/evidence-index.schema.json")
+    event_schema = _json(ROOT / "docs/evidence/evidence-event.schema.json")
+    index_schema["properties"]["events"]["items"] = event_schema  # type: ignore[index]
+    jsonschema.validate(index, index_schema)
 
 
 def test_evidence_events_are_unique_valid_and_artifact_bound() -> None:
