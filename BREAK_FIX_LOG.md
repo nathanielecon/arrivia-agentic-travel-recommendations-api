@@ -208,3 +208,39 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: Docker offline install proved (`pytest` import OK). Cloud GPT-5.4 smoke after push.
 - Owner/status: P_integration / in progress.
 
+### BF-20260716-016 — Cold upstream pools made the first benchmark run nondeterministic
+
+- Time: 2026-07-16T20:39:00-04:00
+- Candidate: `2389c666948f4824819c30fd06be56c50a60ff65`; image `sha256:240a45139683d76a1bde5f38a56a0edc074abf36b56d4c5f62204d0b6ba35579`.
+- Detection: The first required 100-request/concurrency-10 run returned 99 successes and one REST `502`; logs bound the failure to a partner-config `upstream_timeout` while the API's owned connection pools were cold.
+- Impact: The first benchmark is failed evidence and candidate `2389c66` cannot be certified.
+- Cause: The measured burst also performed first-use upstream connection establishment under strict connect/pool timeouts, making Docker Desktop scheduling part of the result.
+- Containment: Preserve the failed result; do not weaken production timeouts or retry the failed request.
+- Repair: Add 10 sequential, separately reported warm-up requests using unique sessions before the 100 measured requests. Any warm-up failure still fails the benchmark; measured concurrency remains 10 and production behavior is unchanged.
+- Verification: Unit/argument tests plus a replacement-candidate live benchmark are required.
+- Owner/status: P_integration / repair implemented; replacement evidence pending.
+
+### BF-20260716-017 — Warm-up exposed per-call production HTTP client construction
+
+- Time: 2026-07-16T20:43:00-04:00
+- Candidate: dirty repair tree after superseded candidate `2389c666948f4824819c30fd06be56c50a60ff65`.
+- Detection: The warm-up repair itself passed, but the measured run returned 98/100 with two partner-config `upstream_timeout` responses.
+- Impact: Warm-up alone did not make the required concurrency-10 benchmark deterministic; no D5/E6 claim is permitted.
+- Cause: The process-cached `MemberClient` and `PartnerConfigClient` still constructed and closed a new `httpx.AsyncClient` inside every upstream call, defeating connection pooling and repeatedly paying strict connect/pool budgets.
+- Containment: Retain both failed benchmark runs; do not increase production timeouts and do not add retries.
+- Repair: Each production client now owns one process-lifetime `AsyncClient`, reuses its connection pool across calls, preserves injected-client timeout enforcement, and closes owned pools through the REST lifespan. MCP reuses the same clients until its stdio process exits.
+- Verification: Ownership/lifecycle tests, full contracts, candidate image rebuild, 100-request/concurrency-10 benchmark, fault/recovery, and MCP stdio are required.
+- Owner/status: P_reliability / repair implemented; replacement candidate pending.
+
+### BF-20260716-018 — Evidence hashes depended on checkout newline conversion
+
+- Time: 2026-07-16T20:47:00-04:00
+- Candidate: replacement-candidate working tree.
+- Detection: Full tests passed all runtime checks but evidence validation failed after a new Windows worktree converted tracked text artifacts to CRLF.
+- Impact: Artifact digests were not reproducible across Windows and Linux clean checkouts; Gate 6 could not be portable.
+- Cause: The repository had no `.gitattributes`, and the validator hashed platform-transformed worktree bytes.
+- Containment: Treat the failed full-suite run as failed evidence; do not relabel mismatched hashes as passing.
+- Repair: Enforce LF for authoritative text artifacts, binary treatment for images/video/SQLite, and canonical-LF hashing for text evidence.
+- Verification: Refresh current artifact hashes after certification documents are final, then pass the design-authority test from the completion worktree and independent clone.
+- Owner/status: P_authority / repair implemented; final hash refresh pending.
+

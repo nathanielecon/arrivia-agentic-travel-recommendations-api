@@ -69,7 +69,13 @@ def run_benchmark(
     concurrency: int,
     timeout: float,
     run_id: str,
+    warmup: int = 10,
 ) -> dict[str, Any]:
+    warmup_observations = [
+        _request_one(base_url, f"benchmark-{run_id}-warmup-{index:04d}", timeout)
+        for index in range(warmup)
+    ]
+    warmup_errors = [item.error for item in warmup_observations if item.error is not None]
     started = time.perf_counter()
     observations: list[Observation] = []
     with ThreadPoolExecutor(max_workers=concurrency) as executor:
@@ -82,12 +88,15 @@ def run_benchmark(
 
     duration = time.perf_counter() - started
     latencies = [item.latency_ms for item in observations]
-    errors = [item.error for item in observations if item.error is not None]
-    succeeded = requests - len(errors)
+    measured_errors = [item.error for item in observations if item.error is not None]
+    errors = [f"warmup: {error}" for error in warmup_errors] + measured_errors
+    succeeded = requests - len(measured_errors)
     return {
         "result": "pass" if not errors else "fail",
         "base_url": base_url.rstrip("/"),
         "run_id": run_id,
+        "warmup_requests": warmup,
+        "warmup_failed": len(warmup_errors),
         "requests": requests,
         "concurrency": concurrency,
         "succeeded": succeeded,
@@ -115,6 +124,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--requests", type=int, default=100)
     parser.add_argument("--concurrency", type=int, default=10)
     parser.add_argument("--timeout", type=float, default=5.0)
+    parser.add_argument("--warmup", type=int, default=10)
     parser.add_argument("--run-id", default=uuid.uuid4().hex[:12])
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
@@ -124,6 +134,8 @@ def parse_args() -> argparse.Namespace:
         parser.error("--concurrency must be between 1 and --requests")
     if args.timeout <= 0:
         parser.error("--timeout must be positive")
+    if args.warmup < 0:
+        parser.error("--warmup cannot be negative")
     return args
 
 
@@ -135,6 +147,7 @@ def main() -> int:
         concurrency=args.concurrency,
         timeout=args.timeout,
         run_id=args.run_id,
+        warmup=args.warmup,
     )
     rendered = json.dumps(report, indent=2, sort_keys=True)
     print(rendered)

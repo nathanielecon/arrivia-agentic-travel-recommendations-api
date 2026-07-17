@@ -23,6 +23,7 @@ def test_benchmark_reports_measurements_without_inventing_an_slo(monkeypatch) ->
         concurrency=10,
         timeout=1.0,
         run_id="unit",
+        warmup=0,
     )
 
     assert report["result"] == "pass"
@@ -45,6 +46,7 @@ def test_benchmark_fails_when_any_request_or_policy_assertion_fails(monkeypatch)
         concurrency=2,
         timeout=1.0,
         run_id="unit",
+        warmup=0,
     )
 
     assert report["result"] == "fail"
@@ -59,6 +61,7 @@ def test_benchmark_fails_when_any_request_or_policy_assertion_fails(monkeypatch)
         ["benchmark", "--requests", "0"],
         ["benchmark", "--requests", "2", "--concurrency", "3"],
         ["benchmark", "--timeout", "0"],
+        ["benchmark", "--warmup", "-1"],
     ],
 )
 def test_invalid_cli_arguments_exit_nonzero(monkeypatch, arguments: list[str]) -> None:

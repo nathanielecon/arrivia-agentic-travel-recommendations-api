@@ -117,20 +117,21 @@ class MemberClient:
             if timeout_seconds is not None
             else httpx.Timeout(connect=0.25, read=1.0, write=0.25, pool=0.25)
         )
-        self._client = client
+        self._owns_client = client is None
+        self._client = client or httpx.AsyncClient(base_url=self._base_url, timeout=self._timeout)
+        self._member_path_prefix = "/v1/members" if self._owns_client else "/members"
         self.circuit = circuit or AsyncCircuitBreaker("member")
+
+    async def aclose(self) -> None:
+        if self._owns_client:
+            await self._client.aclose()
 
     async def _request_member(self, member_id: str) -> MemberProfile:
         try:
-            if self._client is not None:
-                response = await self._client.get(
-                    f"/members/{quote(member_id, safe='')}",
-                    timeout=self._timeout,
-                )
-            else:
-                url = f"{self._base_url}/v1/members/{quote(member_id, safe='')}"
-                async with httpx.AsyncClient(timeout=self._timeout) as client:
-                    response = await client.get(url)
+            response = await self._client.get(
+                f"{self._member_path_prefix}/{quote(member_id, safe='')}",
+                timeout=self._timeout,
+            )
         except httpx.TimeoutException as exc:
             raise MemberServiceError(
                 "member service request timed out",

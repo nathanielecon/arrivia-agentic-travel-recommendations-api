@@ -11,6 +11,8 @@ review_trigger: Candidate SHA/image, assertion, artifact, command, or public cla
 The machine-readable authority is [index.json](index.json). Raw transcripts are retained under
 `raw/`; the gallery image is a presentation rendering of those transcripts and is not independent
 proof. Failed attempts stay visible in [BREAK_FIX_LOG.md](../../BREAK_FIX_LOG.md).
+Text-artifact digests use canonical LF bytes, enforced by `.gitattributes`, so evidence validation
+is stable across Windows and Linux checkouts. Binary artifacts are always hashed byte-for-byte.
 
 ![Rendered evidence summary; consult the raw transcripts and evidence index for authority](assets/evidence-gallery.png)
 

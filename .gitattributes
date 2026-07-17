@@ -1,0 +1,18 @@
+* text=auto
+
+# Evidence digests use canonical LF bytes on every checkout platform.
+docs/evidence/** text eol=lf
+docs/architecture/*.drawio text eol=lf
+docs/architecture/*.svg text eol=lf
+docs/portfolio/*.txt text eol=lf
+docs/certification/*.md text eol=lf
+walkthrough/*.html text eol=lf
+.codex/*.md text eol=lf
+
+# Binary proof artifacts must never be newline-normalized.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.mp4 binary
+*.sqlite3 binary
+*.zip binary

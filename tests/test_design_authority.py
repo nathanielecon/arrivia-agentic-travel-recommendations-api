@@ -35,6 +35,13 @@ def _sha256(paths: list[str]) -> str:
     return hashlib.sha256("\n".join(entries).encode()).hexdigest()
 
 
+def _artifact_sha256(path: Path) -> str:
+    payload = path.read_bytes()
+    if path.suffix.lower() not in {".png", ".jpg", ".jpeg", ".mp4", ".sqlite3", ".zip"}:
+        payload = payload.replace(b"\r\n", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def test_project_design_validates_against_schema() -> None:
     jsonschema.validate(
         _json(DESIGN / "project-design.json"),
@@ -95,7 +102,7 @@ def test_evidence_events_are_unique_valid_and_artifact_bound() -> None:
             path = ROOT / artifact["path"]
             assert path.is_file(), f"evidence artifact does not resolve: {path}"
             if artifact["sha256"] is not None:
-                assert hashlib.sha256(path.read_bytes()).hexdigest() == artifact["sha256"]
+                assert _artifact_sha256(path) == artifact["sha256"]
 
 
 def test_dependency_contract_hashes_are_current() -> None:

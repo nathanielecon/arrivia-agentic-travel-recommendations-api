@@ -306,7 +306,7 @@
         "src/arrivia_recs/domain/partner_policy.py",
         "src/arrivia_recs/integrations/partner_config_client.py"
       ],
-      "contract_hash": "655594f875e82a446fa481c6afbf879606b745ef8df78c21c6d63978063d48c1",
+      "contract_hash": "a955b4af1014fb2e5c724092ef226ab44337391facee653361e836df8c7acf08",
       "compatibility_policy": "Known values are dynamic; new fields/types/semantics require versioned support and fail closed before deployment",
       "invalidation_rule": "Any change revalidates evaluator, REST/MCP parity, schema docs, and policy evidence"
     },
@@ -336,14 +336,14 @@
         "docs/design/INTERFACE_CATALOG.md",
         "src/arrivia_recs/config.py"
       ],
-      "contract_hash": "c7abdc102407bed42f8388c82167f1e91b76e4eb7e5312ebf5f2cb7917f823a5",
+      "contract_hash": "edb65c714251a9eb499348ff464ac44507f82ac38b9bf71eda942db96d5a4d49",
       "compatibility_policy": "Existing setting, metric, log, and error names remain stable; label additions require cardinality review",
       "invalidation_rule": "Any change revalidates operations tests, docs, dashboards, evidence, and reliability consumer configuration"
     }
   ],
   "dependency_contract_hashes": {
-    "pyproject.toml": "f2256116816b1acb07e7e3ae2a3837e44e1b2dbe80ef8d5cfeb8e71daff38e6a",
-    "docker-compose.yml": "1a8f28c569962429e0cad16cc0bee176a29b1617d2299eeb7f08af745b1a4526",
+    "pyproject.toml": "efeab03e6cb25aecbca1554c7dda9d897409995502a3cc01c2a4e5d6a76e4691",
+    "docker-compose.yml": "9d617577a8794be0cdc0ac4a6225f8ce96180dd849a9ede9d3f3297d9eef8b1f",
     "Dockerfile": "0a270f7ef201a5d2ff82e588c9adc7d9d9082fb4c4ac773b66959ae2ba112d60"
   }
 }

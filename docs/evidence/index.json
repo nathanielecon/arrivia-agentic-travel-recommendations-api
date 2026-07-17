@@ -913,7 +913,7 @@
       "artifacts": [
         {
           "path": "docs/evidence/raw/20260716-rollback-verifier.txt",
-          "sha256": "d2eedf44e8a9da075a4605b19ed5f62b6e58df4684a9417c519788e4736a1c5a"
+          "sha256": "b3d259b8718226954c06d3f706b4ab2e1e90cb43cbbef42cbbe9588d7b20e8b1"
         },
         {
           "path": "docs/evidence/raw/rollback-snapshot-20260716-165326/session_budget.sqlite3",
@@ -921,7 +921,7 @@
         },
         {
           "path": "docs/evidence/raw/rollback-snapshot-20260716-165326/SHA256SUMS.txt",
-          "sha256": "eb2e24a368fe2521c4bc09fc68e1ef2f87de445725d57cc6c14c7d8ee25a1bc5"
+          "sha256": "fa127af7a97d0ee40772055ee787e4ba2cb6ada30a323cbf21c2c4a9197b3459"
         }
       ],
       "tool_versions": {
@@ -985,11 +985,11 @@
       "artifacts": [
         {
           "path": "docs/certification/CHECK_MATRIX.md",
-          "sha256": "79b79cd0b0ce4691041b53b92220cd78f1a1d61f373a9d6926b0304990ac8a08"
+          "sha256": "1387290b05707c78870d551b2cf6c902ba4c6a3317886730b67f34b3054f22b0"
         },
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "2acc2e1c0d8d44cbee6a6659d1d1fd212d555293800effb595a4477f671ce064"
+          "sha256": "ced41c4a2f40e80959fea63fb07f7310781223898a58f225d9a2b9bcd1fd9cfb"
         }
       ],
       "tool_versions": {
@@ -1051,7 +1051,7 @@
         },
         {
           "path": ".codex/README.md",
-          "sha256": "983caafd6b3ec3ef750fbb162d8bdb7e6088204d472cfa6beeaa1e8f01d6a6c7"
+          "sha256": "05b78f7059b4a31700780367ac2f067e74d56bfe24dadbab145339177ae8e14a"
         }
       ],
       "tool_versions": {
@@ -1202,19 +1202,19 @@
       "artifacts": [
         {
           "path": "docs/evidence/raw/candidate-db-recovery-20260716-182519/verifier-after-reidentity.txt",
-          "sha256": "61d3b4857198333317942bd309380ce91ada61f0bf6d2cfbecb17680405fe013"
+          "sha256": "3961ae7af1a77483b4aad2db66c8ea4973cec6a36407aaa068057a404cd28a21"
         },
         {
           "path": "docs/evidence/raw/candidate-db-recovery-20260716-182519/verifier-after-restore.txt",
-          "sha256": "61d3b4857198333317942bd309380ce91ada61f0bf6d2cfbecb17680405fe013"
+          "sha256": "3961ae7af1a77483b4aad2db66c8ea4973cec6a36407aaa068057a404cd28a21"
         },
         {
           "path": "docs/evidence/raw/candidate-db-recovery-20260716-182519/integrity-after-docker-restore.txt",
-          "sha256": "7546a3648fee8c05b3f60f3c4801b42dd46c9ca5fa9ea04efc5aebb8ec2a2a5f"
+          "sha256": "7f086336b0422373d75ae3796f6b10f0a4b29446f8e1adc56195a2ae549df930"
         },
         {
           "path": "docs/evidence/raw/candidate-db-recovery-20260716-182519/verifier-after-docker-restore.txt",
-          "sha256": "d2eedf44e8a9da075a4605b19ed5f62b6e58df4684a9417c519788e4736a1c5a"
+          "sha256": "b3d259b8718226954c06d3f706b4ab2e1e90cb43cbbef42cbbe9588d7b20e8b1"
         }
       ],
       "tool_versions": {
@@ -1394,19 +1394,19 @@
       "artifacts": [
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "2acc2e1c0d8d44cbee6a6659d1d1fd212d555293800effb595a4477f671ce064"
+          "sha256": "ced41c4a2f40e80959fea63fb07f7310781223898a58f225d9a2b9bcd1fd9cfb"
         },
         {
           "path": "docs/certification/CHECK_MATRIX.md",
-          "sha256": "79b79cd0b0ce4691041b53b92220cd78f1a1d61f373a9d6926b0304990ac8a08"
+          "sha256": "1387290b05707c78870d551b2cf6c902ba4c6a3317886730b67f34b3054f22b0"
         },
         {
           "path": "docs/evidence/raw/gate6-task_e_6a5975185c9c832b8f84f247bb822803-report.md",
-          "sha256": "66f8708f7f3712ea56339b3dc6db3c49a09a02391aead2890549e47ced9ce5a4"
+          "sha256": "dc5d70d40101c3e7d80c8a602e8173954c7afc10757cb730cf921c7c081ecb8d"
         },
         {
           "path": "docs/evidence/raw/gate6-verdict-task_e_6a597677b24c832b9ff579c5522c73be.md",
-          "sha256": "eaee838947c9e27c1a7dc73d870e901891eabdc78e6d82d446f6bbe9ea8c28e0"
+          "sha256": "a84e79e888c27255da91bdd4e570cbe078353e4ffb37e115aeac56e647246cc7"
         }
       ],
       "tool_versions": {
