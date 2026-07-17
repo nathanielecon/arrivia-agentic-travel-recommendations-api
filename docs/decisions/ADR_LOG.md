@@ -2,7 +2,7 @@
 owner: P_authority / repository maintainer
 status: accepted
 candidate: f5e9dc4df174b1844741efbfb07cb8bdbca3e34c
-last_verified: 2026-07-16
+last_verified: 2026-07-17
 review_trigger: A frozen decision no longer satisfies its requirement, risk, topology, or evidence boundary
 ---
 
@@ -81,4 +81,13 @@ Accepted decisions are append-only. Supersede them with a new ADR; never edit hi
 - Alternatives: Bundle-first edits drift from reviewable source and can discard user changes.
 - Consequences/validation: Generation must be repeatable and source-linked. Documentation contracts, working-tree diff review, and bundle hashes gate integration.
 - Review trigger: Submission system requires an authoritative external store with stable versioning.
+
+## ADR-009 — Lead-orchestrator subagent dispatch for integration bottlenecks
+
+- Status/date/owner: accepted / 2026-07-17 / P_integration and P_authority
+- Requirements/risks: REQ-ORCH-001 / RISK-008, RISK-010
+- Decision: When integration work stalls on multi-repo context, conflict synthesis, or tool planes the primary agent cannot finish alone, the **lead orchestrator in the current Cursor session** may dispatch read-only or shell **subagents** (here: Grok-family workers) to gather conflict sides, validation commands, and PR/SHA state. The lead remains sole writer for merge commits, conflict resolution, and certification-bound paths. Durable worker tasks continue to use `worker-task.schema.json` and partition ownership; subagent chat is not authority and cannot self-certify `D5/E6`.
+- Alternatives: Opening a new chat for every blocker was rejected (loses merge/conflict context). Expanding Codex Cloud / Ralphy parallel writers onto certification history was rejected (immutable candidate SHAs; no rebase/squash). Treating Cursor Cloud Agents as the Gate 6 control plane was already rejected (BF-010).
+- Consequences/validation: PR #2 conflict merge (`7c1fff0` → GitHub merge `89b8c2f`) used subagent orchestration for conflict extracts and validation discovery, then a single lead process for `--no-ff` merge, BF-026, offline-install proof, and GitHub merge-commit. Evidence remains candidate-bound to reviewed source `f5e9dc4…` / image `sha256:7551188…`. Ralphy + Codex YAML (`docs/examples/codex-ralphy-review.yaml`) stays the checked-in multi-agent **review** artifact; this ADR covers **integration bottleneck** dispatch only.
+- Review trigger: A durable, hashed orchestrator protocol replaces session-scoped subagent dispatch, or partition rules forbid lead-orchestrator writes during merge.
 

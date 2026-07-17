@@ -63,7 +63,7 @@ The authoritative multi-page draw.io source shall cover context, REST/MCP compon
 
 ### REQ-ORCH-001 — bounded worker orchestration
 
-Every durable task shall validate against `worker-task.schema.json` and bind task/requirement IDs, baseline/candidate, allowed and forbidden paths, dependency/interface hashes, validators, runtime checks, evidence destinations, claim ceiling, and stop conditions. Parallel writers require disjoint owned paths and frozen hashes. Integration is serialized; workers cannot self-certify; fresh reviewers receive no repair narrative or prior scores.
+Every durable task shall validate against `worker-task.schema.json` and bind task/requirement IDs, baseline/candidate, allowed and forbidden paths, dependency/interface hashes, validators, runtime checks, evidence destinations, claim ceiling, and stop conditions. Parallel writers require disjoint owned paths and frozen hashes. Integration is serialized; workers cannot self-certify; fresh reviewers receive no repair narrative or prior scores. Session-scoped lead-orchestrator subagent dispatch for integration bottlenecks is allowed under ADR-009 when it does not grant write ownership or self-certification to those subagents.
 
 ## Invalidation rules
 

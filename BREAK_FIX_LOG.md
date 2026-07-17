@@ -335,5 +335,15 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Containment: Preserve all BF-001–BF-025 entries and the reviewed D5/E6 candidate/image identities; do not rebase, squash, or rerender walkthrough media.
 - Repair: Combine `.gitattributes` (PR canonical-LF evidence rules + `*.sh text eol=lf` + MP3/M4A binary); take main’s hardened installer and vendor README; keep PR Gate 6 handoff candidate/claim/pass text and add main’s Cloud offline bootstrap + proof; replace BF-015 verification with main’s verified Cloud result; merge with `--no-ff`.
 - Verification: No conflict markers; no duplicate BF IDs; media SHA-256 unchanged vs pre-merge tip; full pytest/Ruff/compileall; design-authority/schema/interface/partition/link/artifact-hash checks; `bash -n` on the offline installer; fresh Linux/Python 3.12 offline install + import smoke with index access disabled.
-- Owner/status: P_integration / verified — 132 pytest passed; Ruff/compileall/design-authority green; Docker `--network none` offline install + import smoke OK; media SHA-256 unchanged.
+- Owner/status: P_integration / verified — 132 pytest passed; Ruff/compileall/design-authority green; Docker `--network none` offline install + import smoke OK; media SHA-256 unchanged. Accomplished via Cursor lead-orchestrator + Grok subagent discovery (ADR-009); lead remained sole merge writer.
+
+### BF-20260717-027 — README front-page walkthrough requires user-attachments CDN
+
+- Time: 2026-07-17T09:40:00-04:00.
+- Detection: Repo/raw and release MP4 URLs render as plain links on the GitHub Code tab; GitHub strips `<video>` tags that are not hosted on `user-attachments`.
+- Impact: Recruiters could not play the Quiet Systems walkthrough inline on the repository front page.
+- Cause: GitHub README media CSP allows inline playback only for drag-drop / user-attachments assets.
+- Repair: Upload the tracked MP4 to `user-attachments` and place the asset URL on its own README line; keep Pages player and tracked `walkthrough/arrivia-walkthrough.mp4` as secondary links. Record ADR-009 for the subagent-orchestrated PR #2 merge path.
+- Verification: Rendered README HTML contains an inline video player for `https://github.com/user-attachments/assets/c6e92ce5-6680-4235-95f0-3d68bd518fc9`; design/docs contracts and README guidance tests pass.
+- Owner/status: P_portfolio / verified.
 
