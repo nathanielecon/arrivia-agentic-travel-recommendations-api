@@ -395,3 +395,13 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: Full local suite, Ruff, compilation, and two fresh no-network Python 3.12 container runs; then freeze a replacement candidate and repeat clean-context review.
 - Owner/status: P_integration / repair implemented; replacement candidate pending.
 
+### BF-20260717-032 — Correct BF-031: offline failure was a review-command error
+
+- Time: 2026-07-17T16:35:00-04:00.
+- Candidate: `35d2ab60aa101d93124c31060cc9730db26fe3c6` in a separate clean detached checkout.
+- Detection: Before issuing its final verdict, the reviewer repeated the repository's exact documented handoff: run the locked installer, source the generated virtual environment, then invoke pytest. The network-disabled Python 3.12 container passed 139 tests.
+- Correction: BF-031's initial cause attribution was wrong. The failing exploratory command invoked `/tmp/g6v/bin/python` directly without sourcing the environment, so the parent `PATH` still pointed the MCP child at system Python. The repository installer, wheelhouse, and documented bootstrap were not defective.
+- Independent result: Candidate `35d2ab6` passed all 160-frame sheets, five scene-boundary pairs, media properties, hashes, schemas, unmodified historical event comparison, protected-tree comparison, and the exact offline handoff. Its final reviewer verdict is PASS.
+- Follow-through: Retain the preliminary failure transcript and this correction. Keep the already-committed `sys.executable` change as test-harness defense-in-depth, freeze its own candidate, and require an exact-candidate fresh review before appending the refresh event.
+- Owner/status: P_integration / corrected; no runtime defect; replacement candidate review pending.
+
