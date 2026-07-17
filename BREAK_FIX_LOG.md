@@ -315,3 +315,13 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: HyperFrames lint/check and representative snapshots passed; the final render is exactly 300 seconds and 300 encoded frames. A fresh subagent independently inspected all 300 frames plus full-resolution pairs at every scene cut and found no overlap, bleed, clipping, illegible annotations, obscured terminal footage, blank frames, or inconsistent layout.
 - Owner/status: P_portfolio / repaired and independently visually verified.
 
+### BF-20260716-025 — Walkthrough renderer continued after native command failure
+
+- Time: 2026-07-16T22:55:39-04:00.
+- Detection: The first paced/music render printed a success line even though HyperFrames could not discover FFmpeg and did not create the intermediate video.
+- Impact: No replacement MP4 was published, but the new one-command renderer could have reported a false-positive build.
+- Cause: `FFMPEG_PATH` remained a directory instead of the executable expected by HyperFrames, and PowerShell does not convert nonzero native exit codes into terminating errors by default.
+- Repair: Resolve and export exact FFmpeg/FFprobe executable paths, retain Windows executable discovery on `PATH`, and check `$LASTEXITCODE` after every HyperFrames and FFmpeg invocation.
+- Verification: A clean rerun passed lint/check/snapshots, rendered all 160 frames, generated the original music bed, muxed H.264/AAC output, removed the intermediate file, and exited zero. The soundtrack was then normalized from an inaudible first-pass average to a restrained background level.
+- Owner/status: P_portfolio / repaired and verified.
+

@@ -1651,14 +1651,14 @@
         {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": "e9767601f4db1d3bf0d4990ae7e9dc0e3994de22e67c92e5c096791a2ded3808"},
         {"path": "docs/certification/CHECK_MATRIX.md", "sha256": "4e57ffa4a5fb9ef4f299e1fa9103f74a48752af924d9bbf8fa0a5bef88d26ab8"},
         {"path": "docs/evidence/README.md", "sha256": "fab791e50b66226f2d1a6583a8f6cdf652d071e74f6cef98dfd4dd63ea5d8bde"},
-        {"path": "walkthrough/index.html", "sha256": "e55caf046a59813d774af71291f6d70b81e862d4ec2e9e994a7dcb92c3e51c95"},
-        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": "573d6e509bb5adb94571e21ea7aeceeda6562d5e432932915dc57e21d92dacd5"},
-        {"path": "walkthrough/snapshots/contact-sheet.jpg", "sha256": "f839b9023f08a77d322e82fc93471859493abc9462a1d1701addb297ae8cb930"}
+        {"path": "walkthrough/index.html", "sha256": null},
+        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": null},
+        {"path": "walkthrough/snapshots/contact-sheet.jpg", "sha256": null}
       ],
       "tool_versions": {"hyperframes": "0.7.60", "ffmpeg": "8.1.2", "reviewer": "fresh Codex subagent"},
       "claim_level": "E4",
       "independent": true,
-      "notes": "Portfolio-only correction. The independently reviewed production runtime candidate f5e9dc4 and image digest remain unchanged.",
+      "notes": "Historical full-frame overlap-repair proof. Superseded after the static scenes were shortened to five seconds and an original instrumental bed was added; replaced mutable composition hashes are nulled. The independently reviewed production runtime candidate f5e9dc4 and image digest remain unchanged.",
       "supersedes": ["EVID-WALKTHROUGH-FINAL"]
     }
   ],
