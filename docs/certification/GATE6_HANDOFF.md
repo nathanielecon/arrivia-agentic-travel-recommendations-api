@@ -94,5 +94,12 @@ Resumed GPT-5.4 Gate 6 (worktree; tip checkout preserved):
 - Proof `task_e_6a5975185c9c832b8f84f247bb822803` READY: clean checkout of `446679405d41bfd91d6b273e269d35f50afed458` and `compileall` passed; `pip install -r requirements-dev.lock` failed (Cloud proxy/index 403); pytest/Ruff/MCP unavailable; Docker untested.
 - Verdict `task_e_6a597677b24c832b9ff579c5522c73be` READY: claim-boundary PASS; score **6/10**; **D5/E6 earned: NO**.
 
-Prior independent attempt failed on Cloud PyPI **403** (not candidate code). Unblock path: committed Linux wheels under `vendor/python-wheels/` + `scripts/install-locked-offline.sh` (`--no-index`). Still do **not** add network `pip download` to setup/maintenance.
+Prior independent attempt failed on Cloud PyPI **403** (not candidate code). Unblock path landed on main:
+
+- `vendor/python-wheels/` (47 Linux cp312 wheels)
+- `scripts/install-locked-offline.sh` (`PIP_NO_INDEX`, `--no-build-isolation`, no pip self-upgrade)
+- Cloud proof **PASS**: `task_e_6a597b38c7a0832b9a273e859f5574e7` → `offline_install_ok`, **122 tests collected** (`docs/evidence/raw/cloud-offline-install-smoke.md`)
+
+Still do **not** add network `pip download` to setup/maintenance. For Gate 6 on candidate SHA `4466794…`, use a worktree that also has tip’s `vendor/` + installer (or cherry-pick `13ee372`), then `bash scripts/install-locked-offline.sh /tmp/g6v`.
+
 
