@@ -2,12 +2,121 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0; url=walkthrough/view.html">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Arrivia — redirecting to evidence walkthrough</title>
-  <link rel="canonical" href="walkthrough/view.html">
+  <title>Arrivia — Agentic Travel Recommendations</title>
+  <meta name="description" content="Arrivia agentic travel recommendations API — D5/E6 independently reproduced v0 with a 165-second evidence walkthrough.">
+  <link rel="canonical" href="./">
+  <style>
+    :root {
+      --bg0: #0a1a2e;
+      --bg1: #143a5c;
+      --text: #eef7ff;
+      --muted: #9bb4c8;
+      --accent: #65d9b7;
+      --claim: #ffd37a;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: linear-gradient(145deg, var(--bg0), var(--bg1));
+      color: var(--text);
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+    .brand {
+      color: var(--accent);
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0 0 10px;
+    }
+    .tag {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin: 0 0 20px;
+    }
+    .lede {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
+      max-width: 40rem;
+      margin: 0 0 28px;
+    }
+    .player {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #020a12;
+      border: 1px solid rgba(101, 217, 183, 0.4);
+      border-radius: 14px;
+      box-shadow: 0 20px 56px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+    }
+    video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: #020a12;
+    }
+    .meta {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .meta .claim { color: var(--claim); margin-top: 8px; }
+    nav {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 22px;
+      font-size: 0.95rem;
+    }
+    a { color: var(--accent); }
+    noscript p {
+      color: var(--muted);
+      margin-top: 16px;
+    }
+  </style>
 </head>
 <body>
-  <p>Redirecting to the <a href="walkthrough/view.html">Arrivia evidence walkthrough</a>.</p>
+  <main>
+    <p class="tag">D5 / E6 · single-replica v0</p>
+    <h1 class="brand">Arrivia</h1>
+    <p class="lede">
+      Partner-aware travel recommendations with audited policy decisions—
+      REST and MCP over one service, proven inside a bounded v0 claim.
+      Watch the 165-second evidence walkthrough below.
+    </p>
+    <div class="player">
+      <video controls playsinline preload="metadata" poster="walkthrough/snapshots/contact-sheet.jpg">
+        <source src="walkthrough/arrivia-walkthrough.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+        <a href="walkthrough/view.html">Open the walkthrough player</a>.
+      </video>
+    </div>
+    <noscript>
+      <p>JavaScript is off — open the <a href="walkthrough/view.html">walkthrough player</a> directly.</p>
+    </noscript>
+    <div class="meta">
+      Current portfolio authority: <code>EVID-PORTFOLIO-DEFINITIONS-MEDIA-REPAIR</code>
+      (candidate <code>ca8a1ad9</code>, 165s). Soundtrack: Quiet Systems.
+      <p class="claim">Project-local D5/E6 labels within one active replica and same-machine SQLite. No D6 tier.</p>
+    </div>
+    <nav>
+      <a href="https://github.com/nathanielecon/arrivia-agentic-travel-recommendations-api#readme">Repository README</a>
+      <a href="walkthrough/view.html">Walkthrough player</a>
+      <a href="https://github.com/nathanielecon/arrivia-agentic-travel-recommendations-api/blob/main/docs/certification/CERTIFICATION_LEVELS.md">Certification levels</a>
+      <a href="walkthrough/arrivia-walkthrough.mp4">Direct MP4</a>
+    </nav>
+  </main>
 </body>
 </html>

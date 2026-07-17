@@ -1,5 +1,7 @@
 # Architecture Authority
 
+This folder holds the exact system topology for Arrivia’s partner-aware recommendations service: one API with REST and MCP surfaces, read-only upstreams, and same-machine SQLite session caps inside the certified single-replica v0 boundary.
+
 | Metadata | Value |
 | --- | --- |
 | Owner | `P_portfolio` / repository maintainer |

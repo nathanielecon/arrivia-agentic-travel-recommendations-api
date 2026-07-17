@@ -10,6 +10,8 @@ review_trigger: Candidate SHA/image, assertion, artifact, command, or public cla
 
 Certification key: `D5 design` means the package is independently reimplementable; `E6 proof` means a separate clean-context reviewer reproduced the result. The axes are independent and project-local, not external accreditation or a production-readiness guarantee. See the [complete D0–D5 and E0–E6 definitions](../certification/CERTIFICATION_LEVELS.md); no D6 level exists.
 
+Players: [walkthrough/view.html](../../walkthrough/view.html) · [homepage index.html](../../index.html).
+
 The machine-readable authority is [index.json](index.json), whose envelope is validated by
 [evidence-index.schema.json](evidence-index.schema.json) and whose append-only entries use
 [evidence-event.schema.json](evidence-event.schema.json). Raw transcripts are retained under
