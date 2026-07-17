@@ -1,6 +1,6 @@
 ---
 owner: P_portfolio and P_integration
-status: passed locally; candidate binding and fresh review pending
+status: passed independently; candidate-bound event appended
 reviewed_runtime_source: f5e9dc4df174b1844741efbfb07cb8bdbca3e34c
 reviewed_runtime_image: sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4
 recorded_at: 2026-07-17T12:30:00-04:00
@@ -50,6 +50,8 @@ create a D6 tier.
   full-resolution scene samples and each scene boundary were checked. No text/terminal overlap,
   clipping, blank frame, mismatched evidence label, or D6 claim was found.
 
-The prior Quiet Systems event remains preserved as historical evidence for its exact cut. Publication to GitHub Pages
+Fresh no-write review of candidate `86fd185d4f31bfea2eaa12e5e1f625909982d642` passed the
+network-disabled locked install, 139 tests, authority checks, and all 160 frames. The prior Quiet
+Systems event remains preserved as historical evidence for its exact cut. Publication to GitHub Pages
 and a new inline user-attachment occurs only after the refresh pull request is merged; the README
 therefore uses the current tracked MP4 and contact sheet as primary proof.

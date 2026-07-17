@@ -30,3 +30,17 @@ The user then supplied the selected Suno track “Quiet Systems.” Portfolio ca
 PR #2 later reconciled the certified completion branch with main's offline-install hardening. A read-only Grok council supplied conflict-side and validation discovery; one lead orchestrator remained the sole writer for all five conflict resolutions and the merge. Branch merge `7c1fff06d5a16ccc62635421221b0c82812d46a8` and GitHub merge `89b8c2fa47f15229b32c9f6c6486dad5c5a0f675` preserved the reviewed source/image identities and passed 132 tests, Ruff, compilation, design authority, link/hash checks, shell syntax, and a no-index Linux offline bootstrap. ADR-009 and `BF-20260716-026` are the durable authorities for that orchestration history.
 
 This integration is not a second Gate 6 and does not establish a “D6” level. The certified result remains `D5 Reimplementable / E6 Independently reproduced`; the 131-test Gate 6 result and the 132-test merged-tree result are intentionally distinct historical facts.
+
+## Final post-merge portfolio refresh
+
+A fresh no-write Codex reviewer independently reproduced exact candidate
+`86fd185d4f31bfea2eaa12e5e1f625909982d642`. The documented network-disabled locked Python 3.12
+install passed all 139 tests, Ruff, compilation, schemas, historical-event identity, archive hashes,
+links, and protected runtime/interface comparisons. The reviewer inspected the exact architecture,
+gallery, infographics, contact sheet, every one of the 160 video frames, all five boundary pairs, and
+the audio stream with no defect or blocked check. `EVID-POSTMERGE-PORTFOLIO-REFRESH` is the current
+portfolio authority and supersedes the older presentation events without rewriting them.
+
+The independently reviewed production identity remains source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`
+and image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`.
+The final level remains `D5 Reimplementable / E6 Independently reproduced`; no D6 tier exists.

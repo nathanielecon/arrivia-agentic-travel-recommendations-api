@@ -6,7 +6,8 @@
     "status": "accepted",
     "baseline_sha": "17cc00d7cf06a04028a1ff3aabdd552875cf5d0a",
     "candidate_ref": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c",
-    "last_verified": "2026-07-16",
+    "portfolio_candidate_ref": "86fd185d4f31bfea2eaa12e5e1f625909982d642",
+    "last_verified": "2026-07-17",
     "review_trigger": "Candidate, artifact, environment, result, assertion, requirement, or public claim change"
   },
   "append_only": true,
@@ -15,7 +16,7 @@
     "evidence_level": "E6",
     "d5_earned": true,
     "e6_earned": true,
-    "reason": "Fresh local Codex review at f4c6d504 passed every required clean-install, static, runtime, failure/recovery, evidence, rollback, visual, and cleanup check"
+    "reason": "Runtime Gate 6 passed at f4c6d504; fresh no-write review at 86fd185d then passed the synchronized post-merge evidence, architecture, documentation, offline-install, and 160-frame portfolio refresh"
   },
   "artifact_archive": {
     "00fc484ce8441b207247a0502c43b7b64eb58d6d7b6502519e6fa8e458588692": "docs/evidence/archive/00fc484ce8441b207247a0502c43b7b64eb58d6d7b6502519e6fa8e458588692-arrivia-system.drawio",
@@ -1748,9 +1749,86 @@
       "independent": false,
       "notes": "User-selected portfolio soundtrack. No license or ownership claim beyond user-supplied provenance is inferred. Production D5/E6 runtime identity is unchanged.",
       "supersedes": ["EVID-WALKTHROUGH-PACED-MUSIC"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-POSTMERGE-FAIL-3CB02BE",
+      "requirement_ids": ["REQ-PORT-001", "REQ-ORCH-001"],
+      "status": "failed",
+      "recorded_at": "2026-07-17T14:35:00-04:00",
+      "candidate": {"git_sha": "3cb02be1da257d5cb4d31de412be2c151878ec68", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "clean-local-codex-postmerge-1", "description": "Fresh detached no-write checkout for post-merge portfolio and evidence-authority review"},
+      "procedure": {"preconditions": ["Exact clean candidate", "No repair narrative"], "commands": ["pytest, Ruff, compilation, schema/hash/link/visual checks"], "cleanup": ["No repository writes"]},
+      "assertions": [
+        {"name": "evidence-index-envelope-schema", "expected": "advertised schema validates the complete index envelope", "observed": "index advertised the per-event schema; wrapper validation failed", "result": "failed"},
+        {"name": "otherwise-clean-candidate", "expected": "runtime and portfolio checks remain inspectable", "observed": "136 tests and all completed protected-tree/hash/visual checks passed", "result": "passed"}
+      ],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/postmerge-review-3cb02be-failed.md", "sha256": "fa4ac17710fcd109f40c17451eeff72bdf5caa380c76d30f3e51e8782dbe647f"}],
+      "tool_versions": {"reviewer": "fresh local Codex", "pytest": "9.1.1"},
+      "claim_level": "E5",
+      "independent": true,
+      "notes": "Failed candidate retained; it did not replace the already-earned runtime D5/E6 result.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-POSTMERGE-FAIL-7E58F3A",
+      "requirement_ids": ["REQ-PORT-001", "REQ-ORCH-001"],
+      "status": "failed",
+      "recorded_at": "2026-07-17T15:20:00-04:00",
+      "candidate": {"git_sha": "7e58f3a66462779e03a547f10df72fb8ffea4d3b", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "clean-local-codex-postmerge-2", "description": "Fresh detached no-write checkout for append-only evidence and complete media review"},
+      "procedure": {"preconditions": ["Exact clean candidate", "No repair narrative"], "commands": ["pytest, Ruff, compilation, full schema/hash/link checks, all-frame media review"], "cleanup": ["No repository writes"]},
+      "assertions": [
+        {"name": "append-only-history", "expected": "historical events are unchanged and replacement bytes are retained", "observed": "four historical events were rewritten to follow mutable paths", "result": "failed"},
+        {"name": "media-and-implementation", "expected": "current media and protected implementation pass", "observed": "137 tests, hashes, six-page architecture, and 160-frame review passed", "result": "passed"}
+      ],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/postmerge-review-7e58f3a-failed.md", "sha256": "8fa4255d97ee5df2f7d5d74086f427dffda9a979654f415e02a80229a8515106"}],
+      "tool_versions": {"reviewer": "fresh local Codex", "pytest": "9.1.1", "hyperframes": "0.7.60", "ffmpeg": "8.1.2"},
+      "claim_level": "E5",
+      "independent": true,
+      "notes": "Failed candidate retained; content-addressed archival and claim-parity repair followed.",
+      "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-POSTMERGE-PORTFOLIO-REFRESH",
+      "requirement_ids": ["REQ-DOC-001", "REQ-PORT-001", "REQ-ORCH-001"],
+      "status": "passed",
+      "recorded_at": "2026-07-17T17:30:00-04:00",
+      "candidate": {"git_sha": "86fd185d4f31bfea2eaa12e5e1f625909982d642", "working_tree_clean": true, "image_digest": "sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4"},
+      "environment": {"id": "clean-local-codex-postmerge-final", "description": "Fresh detached no-write checkout plus network-disabled Python 3.12 container and exhaustive media inspection"},
+      "procedure": {
+        "preconditions": ["Exact pushed candidate", "Certified runtime/image identity frozen", "No conversation or repair context supplied"],
+        "commands": ["locked offline install and 139-test suite", "Ruff and compilation", "schema/event/archive/link/protected-tree checks", "FFprobe and FFmpeg audio inspection", "four chronological 40-frame sheets plus five boundary pairs"],
+        "cleanup": ["Reviewer wrote no repository files", "Temporary review outputs stayed outside the checkout"]
+      },
+      "assertions": [
+        {"name": "clean-offline-reproduction", "expected": "locked no-network install and complete suite pass", "observed": "Python 3.12.13; 139/139 passed; Ruff and compilation passed", "result": "passed"},
+        {"name": "append-only-authority", "expected": "historical events unchanged and old bytes recoverable", "observed": "37 historical events equal main; 13/13 archive keys match retained bytes", "result": "passed"},
+        {"name": "protected-runtime-identity", "expected": "refresh changes no runtime, public interface, container, lock, SBOM, or soundtrack source", "observed": "all protected comparisons and certified image identity passed", "result": "passed"},
+        {"name": "orchestration-and-claim-parity", "expected": "six-page authority records advisory council and sole writer without D6", "observed": "diagrams, README, requirements, and attestation agree on D5/E6 boundary", "result": "passed"},
+        {"name": "exhaustive-media-review", "expected": "current 160-second cut has correct streams and no visual mismatch", "observed": "160/160 frames, all five boundary pairs, audio levels, hashes, diagrams, gallery, and infographics passed", "result": "passed"}
+      ],
+      "artifacts": [
+        {"path": "docs/evidence/raw/final-certification/postmerge-review-86fd185-passed.md", "sha256": "4b59f6c704825084ec2635ba94e483fa5a443aab31f306cb725670651ddf43dd"},
+        {"path": "docs/evidence/raw/final-certification/postmerge-portfolio-refresh.md", "sha256": "565e0f025bab80aae93daf6b314c60e2b9050fe26eb99c11556f992c5f0276de"},
+        {"path": "docs/architecture/arrivia-system.drawio", "sha256": "bd218257b96e97bc5a5a390ef32b54f78c675e70f25c009a7d91753716826020"},
+        {"path": "docs/architecture/arrivia-system.svg", "sha256": "41aec2bb42be70c884d0be12a17ed816de8f5b1726b53b2e4e894c7cf0518075"},
+        {"path": "docs/architecture/arrivia-system.png", "sha256": "aae1d7df9caef07b86337ebeed6542b51267d95883bb0630d0db9d20854f98b6"},
+        {"path": "docs/evidence/assets/evidence-gallery.png", "sha256": "dc183927e3437121e4e23424b893e0293a88e539b5366f2c46fe1034c8fc7bf9"},
+        {"path": "docs/portfolio/arrivia-infographic-image2-original.png", "sha256": "1ddc2a9d90b5c9be7b2ff6e017f79357dbfef08259f96d4303a9c6919b4ad37f"},
+        {"path": "docs/portfolio/arrivia-infographic.png", "sha256": "0a44e38c959af2bd2932d7e8b6ed5464c6feae354c37abbb1e6f3f1c5618dd45"},
+        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": "e2e6a88ab84a9b1c95fe5d5ef1778ab0872bda0e9373cb700c0ab4200a878463"},
+        {"path": "walkthrough/snapshots/contact-sheet.jpg", "sha256": "88836ff46f3dba37ad11a87633d09a5b624f3d6f7c65d9442e8c52a42ede35f4"},
+        {"path": "walkthrough/music/quiet-systems.mp3", "sha256": "5230bef6dd4a62c6635b93b136fc50fa4d5efc3990068edb62518e651e23ea0b"}
+      ],
+      "tool_versions": {"reviewer": "fresh local Codex", "python": "3.12.13", "pytest": "9.1.1", "hyperframes": "0.7.60", "ffmpeg": "8.1.2"},
+      "claim_level": "E6",
+      "independent": true,
+      "notes": "Current portfolio authority. Runtime certification remains the original D5/E6 source and image; this event binds synchronized post-merge documentation and presentation artifacts.",
+      "supersedes": ["EVID-ARCH-EXACT", "EVID-PORTFOLIO", "EVID-WALKTHROUGH-QUIET-SYSTEMS"]
     }
   ],
-  "planned_event_ids": [
-    "EVID-POSTMERGE-PORTFOLIO-REFRESH"
-  ]
+  "planned_event_ids": []
 }

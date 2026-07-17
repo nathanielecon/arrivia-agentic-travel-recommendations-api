@@ -14,6 +14,8 @@ Internal service for AI-driven, partner-aware travel recommendations that power 
 
 PR #2 then integrated the certified branch with main through a read-only Grok council and one lead merge writer. Five conflicts were resolved without rewriting certification history or changing the reviewed runtime/image; the merged result passed 132 tests plus the offline bootstrap proof ([ADR-009](docs/decisions/ADR_LOG.md) · [BF-026](BREAK_FIX_LOG.md)). This post-certification integration does not create a new “D6” tier: the project remains **D5/E6**.
 
+The synchronized portfolio refresh was independently reproduced at `86fd185d4f31bfea2eaa12e5e1f625909982d642`: 139 tests passed in a network-disabled locked Python 3.12 checkout, and all 160 walkthrough frames plus every scene boundary passed visual review ([refresh evidence](docs/evidence/raw/final-certification/postmerge-review-86fd185-passed.md)).
+
 Verified in the current working candidate:
 
 - REST and MCP both use one `RecommendationService` and translate an open upstream circuit to `upstream_circuit_open` ([contract tests](tests/test_upstream_hardening.py)).
