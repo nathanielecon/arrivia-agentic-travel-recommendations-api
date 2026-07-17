@@ -1,7 +1,8 @@
 ---
 owner: P_portfolio / repository maintainer
-status: local validation passed; independent candidate review pending
+status: local and independent exact-candidate validation passed
 runtime_candidate: f5e9dc4df174b1844741efbfb07cb8bdbca3e34c
+portfolio_candidate: ca8a1ad9b81730adbaf4f5d74070a0f04f8763ad
 recorded_at: 2026-07-17T16:45:00-04:00
 ---
 
@@ -46,5 +47,7 @@ fourth fail-fast circuit-open request, cleanup, a 31-second half-open wait, and 
 - `docs/evidence/assets/evidence-gallery.png`: `41f5d9fe76d7bcb9b8eb1a6a8da604558a3dcb978715ffbed586339bbd6650ff`
 
 The earlier 160-frame no-overlap assertion and its later contradiction remain unchanged in the
-append-only history. A fresh exact-candidate review is required before the replacement event is
-appended.
+append-only history. Three fresh reviewers independently passed exact clean candidate
+`ca8a1ad9b81730adbaf4f5d74070a0f04f8763ad`: exhaustive visual review, technical stream/audio
+verification, and clean-context reproduction. The detailed results are retained in the
+[independent review report](definitions-media-repair-independent-review.md).

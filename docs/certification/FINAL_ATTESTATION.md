@@ -46,3 +46,19 @@ portfolio authority and supersedes the older presentation events without rewriti
 The independently reviewed production identity remains source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`
 and image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`.
 The final level remains `D5 Reimplementable / E6 Independently reproduced`; no D6 tier exists.
+
+## Certification definitions and walkthrough repair
+
+The preserved `EVID-WALKTHROUGH-ROW-OVERLAP-DEFECT` later contradicted only the historical
+160-frame no-overlap assertion. Exact clean candidate
+`ca8a1ad9b81730adbaf4f5d74070a0f04f8763ad` adds the canonical definitions, repairs physical-row
+rendering and CLI wrapping, and produces the exact 165-second replacement. Three fresh independent
+tracks passed exhaustive frame and standalone-visual review, technical stream/audio verification,
+and clean-context reproduction with 144 tests and no protected runtime change.
+
+`EVID-PORTFOLIO-DEFINITIONS-MEDIA-REPAIR` is therefore the current portfolio authority. The
+independently reviewed production source remains `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`, the
+certified image digest remains
+`sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`, and the boundary remains
+one active recommendation-serving replica with same-machine SQLite locking. The earned result is
+still `D5 Reimplementable / E6 Independently reproduced`; this project defines no D6.
