@@ -6,12 +6,9 @@ Internal service for AI-driven, partner-aware travel recommendations that power 
 
 ### Evidence walkthrough (Quiet Systems)
 
-<video src="https://github.com/nathanielecon/arrivia-agentic-travel-recommendations-api/releases/download/walkthrough-video/arrivia-walkthrough.mp4" controls playsinline preload="metadata" width="100%" poster="https://raw.githubusercontent.com/nathanielecon/arrivia-agentic-travel-recommendations-api/main/walkthrough/snapshots/contact-sheet.jpg">
-</video>
+[![Quiet Systems evidence walkthrough — click to play](walkthrough/snapshots/contact-sheet.jpg)](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/walkthrough/view.html)
 
-https://github.com/nathanielecon/arrivia-agentic-travel-recommendations-api/releases/download/walkthrough-video/arrivia-walkthrough.mp4
-
-[Open player](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/walkthrough/view.html) · [Tracked MP4 in repo](walkthrough/arrivia-walkthrough.mp4) · [Release asset](https://github.com/nathanielecon/arrivia-agentic-travel-recommendations-api/releases/tag/walkthrough-video)
+▶ [Play full walkthrough (160s)](https://nathanielecon.github.io/arrivia-agentic-travel-recommendations-api/walkthrough/view.html) · [MP4 in repo](walkthrough/arrivia-walkthrough.mp4) · [Release download](https://github.com/nathanielecon/arrivia-agentic-travel-recommendations-api/releases/download/walkthrough-video/arrivia-walkthrough.mp4)
 
 **Current certification: D5 Reimplementable / E6 independently reproduced.** A fresh clean-context reviewer passed every Gate 6 check against source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` and image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4` ([final attestation](docs/certification/FINAL_ATTESTATION.md) · [certification matrix](docs/certification/CHECK_MATRIX.md)).
 
