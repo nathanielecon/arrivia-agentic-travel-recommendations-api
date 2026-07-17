@@ -1,7 +1,7 @@
 ---
 owner: P_authority / repository maintainer
 status: accepted
-candidate: working-tree@5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896
+candidate: final-source-freeze-pending
 last_verified: 2026-07-16
 review_trigger: A frozen decision no longer satisfies its requirement, risk, topology, or evidence boundary
 ---

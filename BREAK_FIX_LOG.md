@@ -244,3 +244,39 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: Refresh current artifact hashes after certification documents are final, then pass the design-authority test from the completion worktree and independent clone.
 - Owner/status: P_authority / repair implemented; final hash refresh pending.
 
+### BF-20260716-019 — Isolated named volume was not writable by the non-root API
+
+- Time: 2026-07-16T20:50:00-04:00
+- Candidate: `9a56c88dce809abd3fe9d2f6bbc918f70b5e9057`; image `sha256:0fc6a563a969bff20a641b888eb7ceb44577bbf9350994f6207201de45b97894`.
+- Detection: The first isolated deployment verifier reached health/readiness/metrics, then recommendation returned HTTP 500 with `sqlite3.OperationalError: unable to open database file`.
+- Impact: The first verifier run is failed harness evidence; it does not invalidate the shipped Compose bind-mount path.
+- Cause: A newly created Docker named volume was root-owned while the image correctly runs as UID 10001.
+- Containment: Kept the candidate image unchanged and did not touch the Windows/Docker bind-mounted production-style `.data` path.
+- Repair: A one-time root helper assigned the isolated volume to UID/GID 10001 before starting the API.
+- Verification: The unchanged image passed verifier, CLI, benchmark, failure/recovery, and rollback/forward checks on the initialized volume.
+- Owner/status: P_integration / verified harness setup.
+
+### BF-20260716-020 — Walkthrough tooling could not discover FFmpeg/FFprobe
+
+- Time: 2026-07-16T20:58:00-04:00
+- Candidate: evidence working tree for `9a56c88`.
+- Detection: HyperFrames lint/check passed, but two snapshot attempts failed claiming FFmpeg was unavailable.
+- Impact: Those snapshot attempts are failed portfolio evidence; no visual pass was claimed.
+- Cause: The first PATH contained only `ffmpeg.exe` without `ffprobe.exe`; the second omitted `C:\Windows\System32`, so HyperFrames could not invoke `where.exe` for discovery.
+- Containment: Retained the already recorded live footage; no presentation derivative was published from failed snapshots.
+- Repair: Use the full FFmpeg `bin` directory containing both executables and retain System32 on PATH; document both requirements.
+- Verification: Seven snapshots and the 300-second MP4 rendered successfully. HyperFrames then identified sparse source keyframes, addressed in BF-021.
+- Owner/status: P_portfolio / verified discovery repair.
+
+### BF-20260716-021 — Terminal footage used sparse 25-second keyframe intervals
+
+- Time: 2026-07-16T21:00:00-04:00
+- Candidate: evidence working tree for `9a56c88`.
+- Detection: Successful HyperFrames render warned that all three terminal tracks could freeze during deterministic seeking because their maximum keyframe interval was 25 seconds.
+- Impact: The first successful render is superseded and cannot be final visual evidence.
+- Cause: The capture encoder relied on libx264's default GOP at a 10 fps source rate.
+- Containment: Preserve the render result as superseded; do not certify it visually.
+- Repair: Encode footage at 30 fps with GOP/keyframe minimum 30 and `+faststart`, then regenerate snapshots and the final composition.
+- Verification: HyperFrames check, snapshot, render, duration/hash inspection, and visual review are required.
+- Owner/status: P_portfolio / repair implemented; rerender pending.
+

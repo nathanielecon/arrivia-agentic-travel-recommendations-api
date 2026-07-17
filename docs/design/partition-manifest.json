@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "candidate_sha": "fdfc3a5efdeb2f79259983b1f4c8259d639074d5",
-  "candidate_state": "immutable candidate C3; image digest sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead; Gate 6 pending",
+  "candidate_sha": "final-source-freeze-pending",
+  "candidate_state": "completion source freeze pending; local D4/E4 checks passed; independent Gate 6 pending",
   "generated_at": "2026-07-16T13:33:00-04:00",
   "owner": "P_authority / repository maintainer",
   "status": "accepted",
@@ -336,7 +336,7 @@
         "docs/design/INTERFACE_CATALOG.md",
         "src/arrivia_recs/config.py"
       ],
-      "contract_hash": "edb65c714251a9eb499348ff464ac44507f82ac38b9bf71eda942db96d5a4d49",
+      "contract_hash": "ba6397f4ca9c4dd0b84c07f81afe09c26f8a8684c616ae84aa6e345d8fcfb006",
       "compatibility_policy": "Existing setting, metric, log, and error names remain stable; label additions require cardinality review",
       "invalidation_rule": "Any change revalidates operations tests, docs, dashboards, evidence, and reliability consumer configuration"
     }

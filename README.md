@@ -4,7 +4,7 @@ Internal service for AI-driven, partner-aware travel recommendations that power 
 
 ![Arrivia architecture-first portfolio infographic showing REST and MCP parity, guarded upstreams, strict policy, SQLite budget state, telemetry, and the v0 claim boundary](docs/portfolio/arrivia-infographic.png)
 
-**Current certification: D4 Operable design / E4 candidate-bound local evidence.** Immutable candidate `446679405d41bfd91d6b273e269d35f50afed458` with image digest `sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720`. D5/E6 remains unclaimed: GPT-5.4 CloudWarm Gate 6 resumed after the maintenance SIGPIPE fix, but locked `pip` install failed on Cloud proxy/index 403 (independent score 6/10).
+**Current certification: D4 Operable design / E4 candidate-bound local evidence.** The completion candidate is being frozen and independently reproduced; its exact source SHA and image digest are recorded in the [certification matrix](docs/certification/CHECK_MATRIX.md). D5/E6 remains unclaimed until the clean-context Gate 6 reviewer passes every required journey.
 
 Verified in the current working candidate:
 
@@ -32,7 +32,7 @@ Goals, constraints, and delivery expectations come from the program brief in `Pr
 
 | Assumption | Violation impact | Current defense | Target mitigation | Owner | Validation | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| Member and partner-config usually respond inside the timeout budget | Requests fail `502`; repeated dependency failures open a circuit | `0.25/1.0/0.25/0.25s` connect/read/write/pool timeouts, no retry, separate circuits | Tune only from measured histograms and upstream SLOs | Reliability | `tests/test_upstream_hardening.py`, `/metrics` | implemented; live drill pending |
+| Member and partner-config usually respond inside the timeout budget | Requests fail `502`; repeated dependency failures open a circuit | `0.25/1.0/0.25/0.25s` connect/read/write/pool timeouts, no retry, separate circuits | Tune only from measured histograms and upstream SLOs | Reliability | `tests/test_upstream_hardening.py`, `/metrics` | implemented; live drill passed locally |
 | Member `partner_id` and returned policy `partner_id` agree | Wrong-tenant policy could be enforced | Strict equality check fails closed as `upstream_invalid_payload` | Upstream contract monitoring and signed tenant context | Security/reliability | mismatch contract test | implemented |
 | Known policy fields retain schema and meaning | Unsafe policy bypass or evaluator drift | Strict schema, unknown-property rejection, explicit alias conflict handling | Versioned compatibility window before semantic changes | Product/platform | schema and policy tests | implemented |
 | One active replica is sufficient for v0 | Multiple independent SQLite files could over-grant a cap | Explicit single-replica claim and rollout guardrail | Shared transactional budget store before horizontal scaling | Service owner | topology review and rollout YAML | accepted v0 |

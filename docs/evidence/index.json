@@ -818,23 +818,23 @@
         },
         {
           "path": "walkthrough/arrivia-walkthrough.mp4",
-          "sha256": "ce66c80f9c4ddc2c0dc3802a2dfee6bd07c970117110b2dbc0c5c73216e4124d"
+          "sha256": "a28a4c930fbfb20f306563a13f3aaae9cc25cb7cf08b1e15e2332ec8747fe3d8"
         },
         {
           "path": "walkthrough/snapshots/contact-sheet.jpg",
-          "sha256": "967339920bcdb97af6f65b34d144d3043ea4828304b3f9c011731421a5a7d4d6"
+          "sha256": "3756171d2883e94db0e58c5a40b2c7d8b801f1d4a635d566c676336a767668f9"
         },
         {
           "path": "walkthrough/footage/cli-success.mp4",
-          "sha256": "653ace2aeea702bee3d8054218b3eef9a8540f49d4272a566172e79ed90847e4"
+          "sha256": "1d1fdfb8cbbb2415d5c6a7c3a95d6569919ebbc500b7b5faeca2fe843b7c4024"
         },
         {
           "path": "walkthrough/footage/partner-fault.mp4",
-          "sha256": "eac1276d69d7f6c59b7849aae28db22e2b5d6175afed5dfa91743b5d53005ffd"
+          "sha256": "5b8308efef179a5a890505822f0ad7fdddbe74c4d0d289390d3ee3ffe3086fb0"
         },
         {
           "path": "walkthrough/footage/final-slot.mp4",
-          "sha256": "32a42de719f65dbc209b517cb61e3e4411385639b84aa320baf4b9ddf09f7d1b"
+          "sha256": "18dd1e78e9be3425641ff7ee60e9bc216546a28110e254e935444e882dfb6afc"
         }
       ],
       "tool_versions": {
@@ -985,11 +985,11 @@
       "artifacts": [
         {
           "path": "docs/certification/CHECK_MATRIX.md",
-          "sha256": "1387290b05707c78870d551b2cf6c902ba4c6a3317886730b67f34b3054f22b0"
+          "sha256": null
         },
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "ced41c4a2f40e80959fea63fb07f7310781223898a58f225d9a2b9bcd1fd9cfb"
+          "sha256": null
         }
       ],
       "tool_versions": {
@@ -1394,11 +1394,11 @@
       "artifacts": [
         {
           "path": "docs/certification/GATE6_HANDOFF.md",
-          "sha256": "ced41c4a2f40e80959fea63fb07f7310781223898a58f225d9a2b9bcd1fd9cfb"
+          "sha256": null
         },
         {
           "path": "docs/certification/CHECK_MATRIX.md",
-          "sha256": "1387290b05707c78870d551b2cf6c902ba4c6a3317886730b67f34b3054f22b0"
+          "sha256": null
         },
         {
           "path": "docs/evidence/raw/gate6-task_e_6a5975185c9c832b8f84f247bb822803-report.md",

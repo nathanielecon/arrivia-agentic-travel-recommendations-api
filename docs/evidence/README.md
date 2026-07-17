@@ -1,7 +1,7 @@
 ---
 owner: P_portfolio / repository maintainer
 status: working-candidate evidence; independent review pending
-candidate: working-tree@5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896
+candidate: final-source-freeze-pending
 last_verified: 2026-07-16
 review_trigger: Candidate SHA/image, assertion, artifact, command, or public claim change
 ---

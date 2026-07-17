@@ -1,34 +1,37 @@
 ---
 owner: P_integration / repository maintainer
-candidate: 446679405d41bfd91d6b273e269d35f50afed458
-image_digest: sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720
-recorded_at: 2026-07-16T17:10:00-04:00
+candidate: final-source-freeze-pending
+image_digest: final-image-build-pending
+recorded_at: 2026-07-16T23:30:00-04:00
 ---
 
 # Certification check matrix
 
+The active claim remains D4/E4 until the independent Gate 6 row passes. Failed and superseded attempts remain in the append-only evidence index.
+
 | Check | Result | Notes |
 | --- | --- | --- |
-| Locked clean install | passed | Fresh venv from `requirements-dev.lock`; 122 passed |
-| Schemas / design authority | passed | `tests/test_design_authority.py` |
-| Full pytest | passed | 122 passed |
-| Ruff | passed | exit 0 |
-| compileall | passed | exit 0 |
-| Dependency audit / SBOM | passed | Linux container `pip-audit`; no known vulnerabilities |
-| Container build (C5) | passed | `sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720` |
-| Benchmark | untested | No measured workload harness in repo |
-| MCP stdio smoke | passed | temp SQLite path; logs on stderr |
-| Deployment verifier (C5) | passed | health/ready/metrics/audit/exclusion/cap after Docker-domain restore of an integrity-verified SQLite snapshot |
-| Failure/recovery | passed | WireMock 502 + circuit + disable |
-| Rollback A←B | passed | seed session remained at cap (`0` grants); `.data` preserved |
-| Links / evidence freshness | passed | candidate-bound index + handoff |
-| Visual inspection | passed | Walkthrough frames; footage under annotations |
-| Gate 6 independent review | blocked | SIGPIPE fixed (`21b57c0`); warm READY; GPT-5.4 worktree proof READY but locked pip 403; verdict 6/10, D5/E6 NO (`task_e_6a597518…` / `task_e_6a597677…`) |
+| Locked clean install | passed locally | Fresh Windows venv from `requirements-dev.lock` |
+| Schemas / design authority | passed locally | `tests/test_design_authority.py` |
+| Full pytest | passed locally | 130 passed |
+| Ruff | passed locally | exit 0 |
+| compileall | passed locally | exit 0 |
+| Dependency audit / SBOM | passed locally | Linux image audit: no known vulnerabilities; current SBOM retained |
+| Container build | pending final binding | Runtime-equivalent provisional image passed; final source image must be recorded here |
+| Healthy-mock benchmark | passed locally | 100/100 valid requests at concurrency 10; measurement only, no latency SLO |
+| MCP stdio smoke | passed locally | discovery and invocation with isolated SQLite path |
+| Deployment verifier | passed locally | health, readiness, metrics, audit, exclusion, and cap |
+| Failure / circuit / recovery | passed locally | `upstream_error` ×3, `upstream_circuit_open`, then recovery |
+| Distinct-image rollback | passed locally | SQLite cap remained enforced across B→A→B; no restore used |
+| Links / hashes / evidence freshness | pending final binding | revalidate after exact source and image are recorded |
+| Walkthrough render / visual parity | passed locally | deterministic 300-second render and inspected contact sheet |
+| Gate 6 independent review | pending | fresh local Codex reviewer receives only `GATE6_HANDOFF.md` |
 
-## Digests
+## Immutable identities
 
-- C1 / image A: `17cc00d7cf06a04028a1ff3aabdd552875cf5d0a` / `sha256:e5f093d29f0d3fdb54677f3e634604a2cef5914a5423af2a112b0260b49d3d08`
-- C2 LABEL stage: `67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8` / prior B digest retained in rollback evidence
-- C3 shipping source: `fdfc3a5efdeb2f79259983b1f4c8259d639074d5` / `sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead`
-- C5 portable Gate 6 candidate: `446679405d41bfd91d6b273e269d35f50afed458` / `sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720`
-- Evidence rebind tip: repository tip containing `EVID-CLEAN-REVIEW-GPT54`
+- Completion source candidate: `final-source-freeze-pending`
+- Completion image digest: `final-image-build-pending`
+- Evidence binding tip: `final-evidence-binding-pending`
+- Retained rollback target: `17cc00d7cf06a04028a1ff3aabdd552875cf5d0a` / `sha256:e5f093d29f0d3fdb54677f3e634604a2cef5914a5423af2a112b0260b49d3d08`
+
+Latency figures are observations from a local healthy-mock run, not service-level objectives.

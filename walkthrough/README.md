@@ -1,7 +1,7 @@
 ---
 owner: P_portfolio / repository maintainer
 status: deterministic source with live terminal footage track under annotations
-candidate: 67ca053d2d5f62051fd175dc091b7dd1e2bbc5e8
+candidate: final-source-freeze-pending
 last_verified: 2026-07-16
 review_trigger: Candidate, timing, evidence transcript, claim, HyperFrames, browser, or FFmpeg change
 ---
@@ -17,7 +17,11 @@ review_trigger: Candidate, timing, evidence transcript, claim, HyperFrames, brow
 - `2:50–4:20`: mandatory AI pushback: never claim an unengineered distributed guarantee.
 - `4:20–5:00`: metrics, rollback distinction, and evidence lookup.
 
-Live terminal captures are produced by `walkthrough/record_live_sessions.py` against a running Compose stack, then composed under HyperFrames annotations on track 1.
+Live terminal captures are produced by `walkthrough/record_live_sessions.py` against a running stack,
+then composed under HyperFrames annotations on track 1. Alternate isolated certification ports are
+supported with `--base-url` and `--admin-url`; set `FFMPEG_PATH` when FFmpeg is outside `.tools`.
+HyperFrames also requires both `ffmpeg` and `ffprobe` on `PATH`; on Windows, keep
+`C:\Windows\System32` on `PATH` so its executable discovery can call `where.exe`.
 
 Validate with HyperFrames `0.7.60`:
 
