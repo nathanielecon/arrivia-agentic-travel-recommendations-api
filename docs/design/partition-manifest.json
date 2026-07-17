@@ -19,6 +19,7 @@
         "docs/evidence/evidence-event.schema.json",
         "docs/evidence/evidence-index.schema.json",
         "docs/evidence/index.json",
+        "docs/evidence/archive/**",
         "BREAK_FIX_LOG.md"
       ],
       "shared_interfaces_owned": [],

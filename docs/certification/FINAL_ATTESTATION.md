@@ -23,7 +23,7 @@ User review later found annotation/terminal overlap that the original sparse con
 
 The user subsequently requested five-second static scenes and fitting music. Portfolio candidate `7b70720b6e05ddf706704766880864630b75b7a3` produces a 160-second cut with the full live recordings intact and a deterministic, original, sample-free ambient bed. All 160 frames, scene cuts, audio stream properties, levels, and artifact hashes passed. `EVID-WALKTHROUGH-PACED-MUSIC` supersedes the earlier walkthrough event without changing the certified runtime boundary.
 
-The user then supplied the selected Suno track “Quiet Systems.” Portfolio candidate `ab72dce80fb079ce976128b0b60a93c07a0510aa` retains the complete song with pitch-preserving duration fitting, credits its embedded artist metadata, and produces a level-checked 160-second H.264/AAC walkthrough. `EVID-WALKTHROUGH-QUIET-SYSTEMS` is the authoritative current portfolio event; the production runtime identity and boundary remain unchanged.
+The user then supplied the selected Suno track “Quiet Systems.” Portfolio candidate `ab72dce80fb079ce976128b0b60a93c07a0510aa` retains the complete song with pitch-preserving duration fitting, credits its embedded artist metadata, and produces a level-checked 160-second H.264/AAC walkthrough. `EVID-WALKTHROUGH-QUIET-SYSTEMS` remains the historical authority for that exact cut; the current post-merge refresh is not authoritative until its candidate-bound event passes fresh review. The production runtime identity and boundary remain unchanged.
 
 ## Post-certification integration
 

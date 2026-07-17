@@ -371,3 +371,15 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: 137 tests, Ruff, and compilation pass locally after repair. A new immutable candidate and fresh clean-context review are required.
 - Owner/status: P_authority and P_integration / repaired locally; replacement candidate pending.
 
+### BF-20260717-030 — Replacement review exposed mutable append-only evidence
+
+- Time: 2026-07-17T15:20:00-04:00.
+- Candidate: `7e58f3a66462779e03a547f10df72fb8ffea4d3b` in a separate clean detached checkout.
+- Detection: A fresh no-write Codex reviewer passed 137 tests, Ruff, compilation, schema validation, runtime-identity checks, hashes, and architecture checks, then found that historical evidence events had been edited to track newer presentation files even though the index declares `append_only: true`.
+- Impact: Candidate `7e58f3a` failed independent review. The already-certified runtime D5/E6 identity remains unchanged, but the portfolio refresh cannot be attested or readied from this candidate.
+- Cause: Mutable presentation paths and immutable historical event records were treated as the same authority. The refresh report also claimed a binding that had not yet been appended, and the final attestation called an older walkthrough cut current.
+- Containment: Preserve this failure report and candidate SHA; retain PR #3 as draft; do not edit historical events or claim a current refresh event.
+- Repair: Restore the historical event array byte-for-byte, retain changed historical bytes in a content-addressed `artifact_archive`, validate archive hashes, mark the refresh event planned until fresh review passes, and correct the premature authority wording.
+- Verification: Full suite, Ruff, compilation, schema/ownership/hash checks, an exact diff proving no historical event edits, then a new immutable candidate and fresh clean-context review.
+- Owner/status: P_authority and P_integration / repair in progress; replacement candidate pending.
+

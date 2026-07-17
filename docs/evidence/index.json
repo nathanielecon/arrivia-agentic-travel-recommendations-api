@@ -17,6 +17,21 @@
     "e6_earned": true,
     "reason": "Fresh local Codex review at f4c6d504 passed every required clean-install, static, runtime, failure/recovery, evidence, rollback, visual, and cleanup check"
   },
+  "artifact_archive": {
+    "00fc484ce8441b207247a0502c43b7b64eb58d6d7b6502519e6fa8e458588692": "docs/evidence/archive/00fc484ce8441b207247a0502c43b7b64eb58d6d7b6502519e6fa8e458588692-arrivia-system.drawio",
+    "2d02b8cc332053601a9dbad0fc31f3ee67d39ce5e845f44849dc562fa79f94e6": "docs/evidence/archive/2d02b8cc332053601a9dbad0fc31f3ee67d39ce5e845f44849dc562fa79f94e6-walkthrough-index.html",
+    "3bea44bcf8e3ad549ed44a92522a9ea06251216574b3e99e7804442b19f32b12": "docs/evidence/archive/3bea44bcf8e3ad549ed44a92522a9ea06251216574b3e99e7804442b19f32b12-check-matrix.md",
+    "50d5a2c2702651f403368e307054036db85e64da15aa7ce973db033b7320dc0e": "docs/evidence/archive/50d5a2c2702651f403368e307054036db85e64da15aa7ce973db033b7320dc0e-contact-sheet.jpg",
+    "51abab61256434e7c9bb26f7f1e2f0862ff98795d0889a150abcc3f360ed8905": "docs/evidence/archive/51abab61256434e7c9bb26f7f1e2f0862ff98795d0889a150abcc3f360ed8905-image2-prompt.txt",
+    "52e52a7412cfef664f9d1fe7500acd7ecb8775405f9526e0511db92a733fe268": "docs/evidence/archive/52e52a7412cfef664f9d1fe7500acd7ecb8775405f9526e0511db92a733fe268-walkthrough-readme.md",
+    "5475cb88449dc27daaa537d157d46c688eb5ab0ef54aa76d7c7db5b18ed12d60": "docs/evidence/archive/5475cb88449dc27daaa537d157d46c688eb5ab0ef54aa76d7c7db5b18ed12d60-render.ps1",
+    "5ca75edb82714e938cd6f478e4bbccfdce5ab94a2b2735e6be06da189f491d7a": "docs/evidence/archive/5ca75edb82714e938cd6f478e4bbccfdce5ab94a2b2735e6be06da189f491d7a-arrivia-infographic.png",
+    "6079b7f11c574f4f41dd337dd2629762f5b0bab433701063fa0f8a8aa1092ddb": "docs/evidence/archive/6079b7f11c574f4f41dd337dd2629762f5b0bab433701063fa0f8a8aa1092ddb-arrivia-walkthrough.mp4",
+    "793e9bba78679925c080364a7e2185f0780a1753926fd95ad842b32d0817531f": "docs/evidence/archive/793e9bba78679925c080364a7e2185f0780a1753926fd95ad842b32d0817531f-final-attestation.md",
+    "8e2e41d2cd66bb58102da75d25d65783d498d8fd8f3e716ef0b31f23e3a85b0b": "docs/evidence/archive/8e2e41d2cd66bb58102da75d25d65783d498d8fd8f3e716ef0b31f23e3a85b0b-evidence-readme.md",
+    "af37b7624e2e33bd50d45d92fec7e7d7b75e08bfd9a1f48015304a8c202e6064": "docs/evidence/archive/af37b7624e2e33bd50d45d92fec7e7d7b75e08bfd9a1f48015304a8c202e6064-arrivia-system.png",
+    "fe65030d1776aaf5f62072e922c85266644e23910956dcd1b2f3c60d0f0b3b99": "docs/evidence/archive/fe65030d1776aaf5f62072e922c85266644e23910956dcd1b2f3c60d0f0b3b99-arrivia-infographic-image2-original.png"
+  },
   "events": [
     {
       "schema_version": "1.0",
@@ -435,7 +450,7 @@
       "artifacts": [
         {
           "path": "docs/architecture/arrivia-system.drawio",
-          "sha256": null
+          "sha256": "00fc484ce8441b207247a0502c43b7b64eb58d6d7b6502519e6fa8e458588692"
         },
         {
           "path": "docs/architecture/arrivia-system.svg",
@@ -443,7 +458,7 @@
         },
         {
           "path": "docs/architecture/arrivia-system.png",
-          "sha256": null
+          "sha256": "af37b7624e2e33bd50d45d92fec7e7d7b75e08bfd9a1f48015304a8c202e6064"
         }
       ],
       "tool_versions": {
@@ -451,7 +466,7 @@
       },
       "claim_level": "E3",
       "independent": false,
-      "notes": "Historical architecture event. The authoritative paths later advanced for post-certification delivery/orchestration documentation; their current hashes are bound by the newer portfolio refresh event. Presentation derivatives cannot amend runtime topology.",
+      "notes": "The draw.io source is authoritative; presentation derivatives cannot amend topology.",
       "supersedes": []
     },
     {
@@ -536,7 +551,7 @@
       "requirement_ids": [
         "REQ-PORT-001"
       ],
-      "status": "superseded",
+      "status": "passed",
       "recorded_at": "2026-07-16T14:28:00-04:00",
       "candidate": {
         "git_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
@@ -591,15 +606,15 @@
       "artifacts": [
         {
           "path": "docs/portfolio/image2-prompt.txt",
-          "sha256": null
+          "sha256": "51abab61256434e7c9bb26f7f1e2f0862ff98795d0889a150abcc3f360ed8905"
         },
         {
           "path": "docs/portfolio/arrivia-infographic-image2-original.png",
-          "sha256": null
+          "sha256": "fe65030d1776aaf5f62072e922c85266644e23910956dcd1b2f3c60d0f0b3b99"
         },
         {
           "path": "docs/portfolio/arrivia-infographic.png",
-          "sha256": null
+          "sha256": "5ca75edb82714e938cd6f478e4bbccfdce5ab94a2b2735e6be06da189f491d7a"
         }
       ],
       "tool_versions": {
@@ -608,7 +623,7 @@
       },
       "claim_level": "E3",
       "independent": false,
-      "notes": "Historical pre-certification presentation. Mutable portfolio paths later advanced to remove the obsolete no-D5/E6 band, so their old hashes are nulled. The exact draw.io source and render remain normative.",
+      "notes": "Presentation only. The exact draw.io source and render remain normative.",
       "supersedes": []
     },
     {
@@ -1686,12 +1701,12 @@
         {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": null},
         {"path": "docs/certification/CHECK_MATRIX.md", "sha256": null},
         {"path": "docs/evidence/README.md", "sha256": null},
-        {"path": "walkthrough/index.html", "sha256": null},
+        {"path": "walkthrough/index.html", "sha256": "2d02b8cc332053601a9dbad0fc31f3ee67d39ce5e845f44849dc562fa79f94e6"},
         {"path": "walkthrough/render.ps1", "sha256": null},
         {"path": "walkthrough/README.md", "sha256": null},
         {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": null},
         {"path": "walkthrough/music/ambient-bed.m4a", "sha256": "0e7b53de901e4aba8c09fbf607425fbf65df5dd72c25f0d837c0334857674ffd"},
-        {"path": "walkthrough/snapshots/contact-sheet.jpg", "sha256": null}
+        {"path": "walkthrough/snapshots/contact-sheet.jpg", "sha256": "50d5a2c2702651f403368e307054036db85e64da15aa7ce973db033b7320dc0e"}
       ],
       "tool_versions": {"hyperframes": "0.7.60", "ffmpeg": "8.1.2", "powershell": "7"},
       "claim_level": "E4",
@@ -1703,7 +1718,7 @@
       "schema_version": "1.0",
       "evidence_id": "EVID-WALKTHROUGH-QUIET-SYSTEMS",
       "requirement_ids": ["REQ-PORT-001"],
-      "status": "superseded",
+      "status": "passed",
       "recorded_at": "2026-07-17T03:18:00Z",
       "candidate": {"git_sha": "ab72dce80fb079ce976128b0b60a93c07a0510aa", "working_tree_clean": true, "image_digest": null},
       "environment": {"id": "local-hyperframes-quiet-systems", "description": "HyperFrames 0.7.60 and FFmpeg 8.1.2 with user-supplied Suno soundtrack duration fitting, normalization, mux, and stream validation"},
@@ -1720,20 +1735,22 @@
       ],
       "artifacts": [
         {"path": "docs/evidence/raw/final-certification/walkthrough-quiet-systems.md", "sha256": "ae802d6a258d9e24342ed530caad4031a8c236776d136d72ccde0be234d96ef2"},
-        {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": null},
-        {"path": "docs/certification/CHECK_MATRIX.md", "sha256": null},
-        {"path": "docs/evidence/README.md", "sha256": null},
+        {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": "793e9bba78679925c080364a7e2185f0780a1753926fd95ad842b32d0817531f"},
+        {"path": "docs/certification/CHECK_MATRIX.md", "sha256": "3bea44bcf8e3ad549ed44a92522a9ea06251216574b3e99e7804442b19f32b12"},
+        {"path": "docs/evidence/README.md", "sha256": "8e2e41d2cd66bb58102da75d25d65783d498d8fd8f3e716ef0b31f23e3a85b0b"},
         {"path": "walkthrough/music/quiet-systems.mp3", "sha256": "5230bef6dd4a62c6635b93b136fc50fa4d5efc3990068edb62518e651e23ea0b"},
-        {"path": "walkthrough/render.ps1", "sha256": null},
-        {"path": "walkthrough/README.md", "sha256": null},
-        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": null}
+        {"path": "walkthrough/render.ps1", "sha256": "5475cb88449dc27daaa537d157d46c688eb5ab0ef54aa76d7c7db5b18ed12d60"},
+        {"path": "walkthrough/README.md", "sha256": "52e52a7412cfef664f9d1fe7500acd7ecb8775405f9526e0511db92a733fe268"},
+        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": "6079b7f11c574f4f41dd337dd2629762f5b0bab433701063fa0f8a8aa1092ddb"}
       ],
       "tool_versions": {"hyperframes": "0.7.60", "ffmpeg": "8.1.2", "powershell": "7"},
       "claim_level": "E4",
       "independent": false,
-      "notes": "Historical user-selected soundtrack proof, superseded by the post-merge D5/E6 portfolio refresh. Mutable render and certification-path hashes are nulled; the source MP3 and original raw report remain hash-bound. No license or ownership claim beyond user-supplied provenance is inferred. Production D5/E6 runtime identity is unchanged.",
+      "notes": "User-selected portfolio soundtrack. No license or ownership claim beyond user-supplied provenance is inferred. Production D5/E6 runtime identity is unchanged.",
       "supersedes": ["EVID-WALKTHROUGH-PACED-MUSIC"]
     }
   ],
-  "planned_event_ids": []
+  "planned_event_ids": [
+    "EVID-POSTMERGE-PORTFOLIO-REFRESH"
+  ]
 }

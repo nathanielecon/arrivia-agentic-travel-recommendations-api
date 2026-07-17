@@ -15,6 +15,9 @@ The machine-readable authority is [index.json](index.json), whose envelope is va
 proof. Failed attempts stay visible in [BREAK_FIX_LOG.md](../../BREAK_FIX_LOG.md).
 Text-artifact digests use canonical LF bytes, enforced by `.gitattributes`, so evidence validation
 is stable across Windows and Linux checkouts. Binary artifacts are always hashed byte-for-byte.
+When a presentation path advances, the original bytes remain under the content-addressed
+`archive/` path recorded by `artifact_archive`; historical event records are never edited to follow
+the newer file. A new event binds the replacement artifact only after its candidate review passes.
 
 ![Rendered evidence summary; consult the raw transcripts and evidence index for authority](assets/evidence-gallery.png)
 

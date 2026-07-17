@@ -118,6 +118,7 @@ def test_evidence_events_are_unique_valid_and_artifact_bound() -> None:
     index = _json(ROOT / "docs/evidence/index.json")
     schema = _json(ROOT / "docs/evidence/evidence-event.schema.json")
     events = index["events"]  # type: ignore[index]
+    archive = index["artifact_archive"]  # type: ignore[index]
     ids = [event["evidence_id"] for event in events]
     assert len(ids) == len(set(ids)), "evidence IDs must be unique"
 
@@ -129,7 +130,25 @@ def test_evidence_events_are_unique_valid_and_artifact_bound() -> None:
             path = ROOT / artifact["path"]
             assert path.is_file(), f"evidence artifact does not resolve: {path}"
             if artifact["sha256"] is not None:
-                assert _artifact_sha256(path) == artifact["sha256"]
+                digest = artifact["sha256"]
+                if _artifact_sha256(path) != digest:
+                    assert digest in archive, (
+                        "historical artifact bytes changed without a content-addressed archive: "
+                        f"{artifact['path']}"
+                    )
+                    archived_path = ROOT / archive[digest]
+                    assert archived_path.is_file(), (
+                        f"archived evidence artifact does not resolve: {archived_path}"
+                    )
+                    assert _artifact_sha256(archived_path) == digest
+
+
+def test_evidence_artifact_archive_is_content_addressed() -> None:
+    index = _json(ROOT / "docs/evidence/index.json")
+    for digest, relative in index["artifact_archive"].items():  # type: ignore[index]
+        path = ROOT / relative
+        assert path.is_file(), f"archived evidence artifact does not resolve: {path}"
+        assert _artifact_sha256(path) == digest
 
 
 def test_dependency_contract_hashes_are_current() -> None:
@@ -168,6 +187,12 @@ def test_project_uses_defined_d5_e6_terms_and_rejects_d6() -> None:
     assert "D6 certified" not in text
     assert '"earned_depth": "D5"' in text
     assert '"evidence_level": "E6"' in text
+
+
+def test_traceability_matches_current_walkthrough_duration() -> None:
+    traceability = (DESIGN / "REQUIREMENTS_TRACEABILITY.md").read_text(encoding="utf-8")
+    assert "160-second walkthrough" in traceability
+    assert "five-minute walkthrough" not in traceability
 
 
 def test_post_merge_orchestration_history_is_consistent() -> None:

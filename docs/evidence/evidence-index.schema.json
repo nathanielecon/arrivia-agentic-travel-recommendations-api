@@ -10,6 +10,7 @@
     "index_metadata",
     "append_only",
     "current_claim",
+    "artifact_archive",
     "events",
     "planned_event_ids"
   ],
@@ -48,6 +49,14 @@
         "d5_earned": { "const": true },
         "e6_earned": { "const": true },
         "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "artifact_archive": {
+      "type": "object",
+      "description": "Content-addressed retained bytes for historical events whose original path later advanced.",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9a-f]{64}$": { "type": "string", "pattern": "^docs/evidence/archive/" }
       }
     },
     "events": {
