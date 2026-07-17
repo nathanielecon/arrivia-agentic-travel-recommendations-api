@@ -280,3 +280,15 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: HyperFrames check, snapshot, render, duration/hash inspection, and visual review are required.
 - Owner/status: P_portfolio / repair implemented; rerender pending.
 
+### BF-20260716-022 — Clean Gate 6 exposed non-portable interface hashes
+
+- Time: 2026-07-16T21:30:00-04:00.
+- Candidate: source `3156cf8869563b9683f5c3ff67b4104d95dc1b40`; evidence binding `07bbc9168a00cfcaa8e1ccea4b3593ff75edf2c5`; image `sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee`.
+- Detection: The fresh local Codex reviewer passed installation, runtime, MCP, concurrency, benchmark, circuit/recovery, and evidence discovery, but full pytest reported 129 passed and one frozen-interface-hash failure.
+- Impact: Gate 6 failed; D5/E6 was not earned. The local “130 passed” certification row is superseded for this candidate.
+- Cause: Interface and dependency contract validators hashed checkout-transformed raw text bytes, while the manifest was refreshed from a different Windows worktree representation. Evidence artifacts had canonical-LF hashing, but interface/dependency hashing did not share it.
+- Containment: Retain the reviewer failure and all old candidate identities; do not relabel the otherwise passing runtime checks as Gate 6.
+- Repair: Use one canonical-LF digest helper for text evidence, interface files, and dependency contracts; keep binary hashing byte-for-byte; refresh every frozen hash; add a CRLF/LF equivalence regression test.
+- Verification: Full suite in the author worktree, full suite in a separate clean clone, new candidate/image identity, rebound local evidence, and a second repair-history-free Gate 6 review.
+- Owner/status: P_authority / repair implemented; replacement candidate pending.
+

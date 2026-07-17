@@ -15,7 +15,7 @@
     "evidence_level": "E4",
     "d5_earned": false,
     "e6_earned": false,
-    "reason": "All local gates pass on the immutable completion source and image; fresh clean-context local Codex Gate 6 review is pending"
+    "reason": "Independent review of 07bbc916 failed frozen interface hash reproduction; D5/E6 remains unearned while a replacement candidate is prepared"
   },
   "events": [
     {
@@ -1530,6 +1530,27 @@
       "assertions": [{"name": "local-gates-1-through-5", "expected": "all local acceptance checks pass without expanding claim boundary", "observed": "all local checks passed; D4/E4 retained pending independent Gate 6", "result": "passed"}],
       "artifacts": [{"path": "docs/evidence/raw/final-certification/runtime-validation.md", "sha256": "1cbff7d2e0002e57e85ca73c99cf6857eeb316616d919150129ea2a549870da6"}, {"path": "docs/evidence/raw/final-certification/healthy-mock-benchmark.json", "sha256": "6b46a34612275c25da44fc9f75804a74da2c09c86755851a0e66234c6c38af45"}, {"path": "docs/evidence/raw/final-certification/rollback.md", "sha256": "fc75682fc3b258aad5b7729bba2e4f4bd96d47ce1064f86030b10e8f87a34523"}, {"path": "docs/evidence/raw/final-certification/portfolio-validation.md", "sha256": "d4276557966c3215c7d3bced0df0a3a6263be474a0b1255502ac4fc8bd9a3d33"}],
       "tool_versions": {"pytest": "locked requirements-dev.lock", "docker": "Docker Desktop Linux", "hyperframes": "0.7.60"}, "claim_level": "E4", "independent": false, "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-GATE6-FAIL-07BBC91",
+      "requirement_ids": ["REQ-ORCH-001", "REQ-DOC-001"],
+      "status": "failed",
+      "recorded_at": "2026-07-17T01:30:00Z",
+      "candidate": {"git_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40", "working_tree_clean": true, "image_digest": "sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee"},
+      "environment": {"id": "fresh-local-codex-07bbc91", "description": "Separate clean GitHub clone at review package 07bbc916 with no repair history"},
+      "procedure": {"preconditions": ["Fresh reviewer received only handoff identities and acceptance scope"], "commands": ["locked install", "pytest -q", "Ruff and compileall", "MCP and final-slot tests", "image/runtime journeys", "evidence discovery"], "cleanup": ["WireMock fault disabled; final health/readiness 200; candidate unmodified"]},
+      "assertions": [
+        {"name": "mandatory-full-suite", "expected": "all tests pass from clean checkout", "observed": "129 passed, 1 failed: frozen interface hashes for policy and operations", "result": "failed"},
+        {"name": "runtime-journeys", "expected": "image identity, verifier, CLI, benchmark, circuit/recovery, MCP, and concurrency pass", "observed": "all passed; benchmark 100/100; recovery HTTP 200", "result": "passed"},
+        {"name": "d5-e6-verdict", "expected": "every required check passes", "observed": "not earned because full suite and design authority failed", "result": "failed"}
+      ],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/gate6-review-07bbc91-failed.md", "sha256": "488b86f9e2fd610d7e4f15ae6683ad3833bb07040a029bf9a3de45d7d83a3958"}],
+      "tool_versions": {"python": "3.14.3", "reviewer": "fresh local Codex"},
+      "claim_level": "E4",
+      "independent": true,
+      "notes": "Runtime checks passed, but certification is conjunctive. D5/E6 remains unearned.",
+      "supersedes": ["EVID-INTEGRATION-FINAL", "EVID-DOC-CONTRACT"]
     }
   ],
   "planned_event_ids": []
