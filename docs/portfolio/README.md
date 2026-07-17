@@ -1,7 +1,7 @@
 ---
 owner: P_portfolio / repository maintainer
-status: presentation derivative generated and parity-reviewed; independent review pending
-candidate: working-tree@5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896
+status: presentation derivative generated, parity-reviewed, and independently located
+candidate: f5e9dc4df174b1844741efbfb07cb8bdbca3e34c
 last_verified: 2026-07-16
 review_trigger: Architecture, README claim, evidence result, prompt, generated image, or resize-tool change
 ---

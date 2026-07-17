@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "candidate_sha": "fdfc3a5efdeb2f79259983b1f4c8259d639074d5",
-  "candidate_state": "immutable candidate C3; image digest sha256:76e294048920ae40f37db1c0f7f5e9f8625ef213abea3b5a81245638f176aead; Gate 6 pending",
+  "candidate_sha": "f5e9dc4df174b1844741efbfb07cb8bdbca3e34c",
+  "candidate_state": "immutable replacement source; image sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4; independent D5/E6 Gate 6 passed at review package f4c6d504",
   "generated_at": "2026-07-16T13:33:00-04:00",
   "owner": "P_authority / repository maintainer",
   "status": "accepted",
@@ -217,7 +217,7 @@
       ],
       "claim_ceiling": "E5",
       "integration_order": 3,
-      "status": "partial-terminal-footage-and-image2-pending"
+      "status": "complete-local-evidence-independent-review-pending"
     },
     {
       "partition_id": "P_integration",
@@ -260,7 +260,7 @@
       ],
       "claim_ceiling": "E6",
       "integration_order": 4,
-      "status": "integration-in-progress-independent-review-pending"
+      "status": "complete-independent-review-passed"
     }
   ],
   "shared_interfaces": [
@@ -276,7 +276,7 @@
         "src/arrivia_recs/api/routes/recommendations.py",
         "src/arrivia_recs/domain/models.py"
       ],
-      "contract_hash": "7805e3e0a07816e1c8e1efd806cf16def13551e4714cffe5c60e108ae187d517",
+      "contract_hash": "499bbdc0c24b9713d6ebfbbe0fa72c1596cb2bfe5830adf6fbef6f13ddd6828b",
       "compatibility_policy": "Additive optional fields only within v1; removal, rename, type/status, or semantic changes require versioning",
       "invalidation_rule": "Any material change revalidates all consumers and REST evidence"
     },
@@ -290,7 +290,7 @@
       "contract_paths": [
         "src/arrivia_recs/mcp/server.py"
       ],
-      "contract_hash": "c84f63fecee6e09a31bc347aba5d0fc7ed839c364b2e46cf68b2454185bebd56",
+      "contract_hash": "1bb5b8f6ce32418d52294bd2ee41c1bfc75303cf9ea7142d1b47d25855e445b5",
       "compatibility_policy": "Stable tool name and existing arguments; additive optional arguments require stdio smoke",
       "invalidation_rule": "Any material change revalidates MCP consumers and stdio evidence"
     },
@@ -306,7 +306,7 @@
         "src/arrivia_recs/domain/partner_policy.py",
         "src/arrivia_recs/integrations/partner_config_client.py"
       ],
-      "contract_hash": "655594f875e82a446fa481c6afbf879606b745ef8df78c21c6d63978063d48c1",
+      "contract_hash": "d8d363cde0249e6d78b73c5d51200acfeb89aac177a1bed3d15411730af9eb61",
       "compatibility_policy": "Known values are dynamic; new fields/types/semantics require versioned support and fail closed before deployment",
       "invalidation_rule": "Any change revalidates evaluator, REST/MCP parity, schema docs, and policy evidence"
     },
@@ -320,7 +320,7 @@
       "contract_paths": [
         "src/arrivia_recs/services/session_budget.py"
       ],
-      "contract_hash": "59526af08329377ee613ebc16bf8acde730bd18d3c5a5b6af1e2ab92addd8770",
+      "contract_hash": "227ddc938a47e19bac4c1a982bf974dffa6c99c60d7f280d17e391b5c4d39b56",
       "compatibility_policy": "Atomic reserve invariant and persisted schema cannot change without migration/rollback ADR",
       "invalidation_rule": "Any change revalidates cross-process race, rollback state, and cap claims"
     },
@@ -336,14 +336,14 @@
         "docs/design/INTERFACE_CATALOG.md",
         "src/arrivia_recs/config.py"
       ],
-      "contract_hash": "c7abdc102407bed42f8388c82167f1e91b76e4eb7e5312ebf5f2cb7917f823a5",
+      "contract_hash": "3d9ec67c7cfdbc99a655b46ad9a32a350e9dc75819acb943dce68bf8c7a1c4a4",
       "compatibility_policy": "Existing setting, metric, log, and error names remain stable; label additions require cardinality review",
       "invalidation_rule": "Any change revalidates operations tests, docs, dashboards, evidence, and reliability consumer configuration"
     }
   ],
   "dependency_contract_hashes": {
-    "pyproject.toml": "f2256116816b1acb07e7e3ae2a3837e44e1b2dbe80ef8d5cfeb8e71daff38e6a",
-    "docker-compose.yml": "1a8f28c569962429e0cad16cc0bee176a29b1617d2299eeb7f08af745b1a4526",
-    "Dockerfile": "0a270f7ef201a5d2ff82e588c9adc7d9d9082fb4c4ac773b66959ae2ba112d60"
+    "pyproject.toml": "d7b8c458189083946218005f8051ecad3202eafdd833a763e96dceae11a9c717",
+    "docker-compose.yml": "9d448f819f951c2b2cb30ddcc374297b760ccacbefed2f72d15c4a9644e9f906",
+    "Dockerfile": "8dd8128bf171e1e9e8101e77a9cc87a7db48ee1fa74ae341ddb842bc1198e0dd"
   }
 }

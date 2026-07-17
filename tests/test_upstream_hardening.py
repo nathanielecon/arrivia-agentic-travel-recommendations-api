@@ -19,6 +19,64 @@ from arrivia_recs.mcp import server as mcp_server
 from arrivia_recs.services.recommendations import RecommendationService
 
 
+@pytest.mark.asyncio
+async def test_owned_member_client_reuses_and_closes_one_http_pool(monkeypatch) -> None:
+    instances = []
+
+    class FakeClient:
+        def __init__(self, **_kwargs) -> None:
+            self.calls = 0
+            self.closed = False
+            instances.append(self)
+
+        async def get(self, _path: str, **_kwargs) -> httpx.Response:
+            self.calls += 1
+            return httpx.Response(200, json=_member_payload())
+
+        async def aclose(self) -> None:
+            self.closed = True
+
+    monkeypatch.setattr("arrivia_recs.integrations.member_client.httpx.AsyncClient", FakeClient)
+    client = MemberClient("http://member")
+
+    await client.get_member("m1")
+    await client.get_member("m1")
+    await client.aclose()
+
+    assert len(instances) == 1
+    assert instances[0].calls == 2
+    assert instances[0].closed is True
+
+
+@pytest.mark.asyncio
+async def test_owned_partner_client_reuses_and_closes_one_http_pool(monkeypatch) -> None:
+    instances = []
+
+    class FakeClient:
+        def __init__(self, **_kwargs) -> None:
+            self.calls = 0
+            self.closed = False
+            instances.append(self)
+
+        async def get(self, _path: str, **_kwargs) -> httpx.Response:
+            self.calls += 1
+            return httpx.Response(200, json=_policy_payload())
+
+        async def aclose(self) -> None:
+            self.closed = True
+
+    monkeypatch.setattr(
+        "arrivia_recs.integrations.partner_config_client.httpx.AsyncClient", FakeClient
+    )
+    client = PartnerConfigClient("http://partner")
+
+    await client.get_policy("p1")
+    await client.get_policy("p1")
+    await client.aclose()
+
+    assert len(instances) == 1
+    assert instances[0].calls == 2
+    assert instances[0].closed is True
 def _member_payload() -> dict[str, object]:
     return {
         "member_id": "m1",

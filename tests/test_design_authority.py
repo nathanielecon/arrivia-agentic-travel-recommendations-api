@@ -30,9 +30,34 @@ def _json(path: Path) -> dict[str, object]:
 def _sha256(paths: list[str]) -> str:
     entries = []
     for relative in sorted(paths):
-        file_digest = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
+        file_digest = _portable_sha256(ROOT / relative)
         entries.append(f"{relative}:{file_digest}")
     return hashlib.sha256("\n".join(entries).encode()).hexdigest()
+
+
+def _portable_sha256(path: Path) -> str:
+    payload = path.read_bytes()
+    if path.suffix.lower() not in {".png", ".jpg", ".jpeg", ".mp4", ".m4a", ".mp3", ".sqlite3", ".zip"}:
+        payload = payload.replace(b"\r\n", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _artifact_sha256(path: Path) -> str:
+    return _portable_sha256(path)
+
+
+def test_portable_hash_normalizes_text_line_endings(tmp_path: Path) -> None:
+    lf = tmp_path / "lf.md"
+    crlf = tmp_path / "crlf.md"
+    lf.write_bytes(b"one\ntwo\n")
+    crlf.write_bytes(b"one\r\ntwo\r\n")
+    assert _portable_sha256(lf) == _portable_sha256(crlf)
+
+
+def test_portable_hash_does_not_rewrite_audio_bytes(tmp_path: Path) -> None:
+    audio = tmp_path / "bed.m4a"
+    audio.write_bytes(b"binary\r\npayload")
+    assert _portable_sha256(audio) == hashlib.sha256(b"binary\r\npayload").hexdigest()
 
 
 def test_project_design_validates_against_schema() -> None:
@@ -95,13 +120,13 @@ def test_evidence_events_are_unique_valid_and_artifact_bound() -> None:
             path = ROOT / artifact["path"]
             assert path.is_file(), f"evidence artifact does not resolve: {path}"
             if artifact["sha256"] is not None:
-                assert hashlib.sha256(path.read_bytes()).hexdigest() == artifact["sha256"]
+                assert _artifact_sha256(path) == artifact["sha256"]
 
 
 def test_dependency_contract_hashes_are_current() -> None:
     manifest = _json(DESIGN / "partition-manifest.json")
     for relative, expected in manifest["dependency_contract_hashes"].items():  # type: ignore[index]
-        assert hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() == expected
+        assert _portable_sha256(ROOT / relative) == expected
 
 
 def test_architecture_authority_has_six_pages_and_claim_boundary() -> None:

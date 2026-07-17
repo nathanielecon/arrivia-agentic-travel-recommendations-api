@@ -120,49 +120,35 @@ class PartnerConfigClient:
             if timeout_seconds is not None
             else httpx.Timeout(connect=0.25, read=1.0, write=0.25, pool=0.25)
         )
-        self._client = client
+        self._owns_client = client is None
+        self._client = client or httpx.AsyncClient(base_url=self._base, timeout=self._timeout)
+        self._policy_path_prefix = "/v1/partners" if self._owns_client else "/partners"
         self.circuit = circuit or AsyncCircuitBreaker("partner_config")
 
+    async def aclose(self) -> None:
+        if self._owns_client:
+            await self._client.aclose()
+
     async def _request_policy(self, partner_id: str) -> PartnerPolicy:
-        if self._client is not None:
-            try:
-                response = await self._client.get(
-                    f"/partners/{quote(partner_id, safe='')}/policy",
-                    timeout=self._timeout,
-                )
-            except httpx.TimeoutException as exc:
-                raise PartnerConfigError(
-                    "partner config request timed out",
-                    status_code=502,
-                    code="upstream_timeout",
-                    circuit_failure=True,
-                ) from exc
-            except httpx.RequestError as exc:
-                raise PartnerConfigError(
-                    f"partner config request failed: {exc}",
-                    status_code=502,
-                    code="upstream_unreachable",
-                    circuit_failure=True,
-                ) from exc
-        else:
-            url = f"{self._base}/v1/partners/{quote(partner_id, safe='')}/policy"
-            try:
-                async with httpx.AsyncClient(timeout=self._timeout) as client:
-                    response = await client.get(url)
-            except httpx.TimeoutException as exc:
-                raise PartnerConfigError(
-                    "partner config request timed out",
-                    status_code=502,
-                    code="upstream_timeout",
-                    circuit_failure=True,
-                ) from exc
-            except httpx.RequestError as exc:
-                raise PartnerConfigError(
-                    f"partner config request failed: {exc}",
-                    status_code=502,
-                    code="upstream_unreachable",
-                    circuit_failure=True,
-                ) from exc
+        try:
+            response = await self._client.get(
+                f"{self._policy_path_prefix}/{quote(partner_id, safe='')}/policy",
+                timeout=self._timeout,
+            )
+        except httpx.TimeoutException as exc:
+            raise PartnerConfigError(
+                "partner config request timed out",
+                status_code=502,
+                code="upstream_timeout",
+                circuit_failure=True,
+            ) from exc
+        except httpx.RequestError as exc:
+            raise PartnerConfigError(
+                f"partner config request failed: {exc}",
+                status_code=502,
+                code="upstream_unreachable",
+                circuit_failure=True,
+            ) from exc
 
         if response.status_code == 404:
             raise PartnerConfigError(

@@ -59,3 +59,11 @@ def get_recommendation_service(
     session_budget: SessionRecommendationBudget = Depends(get_session_budget),
 ) -> RecommendationService:
     return RecommendationService(members, partners, session_budget=session_budget)
+
+
+async def close_upstream_clients() -> None:
+    """Close process-owned pools after the serving surface stops."""
+    await get_member_client().aclose()
+    await get_partner_config_client().aclose()
+    get_member_client.cache_clear()
+    get_partner_config_client.cache_clear()

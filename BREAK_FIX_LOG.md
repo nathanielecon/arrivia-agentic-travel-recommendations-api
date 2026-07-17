@@ -208,3 +208,132 @@ This file is append-only. Never delete failed attempts. A correction adds a new 
 - Verification: Docker offline OK under blocked proxy; Cloud GPT-5.4 task `task_e_6a597b38c7a0832b9a273e859f5574e7` READY — `offline_install_ok`, 122 tests collected (`docs/evidence/raw/cloud-offline-install-smoke.md`).
 - Owner/status: P_integration / unblocked for Cloud locked install.
 
+### BF-20260716-016 — Cold upstream pools made the first benchmark run nondeterministic
+
+- Time: 2026-07-16T20:39:00-04:00
+- Candidate: `2389c666948f4824819c30fd06be56c50a60ff65`; image `sha256:240a45139683d76a1bde5f38a56a0edc074abf36b56d4c5f62204d0b6ba35579`.
+- Detection: The first required 100-request/concurrency-10 run returned 99 successes and one REST `502`; logs bound the failure to a partner-config `upstream_timeout` while the API's owned connection pools were cold.
+- Impact: The first benchmark is failed evidence and candidate `2389c66` cannot be certified.
+- Cause: The measured burst also performed first-use upstream connection establishment under strict connect/pool timeouts, making Docker Desktop scheduling part of the result.
+- Containment: Preserve the failed result; do not weaken production timeouts or retry the failed request.
+- Repair: Add 10 sequential, separately reported warm-up requests using unique sessions before the 100 measured requests. Any warm-up failure still fails the benchmark; measured concurrency remains 10 and production behavior is unchanged.
+- Verification: Unit/argument tests plus a replacement-candidate live benchmark are required.
+- Owner/status: P_integration / repair implemented; replacement evidence pending.
+
+### BF-20260716-017 — Warm-up exposed per-call production HTTP client construction
+
+- Time: 2026-07-16T20:43:00-04:00
+- Candidate: dirty repair tree after superseded candidate `2389c666948f4824819c30fd06be56c50a60ff65`.
+- Detection: The warm-up repair itself passed, but the measured run returned 98/100 with two partner-config `upstream_timeout` responses.
+- Impact: Warm-up alone did not make the required concurrency-10 benchmark deterministic; no D5/E6 claim is permitted.
+- Cause: The process-cached `MemberClient` and `PartnerConfigClient` still constructed and closed a new `httpx.AsyncClient` inside every upstream call, defeating connection pooling and repeatedly paying strict connect/pool budgets.
+- Containment: Retain both failed benchmark runs; do not increase production timeouts and do not add retries.
+- Repair: Each production client now owns one process-lifetime `AsyncClient`, reuses its connection pool across calls, preserves injected-client timeout enforcement, and closes owned pools through the REST lifespan. MCP reuses the same clients until its stdio process exits.
+- Verification: Ownership/lifecycle tests, full contracts, candidate image rebuild, 100-request/concurrency-10 benchmark, fault/recovery, and MCP stdio are required.
+- Owner/status: P_reliability / repair implemented; replacement candidate pending.
+
+### BF-20260716-018 — Evidence hashes depended on checkout newline conversion
+
+- Time: 2026-07-16T20:47:00-04:00
+- Candidate: replacement-candidate working tree.
+- Detection: Full tests passed all runtime checks but evidence validation failed after a new Windows worktree converted tracked text artifacts to CRLF.
+- Impact: Artifact digests were not reproducible across Windows and Linux clean checkouts; Gate 6 could not be portable.
+- Cause: The repository had no `.gitattributes`, and the validator hashed platform-transformed worktree bytes.
+- Containment: Treat the failed full-suite run as failed evidence; do not relabel mismatched hashes as passing.
+- Repair: Enforce LF for authoritative text artifacts, binary treatment for images/video/SQLite, and canonical-LF hashing for text evidence.
+- Verification: Refresh current artifact hashes after certification documents are final, then pass the design-authority test from the completion worktree and independent clone.
+- Owner/status: P_authority / repair implemented; final hash refresh pending.
+
+### BF-20260716-019 — Isolated named volume was not writable by the non-root API
+
+- Time: 2026-07-16T20:50:00-04:00
+- Candidate: `9a56c88dce809abd3fe9d2f6bbc918f70b5e9057`; image `sha256:0fc6a563a969bff20a641b888eb7ceb44577bbf9350994f6207201de45b97894`.
+- Detection: The first isolated deployment verifier reached health/readiness/metrics, then recommendation returned HTTP 500 with `sqlite3.OperationalError: unable to open database file`.
+- Impact: The first verifier run is failed harness evidence; it does not invalidate the shipped Compose bind-mount path.
+- Cause: A newly created Docker named volume was root-owned while the image correctly runs as UID 10001.
+- Containment: Kept the candidate image unchanged and did not touch the Windows/Docker bind-mounted production-style `.data` path.
+- Repair: A one-time root helper assigned the isolated volume to UID/GID 10001 before starting the API.
+- Verification: The unchanged image passed verifier, CLI, benchmark, failure/recovery, and rollback/forward checks on the initialized volume.
+- Owner/status: P_integration / verified harness setup.
+
+### BF-20260716-020 — Walkthrough tooling could not discover FFmpeg/FFprobe
+
+- Time: 2026-07-16T20:58:00-04:00
+- Candidate: evidence working tree for `9a56c88`.
+- Detection: HyperFrames lint/check passed, but two snapshot attempts failed claiming FFmpeg was unavailable.
+- Impact: Those snapshot attempts are failed portfolio evidence; no visual pass was claimed.
+- Cause: The first PATH contained only `ffmpeg.exe` without `ffprobe.exe`; the second omitted `C:\Windows\System32`, so HyperFrames could not invoke `where.exe` for discovery.
+- Containment: Retained the already recorded live footage; no presentation derivative was published from failed snapshots.
+- Repair: Use the full FFmpeg `bin` directory containing both executables and retain System32 on PATH; document both requirements.
+- Verification: Seven snapshots and the 300-second MP4 rendered successfully. HyperFrames then identified sparse source keyframes, addressed in BF-021.
+- Owner/status: P_portfolio / verified discovery repair.
+
+### BF-20260716-021 — Terminal footage used sparse 25-second keyframe intervals
+
+- Time: 2026-07-16T21:00:00-04:00
+- Candidate: evidence working tree for `9a56c88`.
+- Detection: Successful HyperFrames render warned that all three terminal tracks could freeze during deterministic seeking because their maximum keyframe interval was 25 seconds.
+- Impact: The first successful render is superseded and cannot be final visual evidence.
+- Cause: The capture encoder relied on libx264's default GOP at a 10 fps source rate.
+- Containment: Preserve the render result as superseded; do not certify it visually.
+- Repair: Encode footage at 30 fps with GOP/keyframe minimum 30 and `+faststart`, then regenerate snapshots and the final composition.
+- Verification: HyperFrames check, snapshot, render, duration/hash inspection, and visual review are required.
+- Owner/status: P_portfolio / repair implemented; rerender pending.
+
+### BF-20260716-022 — Clean Gate 6 exposed non-portable interface hashes
+
+- Time: 2026-07-16T21:30:00-04:00.
+- Candidate: source `3156cf8869563b9683f5c3ff67b4104d95dc1b40`; evidence binding `07bbc9168a00cfcaa8e1ccea4b3593ff75edf2c5`; image `sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee`.
+- Detection: The fresh local Codex reviewer passed installation, runtime, MCP, concurrency, benchmark, circuit/recovery, and evidence discovery, but full pytest reported 129 passed and one frozen-interface-hash failure.
+- Impact: Gate 6 failed; D5/E6 was not earned. The local “130 passed” certification row is superseded for this candidate.
+- Cause: Interface and dependency contract validators hashed checkout-transformed raw text bytes, while the manifest was refreshed from a different Windows worktree representation. Evidence artifacts had canonical-LF hashing, but interface/dependency hashing did not share it.
+- Containment: Retain the reviewer failure and all old candidate identities; do not relabel the otherwise passing runtime checks as Gate 6.
+- Repair: Use one canonical-LF digest helper for text evidence, interface files, and dependency contracts; keep binary hashing byte-for-byte; refresh every frozen hash; add a CRLF/LF equivalence regression test.
+- Verification: Full suite in the author worktree, full suite in a separate clean clone, new candidate/image identity, rebound local evidence, and a second repair-history-free Gate 6 review.
+- Owner/status: P_authority / repair implemented; replacement candidate pending.
+
+### BF-20260716-023 — Final attestation initially promoted the D4 prerequisite gate
+
+- Time: 2026-07-16T22:10:00-04:00.
+- Candidate: reviewed source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`; attestation working tree after independent Gate 6 passed.
+- Detection: The first post-review full suite returned 130 passed and one project-design schema failure because `design_gate.level` was changed from its frozen `D4` constant to `D5`.
+- Impact: The first attestation draft could not be committed; reviewed source/image and the independent Gate 6 result were unaffected.
+- Cause: Project earned depth and the prerequisite design-gate level were conflated during final documentation promotion.
+- Containment: Retain the failed attestation validation; do not alter the reviewed source or image.
+- Repair: Keep the frozen design gate at D4, set project `earned_depth` to D5 and `evidence_level` to E6, and explain that completed implementation plus independent reproduction earns D5.
+- Verification: Final full suite, schema validation, Ruff, compilation, evidence hashes, and clean diff checks must pass before the attestation commit.
+- Owner/status: P_integration / repaired; final validation pending.
+
+### BF-20260716-024 — Walkthrough annotations obscured live terminal text
+
+- Time: 2026-07-16T22:25:00-04:00.
+- Detection: User review identified text-on-text overlap in the completed walkthrough; a 10-second-interval, 30-frame contact sheet confirmed the annotation layer obscured terminal output throughout all three evidence scenes.
+- Impact: The published walkthrough was not presentation-ready despite passing duration, render, hash, and sparse contact-sheet checks. Its prior visual certification is superseded.
+- Cause: Terminal footage filled the entire canvas on track 0 while a full-canvas annotation overlay occupied track 1. Automated layout checks treated each layer as valid but did not test cross-track semantic occlusion.
+- Containment: Withdraw the “video complete” claim and preserve the overlapping render as failed/superseded evidence.
+- Repair: Place annotations in a dedicated left pane and the live terminal in a bordered 16:9 panel on the right; reduce evidence-scene typography and wrap source labels within the annotation pane.
+- Verification: HyperFrames lint/check and representative snapshots passed; the final render is exactly 300 seconds and 300 encoded frames. A fresh subagent independently inspected all 300 frames plus full-resolution pairs at every scene cut and found no overlap, bleed, clipping, illegible annotations, obscured terminal footage, blank frames, or inconsistent layout.
+- Owner/status: P_portfolio / repaired and independently visually verified.
+
+### BF-20260716-025 — Walkthrough renderer continued after native command failure
+
+- Time: 2026-07-16T22:55:39-04:00.
+- Detection: The first paced/music render printed a success line even though HyperFrames could not discover FFmpeg and did not create the intermediate video.
+- Impact: No replacement MP4 was published, but the new one-command renderer could have reported a false-positive build.
+- Cause: `FFMPEG_PATH` remained a directory instead of the executable expected by HyperFrames, and PowerShell does not convert nonzero native exit codes into terminating errors by default.
+- Repair: Resolve and export exact FFmpeg/FFprobe executable paths, retain Windows executable discovery on `PATH`, and check `$LASTEXITCODE` after every HyperFrames and FFmpeg invocation.
+- Verification: A clean rerun passed lint/check/snapshots, rendered all 160 frames, generated the original music bed, muxed H.264/AAC output, removed the intermediate file, and exited zero. The soundtrack was then normalized from an inaudible first-pass average to a restrained background level.
+- Owner/status: P_portfolio / repaired and verified.
+
+### BF-20260716-026 — Merge main offline-install hardening into completion without rewriting certification history
+
+- Time: 2026-07-17T03:40:00-04:00.
+- Candidate: reviewed runtime source remains `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`; image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`. Merge integrates `origin/main` `99a8d47bc687a46e5043062edd5f39a1e789ec09` into `codex/project-completion` `5a1578e3dc563f41da49e4d4b40c0eb3c9359728`.
+- Detection: GitHub PR #2 was `DIRTY`/`CONFLICTING` on five paths after main landed the verified Cloud offline-install unblock while the completion branch continued certification/walkthrough work with a weaker installer draft.
+- Impact: Without a merge commit, D5/E6 evidence could not land on `main`; rewriting history would invalidate immutable candidate/evidence SHAs.
+- Cause: Parallel tips both added `vendor/python-wheels/`, `scripts/install-locked-offline.sh`, and BF-015/Gate 6 offline notes; main hardened install (`PIP_NO_INDEX`, no pip self-upgrade, `--no-build-isolation`) and recorded Cloud proof, while the PR retained incomplete BF-015 verification text plus BF-016–BF-025.
+- Containment: Preserve all BF-001–BF-025 entries and the reviewed D5/E6 candidate/image identities; do not rebase, squash, or rerender walkthrough media.
+- Repair: Combine `.gitattributes` (PR canonical-LF evidence rules + `*.sh text eol=lf` + MP3/M4A binary); take main’s hardened installer and vendor README; keep PR Gate 6 handoff candidate/claim/pass text and add main’s Cloud offline bootstrap + proof; replace BF-015 verification with main’s verified Cloud result; merge with `--no-ff`.
+- Verification: No conflict markers; no duplicate BF IDs; media SHA-256 unchanged vs pre-merge tip; full pytest/Ruff/compileall; design-authority/schema/interface/partition/link/artifact-hash checks; `bash -n` on the offline installer; fresh Linux/Python 3.12 offline install + import smoke with index access disabled.
+- Owner/status: P_integration / verified — 132 pytest passed; Ruff/compileall/design-authority green; Docker `--network none` offline install + import smoke OK; media SHA-256 unchanged.
+

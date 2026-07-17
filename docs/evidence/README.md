@@ -1,7 +1,7 @@
 ---
 owner: P_portfolio / repository maintainer
-status: working-candidate evidence; independent review pending
-candidate: working-tree@5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896
+status: D5/E6 independently reproduced evidence
+candidate: f5e9dc4df174b1844741efbfb07cb8bdbca3e34c
 last_verified: 2026-07-16
 review_trigger: Candidate SHA/image, assertion, artifact, command, or public claim change
 ---
@@ -11,18 +11,17 @@ review_trigger: Candidate SHA/image, assertion, artifact, command, or public cla
 The machine-readable authority is [index.json](index.json). Raw transcripts are retained under
 `raw/`; the gallery image is a presentation rendering of those transcripts and is not independent
 proof. Failed attempts stay visible in [BREAK_FIX_LOG.md](../../BREAK_FIX_LOG.md).
+Text-artifact digests use canonical LF bytes, enforced by `.gitattributes`, so evidence validation
+is stable across Windows and Linux checkouts. Binary artifacts are always hashed byte-for-byte.
 
 ![Rendered evidence summary; consult the raw transcripts and evidence index for authority](assets/evidence-gallery.png)
 
 | Proof | Raw artifact | Current result |
 | --- | --- | --- |
-| Focused hardening suite | [hardening tests](raw/20260716-hardening-tests.txt) | 29 passed; working tree |
-| Live CLI success | [CLI transcript](raw/20260716-live-cli.txt) | audited JSON; no cruise; cap 3 |
-| Partner failure/circuit/recovery | [fault transcript](raw/20260716-partner-fault.txt) | 502, open on fourth call, recovery 200 |
-| Deployment verifier and JSON log | [verifier/log transcript](raw/20260716-verifier-observability.txt) | health/readiness/metrics/policy/cap pass |
-| MCP stdio discovery/invocation | [MCP transcript](raw/20260716-mcp-stdio.txt) | real subprocess; tool discovery, call, and REST budget parity pass |
-| Final-slot race | [focused suite](raw/20260716-hardening-tests.txt) | spawned grants `[0,1]`; persisted usage 2 |
+| Full suite, CLI, MCP, circuit, logs, metrics | [replacement validation](raw/final-certification/replacement-f5e9dc4-validation.md) | 131 tests in a separate clean checkout and all local runtime journeys passed |
+| Healthy-mock benchmark | [replacement benchmark](raw/final-certification/replacement-f5e9dc4-benchmark.json) | 100/100 valid at concurrency 10; latency measurement only |
+| Distinct-image rollback | [replacement rollback](raw/final-certification/replacement-f5e9dc4-rollback.md) | SQLite cap preserved across B→A→B; no restore |
+| Walkthrough and artifact parity | [Quiet Systems mix review](raw/final-certification/walkthrough-quiet-systems.md) | five-second static scenes and all 160 frames retained; user-selected Suno track is duration-fitted, credited, level-checked, and hash-bound |
+| Earlier failures and superseded proof | [failed Gate 6 review](raw/final-certification/gate6-review-07bbc91-failed.md) | retained; not counted as replacement proof |
 
-The final locked local Compose image is `arrivia-recs@sha256:eb5976b2f9e73c740d2b82aaecace4ca13764456929bf770259213928991fe96`.
-Because its source tree is not committed, the repository-level public ceiling remains conservative;
-this is not Gate 6 or an independent D5/E6 certification.
+The immutable replacement Compose image is `arrivia-recs@sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`, built from source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`. Fresh review package `f4c6d5048e9ce655ae90887c28f03d4cc0927be2` independently passed Gate 6, earning D5/E6 within the stated v0 boundary.

@@ -4,7 +4,7 @@ Internal service for AI-driven, partner-aware travel recommendations that power 
 
 ![Arrivia architecture-first portfolio infographic showing REST and MCP parity, guarded upstreams, strict policy, SQLite budget state, telemetry, and the v0 claim boundary](docs/portfolio/arrivia-infographic.png)
 
-**Current certification: D4 Operable design / E4 candidate-bound local evidence.** Immutable candidate `446679405d41bfd91d6b273e269d35f50afed458` with image digest `sha256:84b02d8bc734e2cb3286fe261ef1cee666117ebeaeb21a6775dfffaaa1f9e720`. D5/E6 remains unclaimed: GPT-5.4 CloudWarm Gate 6 resumed after the maintenance SIGPIPE fix, but locked `pip` install failed on Cloud proxy/index 403 (independent score 6/10).
+**Current certification: D5 Reimplementable / E6 independently reproduced.** A fresh clean-context reviewer passed every Gate 6 check against source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c` and image `sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4` ([final attestation](docs/certification/FINAL_ATTESTATION.md) · [certification matrix](docs/certification/CHECK_MATRIX.md)).
 
 Verified in the current working candidate:
 
@@ -16,7 +16,7 @@ Verified in the current working candidate:
 
 **Exact claim boundary:** v0 supports one active recommendation-serving replica. REST and MCP may share session-cap state only through the same SQLite file in one filesystem-locking domain (both bare-metal processes, or both inside the container). A Windows host MCP process must not concurrently open the Docker Desktop Linux bind-mounted database; run MCP inside the API container for that topology. The project does not claim production authentication, safe public-internet exposure, multi-replica consistency, uptime, compliance, autonomous policy creation, or independent reimplementability.
 
-Architecture authority and evidence: [six-page draw.io source](docs/architecture/arrivia-system.drawio) · [exact SVG](docs/architecture/arrivia-system.svg) · [Image2 provenance and parity review](docs/portfolio/README.md) · [evidence index](docs/evidence/index.json) · [requirements matrix](docs/design/REQUIREMENTS_TRACEABILITY.md) · [five-minute walkthrough source](walkthrough/README.md)
+Architecture authority and evidence: [six-page draw.io source](docs/architecture/arrivia-system.drawio) · [exact SVG](docs/architecture/arrivia-system.svg) · [Image2 provenance and parity review](docs/portfolio/README.md) · [evidence index](docs/evidence/index.json) · [requirements matrix](docs/design/REQUIREMENTS_TRACEABILITY.md) · [paced evidence walkthrough](walkthrough/README.md)
 
 Goals, constraints, and delivery expectations come from the program brief in `Prompt.md` (maintained outside this repository).
 
@@ -32,12 +32,12 @@ Goals, constraints, and delivery expectations come from the program brief in `Pr
 
 | Assumption | Violation impact | Current defense | Target mitigation | Owner | Validation | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| Member and partner-config usually respond inside the timeout budget | Requests fail `502`; repeated dependency failures open a circuit | `0.25/1.0/0.25/0.25s` connect/read/write/pool timeouts, no retry, separate circuits | Tune only from measured histograms and upstream SLOs | Reliability | `tests/test_upstream_hardening.py`, `/metrics` | implemented; live drill pending |
+| Member and partner-config usually respond inside the timeout budget | Requests fail `502`; repeated dependency failures open a circuit | `0.25/1.0/0.25/0.25s` connect/read/write/pool timeouts, no retry, separate circuits | Tune only from measured histograms and upstream SLOs | Reliability | `tests/test_upstream_hardening.py`, `/metrics` | implemented; live drill passed locally |
 | Member `partner_id` and returned policy `partner_id` agree | Wrong-tenant policy could be enforced | Strict equality check fails closed as `upstream_invalid_payload` | Upstream contract monitoring and signed tenant context | Security/reliability | mismatch contract test | implemented |
 | Known policy fields retain schema and meaning | Unsafe policy bypass or evaluator drift | Strict schema, unknown-property rejection, explicit alias conflict handling | Versioned compatibility window before semantic changes | Product/platform | schema and policy tests | implemented |
 | One active replica is sufficient for v0 | Multiple independent SQLite files could over-grant a cap | Explicit single-replica claim and rollout guardrail | Shared transactional budget store before horizontal scaling | Service owner | topology review and rollout YAML | accepted v0 |
 | `.data` remains on one durable volume and all writers share one filesystem-locking domain | Counts can be lost or SQLite locking can fail across Windows/Docker Linux | Bind mount, WAL mode, stop-before-host-access rule, DB/WAL/SHM snapshot | Shared transactional store before cross-host/kernel writers | Operations | verifier, integrity check, BF-20260716-007 | implemented with topology restriction |
-| Session cardinality stays within 10,000 live keys and 1,800s TTL | Disk/lookup pressure and premature eviction | Configured TTL and bounded least-recently-touched pruning | Load test with representative session distribution | Service owner | budget tests and future benchmark | assumed; unmeasured |
+| Session cardinality stays within 10,000 live keys and 1,800s TTL | Disk/lookup pressure and premature eviction | Configured TTL and bounded least-recently-touched pruning | Load test with representative session distribution | Service owner | budget tests and healthy-mock benchmark | harness implemented; representative capacity unmeasured |
 | Metrics endpoint and evidence artifacts remain available only to operators/reviewers | Operational metadata leaks or proof becomes unavailable | `METRICS_ENABLED`, no public route auth claim, tracked append-only index | Network policy and durable artifact store in target environment | Operations | metrics gating and link checks | local only |
 
 ## Fastest Reviewer Path
@@ -88,7 +88,16 @@ Expected reviewer checks for the sample response:
 arrivia-recs-demo --member-id m1 --session-id review-session-1
 ```
 
-5. If you want to inspect the mock fixtures directly, see:
+5. Record a healthy-mock measurement without asserting a latency SLO:
+
+```powershell
+python scripts/healthy_mock_benchmark.py --requests 100 --concurrency 10
+```
+
+The report validates every response and records throughput plus p50/p95/max latency. See the
+[benchmark contract](docs/operations/BENCHMARK.md) for its exact assertions and claim boundary.
+
+6. If you want to inspect the mock fixtures directly, see:
 
 - `mocks/member-service/mappings/member-m1.json`
 - `mocks/partner-config-service/mappings/partner-p1-policy.json`
