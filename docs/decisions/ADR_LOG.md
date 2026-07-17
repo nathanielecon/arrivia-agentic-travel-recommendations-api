@@ -1,7 +1,7 @@
 ---
 owner: P_authority / repository maintainer
 status: accepted
-candidate: final-source-freeze-pending
+candidate: 3156cf8869563b9683f5c3ff67b4104d95dc1b40
 last_verified: 2026-07-16
 review_trigger: A frozen decision no longer satisfies its requirement, risk, topology, or evidence boundary
 ---

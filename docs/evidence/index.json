@@ -5,7 +5,7 @@
     "owner": "P_authority / repository maintainer",
     "status": "accepted",
     "baseline_sha": "17cc00d7cf06a04028a1ff3aabdd552875cf5d0a",
-    "candidate_ref": "446679405d41bfd91d6b273e269d35f50afed458",
+    "candidate_ref": "3156cf8869563b9683f5c3ff67b4104d95dc1b40",
     "last_verified": "2026-07-16",
     "review_trigger": "Candidate, artifact, environment, result, assertion, requirement, or public claim change"
   },
@@ -15,7 +15,7 @@
     "evidence_level": "E4",
     "d5_earned": false,
     "e6_earned": false,
-    "reason": "Local C5 evidence remains; CloudWarm resume works after SIGPIPE fix, but independent Gate 6 locked install failed on Cloud proxy/index 403 (score 6/10; D5/E6 not earned)"
+    "reason": "All local gates pass on the immutable completion source and image; fresh clean-context local Codex Gate 6 review is pending"
   },
   "events": [
     {
@@ -439,7 +439,7 @@
         },
         {
           "path": "docs/architecture/arrivia-system.svg",
-          "sha256": "f607fc7d9977e2254c8c7cbf5938baaadc19d8f82f795036b8283b73393c60b3"
+          "sha256": null
         },
         {
           "path": "docs/architecture/arrivia-system.png",
@@ -1420,13 +1420,117 @@
       "supersedes": [
         "EVID-CLEAN-REVIEW-BOTTLENECK"
       ]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-REL-CIRCUIT",
+      "requirement_ids": ["REQ-REL-001", "REQ-EVID-002"],
+      "status": "passed",
+      "recorded_at": "2026-07-17T01:12:35Z",
+      "candidate": {"git_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40", "working_tree_clean": true, "image_digest": "sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee"},
+      "environment": {"id": "local-compose-final", "description": "Isolated Docker Desktop Linux network with final candidate image and WireMock dependencies"},
+      "procedure": {"preconditions": ["Healthy final candidate verifier passed"], "commands": ["wiremock_partner_fault.py enable", "four unique-session REST calls", "wiremock_partner_fault.py disable; wait 31 seconds; recovery call"], "cleanup": ["Partner fault disabled"]},
+      "assertions": [{"name": "circuit-and-recovery", "expected": "three upstream_error responses, one upstream_circuit_open response, then HTTP 200 recovery", "observed": "502 upstream_error x3; 502 upstream_circuit_open; recovery 200", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/runtime-validation.md", "sha256": "1cbff7d2e0002e57e85ca73c99cf6857eeb316616d919150129ea2a549870da6"}],
+      "tool_versions": {"python": "3.14 host", "docker": "Docker Desktop Linux"},
+      "claim_level": "E4", "independent": false, "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-POL-STRICT",
+      "requirement_ids": ["REQ-POL-001"],
+      "status": "passed", "recorded_at": "2026-07-17T01:15:00Z",
+      "candidate": {"git_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40", "working_tree_clean": true, "image_digest": "sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee"},
+      "environment": {"id": "local-python-final", "description": "Fresh locked Windows virtual environment and final Docker image"},
+      "procedure": {"preconditions": ["Strict schema is frozen"], "commands": ["pytest -q"], "cleanup": []},
+      "assertions": [{"name": "strict-policy", "expected": "unknown fields, alias conflicts, and tenant mismatch fail closed", "observed": "all policy schema and contract tests passed in 130-test suite", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/runtime-validation.md", "sha256": "1cbff7d2e0002e57e85ca73c99cf6857eeb316616d919150129ea2a549870da6"}],
+      "tool_versions": {"pytest": "locked requirements-dev.lock"}, "claim_level": "E4", "independent": false, "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-OBS-LOG",
+      "requirement_ids": ["REQ-OBS-001"],
+      "status": "passed", "recorded_at": "2026-07-17T01:15:00Z",
+      "candidate": {"git_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40", "working_tree_clean": true, "image_digest": "sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee"},
+      "environment": {"id": "local-compose-final", "description": "Final candidate container logs collected after success and circuit probes"},
+      "procedure": {"preconditions": ["REST journey completed"], "commands": ["docker logs arrivia-cert-api"], "cleanup": []},
+      "assertions": [{"name": "structured-redacted-completion", "expected": "JSON completion contains audit and hashed identifiers without private upstream payloads", "observed": "recommendation.completed and circuit-open events matched frozen fields", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/runtime-validation.md", "sha256": "1cbff7d2e0002e57e85ca73c99cf6857eeb316616d919150129ea2a549870da6"}],
+      "tool_versions": {"structlog": "26.1.0"}, "claim_level": "E4", "independent": false, "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-OBS-METRICS",
+      "requirement_ids": ["REQ-OBS-001"],
+      "status": "passed", "recorded_at": "2026-07-17T01:15:00Z",
+      "candidate": {"git_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40", "working_tree_clean": true, "image_digest": "sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee"},
+      "environment": {"id": "local-compose-final", "description": "Final candidate with METRICS_ENABLED=true"},
+      "procedure": {"preconditions": ["Candidate running"], "commands": ["deployment_verifier.py --base-url http://127.0.0.1:18080"], "cleanup": []},
+      "assertions": [{"name": "metrics-contract", "expected": "frozen request, upstream, rule, budget, and circuit metrics resolve", "observed": "metrics verifier and full metrics tests passed", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/runtime-validation.md", "sha256": "1cbff7d2e0002e57e85ca73c99cf6857eeb316616d919150129ea2a549870da6"}],
+      "tool_versions": {"prometheus-client": "0.25.0"}, "claim_level": "E4", "independent": false, "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-DOC-CONTRACT",
+      "requirement_ids": ["REQ-DOC-001", "REQ-ORCH-001"],
+      "status": "passed", "recorded_at": "2026-07-17T01:15:00Z",
+      "candidate": {"git_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40", "working_tree_clean": true, "image_digest": "sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee"},
+      "environment": {"id": "local-python-final", "description": "Fresh locked environment at immutable source candidate"},
+      "procedure": {"preconditions": ["Authority metadata rebound"], "commands": ["pytest -q tests/test_design_authority.py", "pytest -q"], "cleanup": []},
+      "assertions": [{"name": "authority-and-links", "expected": "schemas, IDs, hashes, ownership, claims, B2, and links validate", "observed": "design-authority and full suite passed", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/runtime-validation.md", "sha256": "1cbff7d2e0002e57e85ca73c99cf6857eeb316616d919150129ea2a549870da6"}],
+      "tool_versions": {"jsonschema": "4.26.0"}, "claim_level": "E4", "independent": false, "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-BENCHMARK-FINAL",
+      "requirement_ids": ["REQ-REL-001", "REQ-EVID-001"],
+      "status": "passed", "recorded_at": "2026-07-17T01:11:52Z",
+      "candidate": {"git_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40", "working_tree_clean": true, "image_digest": "sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee"},
+      "environment": {"id": "local-compose-final", "description": "Healthy final candidate with controlled WireMock upstreams"},
+      "procedure": {"preconditions": ["10 sequential warmups pass"], "commands": ["healthy_mock_benchmark.py --requests 100 --concurrency 10 --warmup 10 --run-id 3156cf8"], "cleanup": []},
+      "assertions": [{"name": "healthy-mock-validity", "expected": "100/100 valid responses, correct audit and exclusion", "observed": "100 succeeded, 0 failed, 56.884 requests/second; p95 210.38 ms measurement only", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/healthy-mock-benchmark.json", "sha256": "6b46a34612275c25da44fc9f75804a74da2c09c86755851a0e66234c6c38af45"}],
+      "tool_versions": {"python": "3.14 host"}, "claim_level": "E4", "independent": false, "notes": "Latency is an observation, not an SLO.", "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-ROLLBACK-FINAL",
+      "requirement_ids": ["REQ-OPS-001"],
+      "status": "passed", "recorded_at": "2026-07-17T01:14:00Z",
+      "candidate": {"git_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40", "working_tree_clean": true, "image_digest": "sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee"},
+      "environment": {"id": "local-compose-final", "description": "Docker Linux locking domain with distinct immutable images and shared SQLite volume"},
+      "procedure": {"preconditions": ["Session capped on candidate B"], "commands": ["stop B; snapshot volume; start A; verify; stop A; start B; verify"], "cleanup": ["No database restore performed"]},
+      "assertions": [{"name": "state-preserving-rollback", "expected": "capped session remains capped on A and B; both verifiers pass", "observed": "zero recommendations after B-to-A and A-to-B; both verifiers passed", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/rollback.md", "sha256": "fc75682fc3b258aad5b7729bba2e4f4bd96d47ce1064f86030b10e8f87a34523"}],
+      "tool_versions": {"docker": "Docker Desktop Linux", "sqlite": "Python 3.12 image runtime"}, "claim_level": "E4", "independent": false, "supersedes": []
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-WALKTHROUGH-FINAL",
+      "requirement_ids": ["REQ-PORT-001", "REQ-EVID-001", "REQ-EVID-002", "REQ-EVID-003"],
+      "status": "passed", "recorded_at": "2026-07-17T01:00:00Z",
+      "candidate": {"git_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40", "working_tree_clean": true, "image_digest": "sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee"},
+      "environment": {"id": "local-hyperframes-final", "description": "Deterministic HyperFrames render over live candidate terminal footage"},
+      "procedure": {"preconditions": ["Candidate footage captured"], "commands": ["hyperframes check", "hyperframes snapshot", "hyperframes render --strict"], "cleanup": []},
+      "assertions": [{"name": "walkthrough-parity", "expected": "300-second render preserves exact evidence and claim boundary", "observed": "render and visual contact-sheet inspection passed; one non-blocking density warning retained", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/portfolio-validation.md", "sha256": "d4276557966c3215c7d3bced0df0a3a6263be474a0b1255502ac4fc8bd9a3d33"}, {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": "a28a4c930fbfb20f306563a13f3aaae9cc25cb7cf08b1e15e2332ec8747fe3d8"}],
+      "tool_versions": {"hyperframes": "0.7.60", "ffmpeg": "8.1.2"}, "claim_level": "E4", "independent": false, "supersedes": ["EVID-WALKTHROUGH-FOOTAGE"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-INTEGRATION-FINAL",
+      "requirement_ids": ["REQ-REL-001", "REQ-POL-001", "REQ-OBS-001", "REQ-OPS-001", "REQ-DOC-001", "REQ-EVID-001", "REQ-EVID-002", "REQ-EVID-003", "REQ-PORT-001", "REQ-ORCH-001"],
+      "status": "passed", "recorded_at": "2026-07-17T01:15:00Z",
+      "candidate": {"git_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40", "working_tree_clean": true, "image_digest": "sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee"},
+      "environment": {"id": "local-certification-final", "description": "Fresh locked host environment plus isolated final Docker candidate"},
+      "procedure": {"preconditions": ["Source candidate and image immutable"], "commands": ["full static/test suite", "container verifier and CLI", "MCP and final-slot tests", "fault/recovery", "benchmark", "rollback", "walkthrough validation"], "cleanup": ["Isolated certification resources retained until independent review"]},
+      "assertions": [{"name": "local-gates-1-through-5", "expected": "all local acceptance checks pass without expanding claim boundary", "observed": "all local checks passed; D4/E4 retained pending independent Gate 6", "result": "passed"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/runtime-validation.md", "sha256": "1cbff7d2e0002e57e85ca73c99cf6857eeb316616d919150129ea2a549870da6"}, {"path": "docs/evidence/raw/final-certification/healthy-mock-benchmark.json", "sha256": "6b46a34612275c25da44fc9f75804a74da2c09c86755851a0e66234c6c38af45"}, {"path": "docs/evidence/raw/final-certification/rollback.md", "sha256": "fc75682fc3b258aad5b7729bba2e4f4bd96d47ce1064f86030b10e8f87a34523"}, {"path": "docs/evidence/raw/final-certification/portfolio-validation.md", "sha256": "d4276557966c3215c7d3bced0df0a3a6263be474a0b1255502ac4fc8bd9a3d33"}],
+      "tool_versions": {"pytest": "locked requirements-dev.lock", "docker": "Docker Desktop Linux", "hyperframes": "0.7.60"}, "claim_level": "E4", "independent": false, "supersedes": []
     }
   ],
-  "planned_event_ids": [
-    "EVID-DOC-CONTRACT",
-    "EVID-OBS-LOG",
-    "EVID-OBS-METRICS",
-    "EVID-POL-STRICT",
-    "EVID-REL-CIRCUIT"
-  ]
+  "planned_event_ids": []
 }

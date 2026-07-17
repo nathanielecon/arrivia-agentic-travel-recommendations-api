@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "candidate_sha": "final-source-freeze-pending",
-  "candidate_state": "completion source freeze pending; local D4/E4 checks passed; independent Gate 6 pending",
+  "candidate_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40",
+  "candidate_state": "immutable completion source; image sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee; local D4/E4 passed; independent Gate 6 pending",
   "generated_at": "2026-07-16T13:33:00-04:00",
   "owner": "P_authority / repository maintainer",
   "status": "accepted",
@@ -217,7 +217,7 @@
       ],
       "claim_ceiling": "E5",
       "integration_order": 3,
-      "status": "partial-terminal-footage-and-image2-pending"
+      "status": "complete-local-evidence-independent-review-pending"
     },
     {
       "partition_id": "P_integration",
@@ -336,7 +336,7 @@
         "docs/design/INTERFACE_CATALOG.md",
         "src/arrivia_recs/config.py"
       ],
-      "contract_hash": "ba6397f4ca9c4dd0b84c07f81afe09c26f8a8684c616ae84aa6e345d8fcfb006",
+      "contract_hash": "543792acee55fe589dbc30c8974c109443e101685ce879aeee65910ad9ff2651",
       "compatibility_policy": "Existing setting, metric, log, and error names remain stable; label additions require cardinality review",
       "invalidation_rule": "Any change revalidates operations tests, docs, dashboards, evidence, and reliability consumer configuration"
     }

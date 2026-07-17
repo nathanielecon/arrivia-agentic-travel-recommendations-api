@@ -1,7 +1,7 @@
 ---
 owner: P_authority / repository maintainer
 status: accepted
-candidate: final-source-freeze-pending
+candidate: 3156cf8869563b9683f5c3ff67b4104d95dc1b40
 last_verified: 2026-07-16
 review_trigger: Requirement statement, acceptance, partition, test, evidence, environment, or claim-ceiling change
 ---
@@ -12,16 +12,16 @@ review_trigger: Requirement statement, acceptance, partition, test, evidence, en
 
 | Requirement | Design / decision | Partition | Acceptance test IDs | Environment | Evidence IDs | Ceiling | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `REQ-REL-001` | Engineering design reliability; ADR-001/002 | `P_reliability` | `TEST-CB-UNIT`, `TEST-UPSTREAM-REST`, `TEST-UPSTREAM-MCP`, `TEST-HALFOPEN-RACE` | local-python, local-compose | `EVID-WORKTREE-HARDENING`, `EVID-LIVE-502` | E4 | implemented; dirty-source evidence |
-| `REQ-POL-001` | `IFACE-POLICY-001`; ADR-003 | `P_reliability` | `TEST-POLICY-SCHEMA`, `TEST-POLICY-CONTRACT` | local-python, local-compose | `EVID-WORKTREE-HARDENING`, `EVID-LIVE-CLI` | E4 | implemented; dirty-source evidence |
-| `REQ-OBS-001` | `IFACE-OPS-001`; ADR-005 | `P_operations` | `TEST-LOG-SCHEMA`, `TEST-METRICS`, `TEST-ALERT-RULES` | local-python, local-compose | `EVID-OBS-RUNTIME` | E4 | implemented; dirty-source evidence |
-| `REQ-OPS-001` | Delivery/recovery; ADR-004 | `P_operations` | `TEST-DEPLOY-VERIFY`, `TEST-ROLLBACK-STATE` | local-compose | `EVID-OBS-RUNTIME`, `EVID-OPS-ROLLBACK` | E5 | verified on candidate-bound staged rollback; Gate 6 pending |
-| `REQ-DOC-001` | Charter, interfaces, risk register; ADR-008 | `P_portfolio` | `TEST-DOC-CONTRACT`, `TEST-B2-CONTRACT` | local-python | `EVID-DOC-CONTRACT` | E3 | implemented; final validation pending |
-| `REQ-EVID-001` | Evidence protocol | `P_portfolio` | `TEST-LIVE-CLI` | local-compose | `EVID-LIVE-CLI` | E4 | passed on dirty image-bound candidate |
-| `REQ-EVID-002` | Failure behavior | `P_portfolio` | `TEST-LIVE-502` | local-compose | `EVID-LIVE-502` | E4 | passed on dirty image-bound candidate |
-| `REQ-EVID-003` | `IFACE-BUDGET-001` | `P_reliability` | `TEST-BUDGET-CROSSPROCESS` | local-python | `EVID-BUDGET-RACE` | E4 | passed locally; clean candidate pending |
-| `REQ-PORT-001` | Architecture/presentation; ADR-006/007 | `P_portfolio` | `TEST-DIAGRAM-PARITY`, `TEST-PORTFOLIO-CLAIMS`, `TEST-WALKTHROUGH` | local-compose | `EVID-ARCH-EXACT`, `EVID-WALKTHROUGH-FOOTAGE` | E5 | exact architecture passed; live terminal footage under annotations |
-| `REQ-ORCH-001` | Worker task contract | `P_authority`, `P_integration` | `TEST-TASK-SCHEMA`, `TEST-PARTITION-OWNERSHIP`, `TEST-INTERFACE-HASH` | local-python | `EVID-ORCH-VALIDATION` | E3 | implemented; final hashes pending |
+| `REQ-REL-001` | Engineering design reliability; ADR-001/002 | `P_reliability` | `TEST-CB-UNIT`, `TEST-UPSTREAM-REST`, `TEST-UPSTREAM-MCP`, `TEST-HALFOPEN-RACE` | local-python, local-compose | `EVID-REL-CIRCUIT`, `EVID-INTEGRATION-FINAL` | E4 | verified on immutable candidate |
+| `REQ-POL-001` | `IFACE-POLICY-001`; ADR-003 | `P_reliability` | `TEST-POLICY-SCHEMA`, `TEST-POLICY-CONTRACT` | local-python, local-compose | `EVID-POL-STRICT`, `EVID-INTEGRATION-FINAL` | E4 | verified on immutable candidate |
+| `REQ-OBS-001` | `IFACE-OPS-001`; ADR-005 | `P_operations` | `TEST-LOG-SCHEMA`, `TEST-METRICS`, `TEST-ALERT-RULES` | local-python, local-compose | `EVID-OBS-LOG`, `EVID-OBS-METRICS` | E4 | verified on immutable candidate |
+| `REQ-OPS-001` | Delivery/recovery; ADR-004 | `P_operations` | `TEST-DEPLOY-VERIFY`, `TEST-ROLLBACK-STATE` | local-compose | `EVID-ROLLBACK-FINAL`, `EVID-INTEGRATION-FINAL` | E5 | verified locally; Gate 6 pending |
+| `REQ-DOC-001` | Charter, interfaces, risk register; ADR-008 | `P_portfolio` | `TEST-DOC-CONTRACT`, `TEST-B2-CONTRACT` | local-python | `EVID-DOC-CONTRACT` | E3 | verified on immutable candidate |
+| `REQ-EVID-001` | Evidence protocol | `P_portfolio` | `TEST-LIVE-CLI` | local-compose | `EVID-INTEGRATION-FINAL`, `EVID-WALKTHROUGH-FINAL` | E4 | verified on immutable candidate |
+| `REQ-EVID-002` | Failure behavior | `P_portfolio` | `TEST-LIVE-502` | local-compose | `EVID-REL-CIRCUIT`, `EVID-WALKTHROUGH-FINAL` | E4 | verified on immutable candidate |
+| `REQ-EVID-003` | `IFACE-BUDGET-001` | `P_reliability` | `TEST-BUDGET-CROSSPROCESS` | local-python | `EVID-BUDGET-RACE`, `EVID-INTEGRATION-FINAL` | E4 | verified on immutable candidate |
+| `REQ-PORT-001` | Architecture/presentation; ADR-006/007 | `P_portfolio` | `TEST-DIAGRAM-PARITY`, `TEST-PORTFOLIO-CLAIMS`, `TEST-WALKTHROUGH` | local-compose | `EVID-ARCH-EXACT`, `EVID-WALKTHROUGH-FINAL` | E5 | verified locally; independent lookup pending |
+| `REQ-ORCH-001` | Worker task contract | `P_authority`, `P_integration` | `TEST-TASK-SCHEMA`, `TEST-PARTITION-OWNERSHIP`, `TEST-INTERFACE-HASH` | local-python | `EVID-DOC-CONTRACT`, `EVID-INTEGRATION-FINAL` | E3 | verified on immutable candidate |
 
 ## Requirement definitions and acceptance
 

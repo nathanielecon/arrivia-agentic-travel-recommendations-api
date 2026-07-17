@@ -1,8 +1,8 @@
 ---
 owner: P_integration / repository maintainer
-status: ready-for-candidate-binding
-candidate: final-source-freeze-pending
-image_digest: final-image-build-pending
+status: ready-for-independent-review
+candidate: 3156cf8869563b9683f5c3ff67b4104d95dc1b40
+image_digest: sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee
 last_verified: 2026-07-16
 ---
 
@@ -14,9 +14,9 @@ This is the complete reviewer input. It intentionally contains no repair history
 
 | Field | Value |
 | --- | --- |
-| Git SHA (source reviewed and used for the image) | `final-source-freeze-pending` |
-| Evidence binding tip | `final-evidence-binding-pending` |
-| Image | `arrivia-recs:gate6-final` / digest `final-image-build-pending` |
+| Git SHA (source reviewed and used for the image) | `3156cf8869563b9683f5c3ff67b4104d95dc1b40` |
+| Evidence binding checkout | Exact pushed `codex/project-completion` tip supplied with the reviewer assignment |
+| Image | `arrivia-recs:gate6-3156cf8` / digest `sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee` |
 | Previous verified rollback image | `arrivia-recs:c1-verified` / `sha256:e5f093d29f0d3fdb54677f3e634604a2cef5914a5423af2a112b0260b49d3d08` |
 
 ## Claim boundary
@@ -32,7 +32,7 @@ Runtime checks: `CHECK-HEALTH`, `CHECK-READY`, `CHECK-METRICS`, `CHECK-CIRCUIT-R
 ## Bootstrap and required reproduction
 
 ```powershell
-git checkout final-evidence-binding-pending
+git checkout <exact-evidence-binding-sha-from-review-assignment>
 Copy-Item .env.example .env -Force
 python -m venv .venv
 .\.venv\Scripts\python -m pip install -r requirements-dev.lock
@@ -40,7 +40,7 @@ python -m venv .venv
 .\.venv\Scripts\python -m pytest -q
 .\.venv\Scripts\python -m ruff check .
 .\.venv\Scripts\python -m compileall -q src tests scripts
-$env:ARRIVIA_RECS_IMAGE = "arrivia-recs:gate6-final"
+$env:ARRIVIA_RECS_IMAGE = "arrivia-recs:gate6-3156cf8"
 docker compose --profile mocks up -d
 .\.venv\Scripts\python scripts/deployment_verifier.py --base-url http://127.0.0.1:8080
 .\.venv\Scripts\python -m arrivia_recs.cli --member-id m1 --session-id gate6-cli --base-url http://127.0.0.1:8080

@@ -1,7 +1,7 @@
 ---
 owner: P_operations / repository maintainer
-status: implemented; rehearsal evidence pending
-candidate: final-source-freeze-pending
+status: implemented and candidate-bound rehearsal passed; independent review pending
+candidate: 3156cf8869563b9683f5c3ff67b4104d95dc1b40
 last_verified: 2026-07-16
 review_trigger: Image selection, Compose topology, SQLite path/schema, verifier, or recovery policy change
 ---

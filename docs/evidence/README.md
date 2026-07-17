@@ -1,7 +1,7 @@
 ---
 owner: P_portfolio / repository maintainer
-status: working-candidate evidence; independent review pending
-candidate: final-source-freeze-pending
+status: immutable-candidate E4 evidence; independent review pending
+candidate: 3156cf8869563b9683f5c3ff67b4104d95dc1b40
 last_verified: 2026-07-16
 review_trigger: Candidate SHA/image, assertion, artifact, command, or public claim change
 ---
@@ -18,13 +18,10 @@ is stable across Windows and Linux checkouts. Binary artifacts are always hashed
 
 | Proof | Raw artifact | Current result |
 | --- | --- | --- |
-| Focused hardening suite | [hardening tests](raw/20260716-hardening-tests.txt) | 29 passed; working tree |
-| Live CLI success | [CLI transcript](raw/20260716-live-cli.txt) | audited JSON; no cruise; cap 3 |
-| Partner failure/circuit/recovery | [fault transcript](raw/20260716-partner-fault.txt) | 502, open on fourth call, recovery 200 |
-| Deployment verifier and JSON log | [verifier/log transcript](raw/20260716-verifier-observability.txt) | health/readiness/metrics/policy/cap pass |
-| MCP stdio discovery/invocation | [MCP transcript](raw/20260716-mcp-stdio.txt) | real subprocess; tool discovery, call, and REST budget parity pass |
-| Final-slot race | [focused suite](raw/20260716-hardening-tests.txt) | spawned grants `[0,1]`; persisted usage 2 |
+| Full suite, CLI, MCP, circuit, logs, metrics | [candidate validation](raw/final-certification/runtime-validation.md) | 130 tests and all local runtime journeys passed |
+| Healthy-mock benchmark | [benchmark report](raw/final-certification/healthy-mock-benchmark.json) | 100/100 valid at concurrency 10; latency measurement only |
+| Distinct-image rollback | [rollback trace](raw/final-certification/rollback.md) | SQLite cap preserved across B→A→B; no restore |
+| Walkthrough and artifact parity | [portfolio validation](raw/final-certification/portfolio-validation.md) | strict 300-second render and visual inspection passed |
+| Earlier failures and superseded proof | [append-only index](index.json) | retained; not counted as current completion proof |
 
-The final locked local Compose image is `arrivia-recs@sha256:eb5976b2f9e73c740d2b82aaecace4ca13764456929bf770259213928991fe96`.
-Because its source tree is not committed, the repository-level public ceiling remains conservative;
-this is not Gate 6 or an independent D5/E6 certification.
+The immutable local Compose image is `arrivia-recs@sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee`, built from source `3156cf8869563b9683f5c3ff67b4104d95dc1b40`. The repository-level public ceiling remains D4/E4 until independent Gate 6 passes.

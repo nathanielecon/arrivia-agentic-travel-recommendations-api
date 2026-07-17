@@ -1,7 +1,7 @@
 ---
 owner: P_integration / repository maintainer
-status: implemented; immutable-candidate evidence pending
-candidate: next immutable certification candidate
+status: implemented and candidate-bound
+candidate: 3156cf8869563b9683f5c3ff67b4104d95dc1b40
 last_verified: 2026-07-16
 review_trigger: Benchmark workload, assertions, concurrency, mock payload, or performance-claim change
 ---

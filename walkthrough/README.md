@@ -1,7 +1,7 @@
 ---
 owner: P_portfolio / repository maintainer
 status: deterministic source with live terminal footage track under annotations
-candidate: final-source-freeze-pending
+candidate: 3156cf8869563b9683f5c3ff67b4104d95dc1b40
 last_verified: 2026-07-16
 review_trigger: Candidate, timing, evidence transcript, claim, HyperFrames, browser, or FFmpeg change
 ---

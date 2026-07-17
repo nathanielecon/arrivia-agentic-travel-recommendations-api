@@ -1,7 +1,7 @@
 ---
 owner: P_portfolio / repository maintainer
 status: presentation derivative generated and parity-reviewed; independent review pending
-candidate: final-source-freeze-pending
+candidate: 3156cf8869563b9683f5c3ff67b4104d95dc1b40
 last_verified: 2026-07-16
 review_trigger: Architecture, README claim, evidence result, prompt, generated image, or resize-tool change
 ---

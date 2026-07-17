@@ -1,0 +1,27 @@
+{
+  "assertions": {
+    "all_http_and_schema_checks_passed": true,
+    "cruise_excluded": true,
+    "policy_audit_present": true
+  },
+  "base_url": "http://127.0.0.1:18080",
+  "candidate_sha": "3156cf8869563b9683f5c3ff67b4104d95dc1b40",
+  "concurrency": 10,
+  "duration_seconds": 1.757952,
+  "failed": 0,
+  "failures": [],
+  "image_digest": "sha256:689c588dcdf98bcd60adbaf26b0d3c52b0a86a694eabe8c5f9736c47ad6517ee",
+  "latency_claim": "measurement_only_no_slo",
+  "latency_ms": {
+    "max": 246.505,
+    "p50": 166.673,
+    "p95": 210.38
+  },
+  "requests": 100,
+  "result": "pass",
+  "run_id": "3156cf8",
+  "succeeded": 100,
+  "throughput_requests_per_second": 56.884,
+  "warmup_failed": 0,
+  "warmup_requests": 10
+}

@@ -4,7 +4,7 @@
     "owner": "P_authority / repository maintainer",
     "status": "accepted",
     "baseline_sha": "5b2fc6f80e7714d0af5459fa2b9d3a30b1c28896",
-    "candidate_ref": "final-source-freeze-pending",
+    "candidate_ref": "3156cf8869563b9683f5c3ff67b4104d95dc1b40",
     "last_verified": "2026-07-16",
     "review_trigger": "Dependency version, source, license, vulnerability, contract, purpose, or consumer change"
   },
@@ -204,7 +204,7 @@
       "failure_modes": ["invented claims/components", "non-deterministic rendering", "service unavailable"],
       "validation": ["prompt/input/output hashes", "manual claim/topology parity"],
       "rollback_exit": "Exact draw.io render remains authoritative and sufficient",
-      "status": "pending-presentation-derivative"
+      "status": "generated-and-parity-reviewed"
     },
     {
       "id": "DEP-HYPERFRAMES-FFMPEG",
@@ -218,7 +218,7 @@
       "failure_modes": ["render drift", "codec unavailable", "license mismatch", "video hides absent live proof"],
       "validation": ["frame inspection", "duration/codec check", "terminal-source linkage"],
       "rollback_exit": "Primary GitHub-friendly PNG evidence remains available",
-      "status": "hyperframes-0.7.60-rendered; actual-terminal-track-blocked"
+      "status": "hyperframes-0.7.60-and-ffmpeg-8.1.2-rendered-with-live-terminal-footage"
     }
   ]
 }
