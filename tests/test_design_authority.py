@@ -37,7 +37,7 @@ def _sha256(paths: list[str]) -> str:
 
 def _portable_sha256(path: Path) -> str:
     payload = path.read_bytes()
-    if path.suffix.lower() not in {".png", ".jpg", ".jpeg", ".mp4", ".sqlite3", ".zip"}:
+    if path.suffix.lower() not in {".png", ".jpg", ".jpeg", ".mp4", ".m4a", ".sqlite3", ".zip"}:
         payload = payload.replace(b"\r\n", b"\n")
     return hashlib.sha256(payload).hexdigest()
 
@@ -52,6 +52,12 @@ def test_portable_hash_normalizes_text_line_endings(tmp_path: Path) -> None:
     lf.write_bytes(b"one\ntwo\n")
     crlf.write_bytes(b"one\r\ntwo\r\n")
     assert _portable_sha256(lf) == _portable_sha256(crlf)
+
+
+def test_portable_hash_does_not_rewrite_audio_bytes(tmp_path: Path) -> None:
+    audio = tmp_path / "bed.m4a"
+    audio.write_bytes(b"binary\r\npayload")
+    assert _portable_sha256(audio) == hashlib.sha256(b"binary\r\npayload").hexdigest()
 
 
 def test_project_design_validates_against_schema() -> None:

@@ -16,7 +16,7 @@ Verified in the current working candidate:
 
 **Exact claim boundary:** v0 supports one active recommendation-serving replica. REST and MCP may share session-cap state only through the same SQLite file in one filesystem-locking domain (both bare-metal processes, or both inside the container). A Windows host MCP process must not concurrently open the Docker Desktop Linux bind-mounted database; run MCP inside the API container for that topology. The project does not claim production authentication, safe public-internet exposure, multi-replica consistency, uptime, compliance, autonomous policy creation, or independent reimplementability.
 
-Architecture authority and evidence: [six-page draw.io source](docs/architecture/arrivia-system.drawio) · [exact SVG](docs/architecture/arrivia-system.svg) · [Image2 provenance and parity review](docs/portfolio/README.md) · [evidence index](docs/evidence/index.json) · [requirements matrix](docs/design/REQUIREMENTS_TRACEABILITY.md) · [five-minute walkthrough source](walkthrough/README.md)
+Architecture authority and evidence: [six-page draw.io source](docs/architecture/arrivia-system.drawio) · [exact SVG](docs/architecture/arrivia-system.svg) · [Image2 provenance and parity review](docs/portfolio/README.md) · [evidence index](docs/evidence/index.json) · [requirements matrix](docs/design/REQUIREMENTS_TRACEABILITY.md) · [paced evidence walkthrough](walkthrough/README.md)
 
 Goals, constraints, and delivery expectations come from the program brief in `Prompt.md` (maintained outside this repository).
 

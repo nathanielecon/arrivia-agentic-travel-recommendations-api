@@ -21,7 +21,7 @@ is stable across Windows and Linux checkouts. Binary artifacts are always hashed
 | Full suite, CLI, MCP, circuit, logs, metrics | [replacement validation](raw/final-certification/replacement-f5e9dc4-validation.md) | 131 tests in a separate clean checkout and all local runtime journeys passed |
 | Healthy-mock benchmark | [replacement benchmark](raw/final-certification/replacement-f5e9dc4-benchmark.json) | 100/100 valid at concurrency 10; latency measurement only |
 | Distinct-image rollback | [replacement rollback](raw/final-certification/replacement-f5e9dc4-rollback.md) | SQLite cap preserved across B→A→B; no restore |
-| Walkthrough and artifact parity | [full-frame overlap repair review](raw/final-certification/walkthrough-overlap-repair.md) | corrected 300-second render independently passed all 300 encoded frames; the earlier sparse visual acceptance is superseded |
+| Walkthrough and artifact parity | [paced music review](raw/final-certification/walkthrough-paced-music.md) | every static scene is five seconds; all 160 frames passed visual review; original sample-free music is level-checked and hash-bound |
 | Earlier failures and superseded proof | [failed Gate 6 review](raw/final-certification/gate6-review-07bbc91-failed.md) | retained; not counted as replacement proof |
 
 The immutable replacement Compose image is `arrivia-recs@sha256:7551188a779f278fbe270348027c8cea213a0c9688dae2bbb5d430c6f8a921d4`, built from source `f5e9dc4df174b1844741efbfb07cb8bdbca3e34c`. Fresh review package `f4c6d5048e9ce655ae90887c28f03d4cc0927be2` independently passed Gate 6, earning D5/E6 within the stated v0 boundary.

@@ -1648,9 +1648,9 @@
       ],
       "artifacts": [
         {"path": "docs/evidence/raw/final-certification/walkthrough-overlap-repair.md", "sha256": "04a4f4213b5b8414f1dc04a7116425a2671d9983e02a48480acee5802e8b3db0"},
-        {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": "e9767601f4db1d3bf0d4990ae7e9dc0e3994de22e67c92e5c096791a2ded3808"},
-        {"path": "docs/certification/CHECK_MATRIX.md", "sha256": "4e57ffa4a5fb9ef4f299e1fa9103f74a48752af924d9bbf8fa0a5bef88d26ab8"},
-        {"path": "docs/evidence/README.md", "sha256": "fab791e50b66226f2d1a6583a8f6cdf652d071e74f6cef98dfd4dd63ea5d8bde"},
+        {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": null},
+        {"path": "docs/certification/CHECK_MATRIX.md", "sha256": null},
+        {"path": "docs/evidence/README.md", "sha256": null},
         {"path": "walkthrough/index.html", "sha256": null},
         {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": null},
         {"path": "walkthrough/snapshots/contact-sheet.jpg", "sha256": null}
@@ -1660,6 +1660,44 @@
       "independent": true,
       "notes": "Historical full-frame overlap-repair proof. Superseded after the static scenes were shortened to five seconds and an original instrumental bed was added; replaced mutable composition hashes are nulled. The independently reviewed production runtime candidate f5e9dc4 and image digest remain unchanged.",
       "supersedes": ["EVID-WALKTHROUGH-FINAL"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-WALKTHROUGH-PACED-MUSIC",
+      "requirement_ids": ["REQ-PORT-001"],
+      "status": "passed",
+      "recorded_at": "2026-07-17T03:00:00Z",
+      "candidate": {"git_sha": "7b70720b6e05ddf706704766880864630b75b7a3", "working_tree_clean": true, "image_digest": null},
+      "environment": {"id": "local-hyperframes-paced-music", "description": "HyperFrames 0.7.60 and FFmpeg 8.1.2 deterministic visual render, procedural music synthesis, mux, full-frame review, and audio-level validation"},
+      "procedure": {
+        "preconditions": ["Split-pane overlap repair retained", "User requested five-second static scenes and fitting music", "Runtime source and image remain unchanged"],
+        "commands": ["pwsh -File walkthrough/render.ps1", "ffprobe stream/frame/duration inspection", "ffmpeg volumedetect", "four chronological 40-frame contact sheets and full-resolution scene-cut pairs"],
+        "cleanup": ["Intermediate video-only MP4 removed by the checked render script", "Temporary exhaustive-review sheets remain outside the repository"]
+      },
+      "assertions": [
+        {"name": "five-second-static-scenes", "expected": "architecture, AI pushback, and operations scenes each last exactly five seconds", "observed": "0-5, 150-155, and 155-160 seconds", "result": "passed"},
+        {"name": "complete-live-footage", "expected": "45-, 45-, and 55-second terminal recordings remain intact", "observed": "145 live seconds retained in a 160-second cut", "result": "passed"},
+        {"name": "full-frame-visual-review", "expected": "no overlap, clipping, blank frame, or scene bleed", "observed": "160/160 frames plus F4/5, F49/50, F94/95, F149/150, and F154/155 pairs passed", "result": "passed"},
+        {"name": "original-background-music", "expected": "sample-free, reproducible, audible but restrained stereo bed without clipping", "observed": "four synthesized crossfaded chords; AAC 48 kHz stereo; mean -26.6 dB and peak -16.1 dB", "result": "passed"},
+        {"name": "render-contract", "expected": "one command fails on any native-tool error and emits H.264/AAC at exact duration", "observed": "exit zero; 160 H.264 frames and AAC audio at 160.000 seconds; initial false-success attempt retained in BF-20260716-025", "result": "passed"}
+      ],
+      "artifacts": [
+        {"path": "docs/evidence/raw/final-certification/walkthrough-paced-music.md", "sha256": "396b3ef63a7e0f7d4fa84be66bb1fd21024d7a0bfd6ebd063f1ae5ab098a6b41"},
+        {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": "b846da7ab7bab94ce1e3b142e8aad8d681c604587318022dfd130129dbb27202"},
+        {"path": "docs/certification/CHECK_MATRIX.md", "sha256": "656d72117b8d6387960cfd0119e3ef2db04a311fe68e3817291fa490d1cd6812"},
+        {"path": "docs/evidence/README.md", "sha256": "38a248194357a6aafdfa81f276cb3541634e1c08a78721f4d32c37de2077ee5d"},
+        {"path": "walkthrough/index.html", "sha256": "2d02b8cc332053601a9dbad0fc31f3ee67d39ce5e845f44849dc562fa79f94e6"},
+        {"path": "walkthrough/render.ps1", "sha256": "443be5438e94908856867d654f632154c655338f0ea3156c46182e588ecc4e50"},
+        {"path": "walkthrough/README.md", "sha256": "f827013799b3691da696370f17ee8cfe1dd1cfa1db290084767f56ae5220d5de"},
+        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": "6371c1e6159b6e2bc795fdf629530a10752b888b1338a0685f6db11316e14ae8"},
+        {"path": "walkthrough/music/ambient-bed.m4a", "sha256": "0e7b53de901e4aba8c09fbf607425fbf65df5dd72c25f0d837c0334857674ffd"},
+        {"path": "walkthrough/snapshots/contact-sheet.jpg", "sha256": "50d5a2c2702651f403368e307054036db85e64da15aa7ce973db033b7320dc0e"}
+      ],
+      "tool_versions": {"hyperframes": "0.7.60", "ffmpeg": "8.1.2", "powershell": "7"},
+      "claim_level": "E4",
+      "independent": false,
+      "notes": "User-directed portfolio replacement. Production D5/E6 runtime source and image identity are unchanged.",
+      "supersedes": ["EVID-WALKTHROUGH-OVERLAP-REPAIR"]
     }
   ],
   "planned_event_ids": []
