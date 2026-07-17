@@ -1620,12 +1620,46 @@
         {"name": "evidence-and-claim-discovery", "expected": "proof resolves without hidden context and stays within boundary", "observed": "0 missing/mismatched declared hashes; 15/15 README links; rollback and visual proof matched", "result": "passed"},
         {"name": "d5-e6-verdict", "expected": "no required defects or blockers", "observed": "PASS; no defects or blocked required checks; eligible within stated boundary", "result": "passed"}
       ],
-      "artifacts": [{"path": "docs/evidence/raw/final-certification/gate6-review-f4c6d50-passed.md", "sha256": "8e044604b7769d1927def12b3008bdf6883e4883be67af6708f2b3896909dc5b"}, {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": "b6468c009ac616580be3608533df47735ddf3e4fb8c09779ff3fbdec6ecd0034"}],
+      "artifacts": [{"path": "docs/evidence/raw/final-certification/gate6-review-f4c6d50-passed.md", "sha256": "8e044604b7769d1927def12b3008bdf6883e4883be67af6708f2b3896909dc5b"}, {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": null}],
       "tool_versions": {"python": "3.14.3", "pytest": "9.1.1", "reviewer": "fresh local Codex", "docker": "Docker Desktop Linux"},
       "claim_level": "E6",
       "independent": true,
       "notes": "D5/E6 is earned only for the reviewed single-replica, same-locking-domain v0 boundary.",
       "supersedes": ["EVID-REPLACEMENT-INTEGRATION-F5E9"]
+    },
+    {
+      "schema_version": "1.0",
+      "evidence_id": "EVID-WALKTHROUGH-OVERLAP-REPAIR",
+      "requirement_ids": ["REQ-PORT-001"],
+      "status": "passed",
+      "recorded_at": "2026-07-17T02:37:35Z",
+      "candidate": {"git_sha": "4e81cbc00b6407a4998254ebbf134972e31817de", "working_tree_clean": true, "image_digest": null},
+      "environment": {"id": "local-hyperframes-independent-visual-review", "description": "HyperFrames 0.7.60 and FFmpeg 8.1.2 render followed by a fresh no-write Codex subagent review of every encoded frame"},
+      "procedure": {
+        "preconditions": ["Corrected split-pane composition committed as an immutable portfolio candidate", "Runtime source and image remain unchanged"],
+        "commands": ["hyperframes lint/check/snapshot/render --strict", "ffprobe frame count and duration", "FFmpeg lossless extraction of frames 0-299", "ten chronological 30-frame contact sheets plus full-resolution scene-cut pairs"],
+        "cleanup": ["Temporary exhaustive-review frames and sheets remain outside the repository"]
+      },
+      "assertions": [
+        {"name": "deterministic-corrected-render", "expected": "1920x1080 H.264, 1 fps, exactly 300 frames and 300 seconds", "observed": "passed; HyperFrames layout/motion/contrast clean with one retained non-blocking density warning", "result": "passed"},
+        {"name": "no-cross-layer-occlusion", "expected": "annotation pane never obscures terminal footage", "observed": "fresh reviewer inspected all 300 frames; no overlap or obscured terminal output", "result": "passed"},
+        {"name": "clean-scene-cuts", "expected": "no prior-scene bleed at five scene boundaries", "observed": "full-resolution F24/25, F69/70, F114/115, F169/170, and F259/260 pairs passed", "result": "passed"},
+        {"name": "visual-legibility", "expected": "no clipping, illegible annotations, blank frames, or inconsistent layouts", "observed": "PASS; no defect timestamps or frame numbers", "result": "passed"}
+      ],
+      "artifacts": [
+        {"path": "docs/evidence/raw/final-certification/walkthrough-overlap-repair.md", "sha256": "04a4f4213b5b8414f1dc04a7116425a2671d9983e02a48480acee5802e8b3db0"},
+        {"path": "docs/certification/FINAL_ATTESTATION.md", "sha256": "e9767601f4db1d3bf0d4990ae7e9dc0e3994de22e67c92e5c096791a2ded3808"},
+        {"path": "docs/certification/CHECK_MATRIX.md", "sha256": "4e57ffa4a5fb9ef4f299e1fa9103f74a48752af924d9bbf8fa0a5bef88d26ab8"},
+        {"path": "docs/evidence/README.md", "sha256": "fab791e50b66226f2d1a6583a8f6cdf652d071e74f6cef98dfd4dd63ea5d8bde"},
+        {"path": "walkthrough/index.html", "sha256": "e55caf046a59813d774af71291f6d70b81e862d4ec2e9e994a7dcb92c3e51c95"},
+        {"path": "walkthrough/arrivia-walkthrough.mp4", "sha256": "573d6e509bb5adb94571e21ea7aeceeda6562d5e432932915dc57e21d92dacd5"},
+        {"path": "walkthrough/snapshots/contact-sheet.jpg", "sha256": "f839b9023f08a77d322e82fc93471859493abc9462a1d1701addb297ae8cb930"}
+      ],
+      "tool_versions": {"hyperframes": "0.7.60", "ffmpeg": "8.1.2", "reviewer": "fresh Codex subagent"},
+      "claim_level": "E4",
+      "independent": true,
+      "notes": "Portfolio-only correction. The independently reviewed production runtime candidate f5e9dc4 and image digest remain unchanged.",
+      "supersedes": ["EVID-WALKTHROUGH-FINAL"]
     }
   ],
   "planned_event_ids": []

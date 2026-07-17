@@ -16,3 +16,7 @@ Every required Gate 6 check passed: locked installation, 131-test suite, Ruff, c
 The repository therefore earns `D5 Reimplementable / E6 Independently reproduced` within this exact boundary: one active recommendation-serving replica; REST and MCP share session-cap state only through one SQLite file in the same filesystem-locking domain; upstream policy remains read-only. This attestation does not claim production authentication, safe public-internet exposure, multi-replica consistency, uptime, compliance, autonomous policy creation, or guarantees beyond the reviewed v0.
 
 The earlier failed review remains preserved as `EVID-GATE6-FAIL-07BBC91`; it is not erased by this pass. The authoritative passing event is `EVID-GATE6-PASS-F4C6D50`.
+
+## Post-certification portfolio correction
+
+User review later found annotation/terminal overlap that the original sparse contact-sheet check missed. `BF-20260716-024` preserves that failure. Portfolio candidate `4e81cbc00b6407a4998254ebbf134972e31817de` replaces the walkthrough with a split-pane render; a fresh no-write Codex reviewer then inspected all 300 encoded frames and every full-resolution scene-cut pair with no defects. `EVID-WALKTHROUGH-OVERLAP-REPAIR` is the authoritative current visual event. This correction does not alter the independently reviewed production runtime source or image digest.
